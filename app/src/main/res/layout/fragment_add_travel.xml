@@ -13,12 +13,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="여행 인원수\n총 몇명인지 묻는 문구"
+            android:text="여행 인원수를\n알려주세요"
             style="@style/TextAppearance.JSG.Head1"
+            android:lineSpacingExtra="5dp"
             android:layout_marginStart="30dp"
-            android:layout_marginBottom="50dp"
-            app:layout_constraintBottom_toTopOf="@id/tv_addTravel_btn_alone"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:layout_marginTop="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
         <TextView
