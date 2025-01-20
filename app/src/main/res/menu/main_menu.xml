@@ -13,13 +13,13 @@
         android:title="리뷰" />
 
     <item
-        android:id="@+id/addScheduleFragmentTab"
+        android:id="@+id/addTravelFragmentTab"
         android:icon="@null"
         android:title="일정 추가"
         gom:showAsAction="never"/>
 
     <item
-        android:id="@+id/myScheduleFragment"
+        android:id="@+id/myTravelFragment"
         android:icon="@drawable/sel_main_icon_bnv_calendar"
         android:title="내 일정" />
 
