@@ -19,6 +19,7 @@
     <color name="gray_700">#616161</color>
     <color name="gray_800">#424242</color>
     <color name="gray_900">#222222</color>
+    <color name="blue_main">#BDE0FE</color>
     <color name="transparency">#00ff0000</color>
     <color name="bottomsheet_background">#80000000</color>
     <color name="line">#2B000000</color>

@@ -2,7 +2,7 @@
 <resources>
 
     <style name="TextAppearance.JSG.Head1">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="fontFamily">@font/pretendard_bold</item>
     </style>
@@ -10,11 +10,11 @@
     <style name="TextAppearance.JSG.Body1">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
     </style>
 
     <style name="TextAppearance.JSG.Button">
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
     </style>
