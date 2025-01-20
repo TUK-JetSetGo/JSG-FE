@@ -3,22 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/challengeFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/challengeFragment"
-        android:name="com.umc.jetsetgo.presentation.challenge.ChallengeFragment"
-        android:label="ChallengeFragment"
-        tools:layout="@layout/fragment_challenge"/>
+        android:id="@+id/homeFragment"
+        android:name="com.umc.jetsetgo.presentation.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home"/>
     <fragment
-        android:id="@+id/sweepFragment"
-        android:name="com.umc.jetsetgo.presentation.sweep.SweepFragment"
-        android:label="SweepFragment"
-        tools:layout="@layout/fragment_sweep"/>
+        android:id="@+id/reviewFragment"
+        android:name="com.umc.jetsetgo.presentation.review.ReviewFragment"
+        android:label="ReviewFragment"
+        tools:layout="@layout/fragment_review"/>
     <fragment
-        android:id="@+id/recordFragment"
-        android:name="com.umc.jetsetgo.presentation.record.RecordFragment"
-        android:label="RecordFragment"
-        tools:layout="@layout/fragment_record"/>
+        android:id="@+id/addTravelFragmentTab"
+        android:name="com.umc.jetsetgo.presentation.addTravel.AddTravelFragment"
+        android:label="AddTravelFragmentTab"
+        tools:layout="@layout/fragment_add_travel"/>
+    <fragment
+        android:id="@+id/myTravelFragment"
+        android:name="com.umc.jetsetgo.presentation.myTravel.MyTravelFragment"
+        android:label="MyTravelFragment"
+        tools:layout="@layout/fragment_my_travel"/>
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.umc.jetsetgo.presentation.mypage.MypageFragment"
+        android:label="MyPageFragment"
+        tools:layout="@layout/fragment_mypage"/>
 
 </navigation>
