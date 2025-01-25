@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#272727</color>
-    <color name="black_80">#CC272727</color>
+    <color name="black">#FF000000</color>
+    <color name="black_500">#9E9E9E</color>
+    <color name="black_700">#616161</color>
+    <color name="black_900">#222222</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="warning">#F26E6E</color>
+    <color name="red">#FF0000</color>
     <color name="gray">#767373</color>
-    <color name="gold">#E0A50E</color>
-    <color name="Transparency">#00FFFFFF</color>
-    <color name="green">#32D892</color>
+    <color name="gray_100">#F9F9F9</color>"
+    <color name="gray_180">#F7F7F7</color>
+    <color name="gray_200">#F5F5F5</color>
+    <color name="gray_250">#F0F0F0</color>
+    <color name="gray_300">#EDEDED</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="gray_900">#222222</color>
+    <color name="blue_main">#BDE0FE</color>
+    <color name="transparency">#00ff0000</color>
+    <color name="bottomsheet_background">#80000000</color>
+    <color name="line">#2B000000</color>
+    <color name="track">#EFF5F5</color>
 </resources>
