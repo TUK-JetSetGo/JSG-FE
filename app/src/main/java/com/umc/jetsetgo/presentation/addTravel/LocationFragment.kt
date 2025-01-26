@@ -4,11 +4,11 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.umc.jetsetgo.R
-import com.umc.jetsetgo.databinding.FragmentAddTravelBinding
+import com.umc.jetsetgo.databinding.FragmentAddTravel8Binding
 import com.umc.jetsetgo.presentation.base.BaseFragment
 import com.umc.jetsetgo.util.extension.setOnSingleClickListener
 
-class AddTravelFragment : BaseFragment<FragmentAddTravelBinding>(R.layout.fragment_add_travel) {
+class LocationFragment: BaseFragment<FragmentAddTravel8Binding>(R.layout.fragment_add_travel_8) {
     override fun initObserver() {
 
     }
@@ -42,8 +42,8 @@ class AddTravelFragment : BaseFragment<FragmentAddTravelBinding>(R.layout.fragme
     }
 
     private fun setupConfirmButton() {
-        binding.viewConfirmBtn.setOnSingleClickListener {
-            findNavController().navigate(R.id.goToCountry)
+        binding.viewAddTravelSaveBtn.setOnSingleClickListener {
+            findNavController().navigate(R.id.goToLoading)
         }
     }
 }

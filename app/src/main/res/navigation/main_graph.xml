@@ -15,11 +15,89 @@
         android:name="com.umc.jetsetgo.presentation.review.ReviewFragment"
         android:label="ReviewFragment"
         tools:layout="@layout/fragment_review"/>
-    <fragment
-        android:id="@+id/addTravelFragmentTab"
-        android:name="com.umc.jetsetgo.presentation.addTravel.AddTravelFragment"
-        android:label="AddTravelFragmentTab"
-        tools:layout="@layout/fragment_add_travel"/>
+
+    <navigation android:id="@+id/addTravelTab"
+        app:startDestination="@+id/addTravelFragment">
+        <fragment
+            android:id="@+id/addTravelFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.AddTravelFragment"
+            android:label="AddTravelFragment"
+            tools:layout="@layout/fragment_add_travel">
+            <action
+                android:id="@+id/goToCountry"
+                app:destination="@id/selectCountryFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/selectCountryFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.SelectCountryFragment"
+            android:label="SelectCountryFragment"
+            tools:layout="@layout/fragment_add_travel_2">
+            <action
+                android:id="@+id/goToActivityLevel"
+                app:destination="@id/activityLevelFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/activityLevelFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.ActivityLevelFragment"
+            android:label="ActivityLevelFragment"
+            tools:layout="@layout/fragment_add_travel_3">
+            <action
+                android:id="@+id/goToPurpose"
+                app:destination="@id/purposeFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/purposeFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.PurposeFragment"
+            android:label="PurposeFragment"
+            tools:layout="@layout/fragment_add_travel_4">
+            <action
+                android:id="@+id/goToTheme"
+                app:destination="@id/themeFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/themeFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.ThemeFragment"
+            android:label="ThemeFragment"
+            tools:layout="@layout/fragment_add_travel_5">
+            <action
+                android:id="@+id/goToBudget"
+                app:destination="@id/budgetFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/budgetFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.BudgetFragment"
+            android:label="BudgetFragment"
+            tools:layout="@layout/fragment_add_travel_6">
+            <action
+                android:id="@+id/goToDate"
+                app:destination="@id/dateFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/dateFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.DateFragment"
+            android:label="DateFragment"
+            tools:layout="@layout/fragment_add_travel_7">
+            <action
+                android:id="@+id/goToLocation"
+                app:destination="@id/locationFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/locationFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.LocationFragment"
+            android:label="LocationFragment"
+            tools:layout="@layout/fragment_add_travel_8">
+            <action
+                android:id="@+id/goToLoading"
+                app:destination="@id/loadingFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/loadingFragment"
+            android:name="com.umc.jetsetgo.presentation.addTravel.LoadingFragment"
+            android:label="LoadingFragment"
+            tools:layout="@layout/fragment_add_travel_loading"/>
+
+    </navigation>
+
     <fragment
         android:id="@+id/myTravelFragment"
         android:name="com.umc.jetsetgo.presentation.myTravel.MyTravelFragment"
