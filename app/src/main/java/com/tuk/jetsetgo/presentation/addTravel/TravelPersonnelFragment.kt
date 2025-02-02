@@ -25,23 +25,6 @@ class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.l
         bottomNavigationView?.visibility = View.GONE
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        val bottomNavigationView =
-            requireActivity().findViewById<BottomNavigationView>(R.id.main_bnv)
-        bottomNavigationView.visibility = View.VISIBLE
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        val bottomNavigationView =
-            requireActivity().findViewById<BottomNavigationView>(R.id.main_bnv)
-        bottomNavigationView.visibility = View.GONE
-    }
-
-
     private fun setupConfirmButton() {
         binding.viewTravelPersonnelConfirmBtn.setOnSingleClickListener {
             findNavController().navigate(R.id.goToCountry)

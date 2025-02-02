@@ -98,7 +98,11 @@
             android:id="@+id/loadingFragment"
             android:name="com.tuk.jetsetgo.presentation.addTravel.TravelLoadingFragment"
             android:label="LoadingFragment"
-            tools:layout="@layout/fragment_travel_loading"/>
+            tools:layout="@layout/fragment_travel_loading">
+            <action
+                android:id="@+id/goToHome"
+                app:destination="@id/homeFragment" />
+        </fragment>
     </navigation>
 
     <!-- my Travel -->
