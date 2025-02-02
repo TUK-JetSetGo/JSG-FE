@@ -30,14 +30,14 @@
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_travelBudget_dropDown_budget"
+            app:layout_constraintBottom_toTopOf="@id/et_travelBudget_dropDown_budget"
             />
 
         <EditText
-            android:id="@+id/tv_travelBudget_dropDown_budget"
+            android:id="@+id/et_travelBudget_dropDown_budget"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="예산을 입력해주세요"
+            android:hint="최소 예산은 10000원 입니다."
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="number"
             android:dropDownHeight="wrap_content"
@@ -56,10 +56,10 @@
             android:text="₩"
             style="@style/TextAppearance.JSG.Body1"
             android:layout_marginEnd="30dp"
-            app:layout_constraintStart_toEndOf="@id/tv_travelBudget_dropDown_budget"
+            app:layout_constraintStart_toEndOf="@id/et_travelBudget_dropDown_budget"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_travelBudget_dropDown_budget"
-            app:layout_constraintBottom_toBottomOf="@id/tv_travelBudget_dropDown_budget"
+            app:layout_constraintTop_toTopOf="@id/et_travelBudget_dropDown_budget"
+            app:layout_constraintBottom_toBottomOf="@id/et_travelBudget_dropDown_budget"
             />
 
         <View
