@@ -29,7 +29,7 @@
             tools:layout="@layout/fragment_travel_personnel">
             <action
                 android:id="@+id/goToCountry"
-                app:destination="@id/personnelFragment" />
+                app:destination="@id/countryFragment" />
         </fragment>
         <fragment
             android:id="@+id/countryFragment"
