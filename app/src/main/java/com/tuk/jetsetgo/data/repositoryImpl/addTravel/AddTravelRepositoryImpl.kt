@@ -1,0 +1,37 @@
+package com.tuk.jetsetgo.data.repositoryImpl.addTravel
+
+import com.tuk.jetsetgo.data.datasource.addTravel.AddTravelDataSource
+import com.tuk.jetsetgo.data.dto.BaseResponse
+import com.tuk.jetsetgo.domain.model.request.CreatePlanRequestModel
+import com.tuk.jetsetgo.domain.model.response.CreatePlanResponseModel
+import com.tuk.jetsetgo.domain.model.response.PurposeResponseModel
+import com.tuk.jetsetgo.domain.model.response.SelectCityResponseModel
+import com.tuk.jetsetgo.domain.model.response.SelectCountryResponseModel
+import com.tuk.jetsetgo.domain.model.response.ThemesResponseModel
+import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
+import javax.inject.Inject
+
+class AddTravelRepositoryImpl @Inject constructor(
+    private val addTravelDataSource: AddTravelDataSource
+): AddTravelRepository {
+    override suspend fun fetchSelectCountry(): Result<SelectCountryResponseModel> = runCatching {
+        addTravelDataSource.fetchSelectCountry().data.toSelectCountryResponseModel()
+    }
+
+    override suspend fun fetchSelectCity(countryId: Int): Result<SelectCityResponseModel> = runCatching {
+        addTravelDataSource.fetchSelectCity(countryId).data.toSelectCityResponseModel()
+    }
+
+    override suspend fun fetchPurpose(): Result<PurposeResponseModel> = runCatching {
+        addTravelDataSource.fetchPurpose().data.toPurposeResponseModel()
+    }
+
+    override suspend fun fetchThemes(): Result<ThemesResponseModel> = runCatching {
+        addTravelDataSource.fetchThemes().data.toThemesResponseModel()
+    }
+
+    override suspend fun fetchCreatePlan(request: CreatePlanRequestModel): Result<CreatePlanResponseModel> = runCatching {
+        addTravelDataSource.fetchCreatePlan(request.toCreatePlanRequestDto()).data.toCreatePlanResponseModel()
+    }
+
+}
