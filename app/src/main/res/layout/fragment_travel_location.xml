@@ -24,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_travelLocation"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +47,6 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="20dp">
             <View
-                android:id="@+id/view_travelLocation_add_btn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/shape_rect_999_blue_main_fill"
@@ -75,10 +75,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="20dp">
+            android:layout_marginVertical="20dp"
+            android:visibility="gone">
 
             <View
-                android:id="@+id/view_travelLocation_save_btn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/shape_rect_999_blue_main_fill"
