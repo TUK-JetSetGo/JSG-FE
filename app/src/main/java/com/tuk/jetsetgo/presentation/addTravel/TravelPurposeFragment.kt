@@ -42,7 +42,7 @@ class TravelPurposeFragment: BaseFragment<FragmentTravelPurposeBinding>(R.layout
     }
 
     private fun setupConfirmButton() {
-        binding.viewConfirmBtn.setOnSingleClickListener {
+        binding.viewTravelPurposeConfirmBtn.setOnSingleClickListener {
             findNavController().navigate(R.id.goToTheme)
         }
     }

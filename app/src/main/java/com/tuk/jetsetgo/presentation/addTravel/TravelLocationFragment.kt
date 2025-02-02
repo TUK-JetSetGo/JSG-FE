@@ -42,7 +42,7 @@ class TravelLocationFragment: BaseFragment<FragmentTravelLocationBinding>(R.layo
     }
 
     private fun setupConfirmButton() {
-        binding.viewAddTravelSaveBtn.setOnSingleClickListener {
+        binding.viewTravelLocationSaveBtn.setOnSingleClickListener {
             findNavController().navigate(R.id.goToLoading)
         }
     }

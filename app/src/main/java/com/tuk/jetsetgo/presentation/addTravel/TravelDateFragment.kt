@@ -42,7 +42,7 @@ class TravelDateFragment: BaseFragment<FragmentTravelDateBinding>(R.layout.fragm
     }
 
     private fun setupConfirmButton() {
-        binding.viewConfirmBtn.setOnSingleClickListener {
+        binding.viewTravelDateConfirmBtn.setOnSingleClickListener {
             findNavController().navigate(R.id.goToLocation)
         }
     }

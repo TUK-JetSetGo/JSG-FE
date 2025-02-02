@@ -42,7 +42,7 @@ class TravelBudgetFragment: BaseFragment<FragmentTravelBudgetBinding>(R.layout.f
     }
 
     private fun setupConfirmButton() {
-        binding.viewConfirmBtn.setOnSingleClickListener {
+        binding.viewTravelBudgetConfirmBtn.setOnSingleClickListener {
             findNavController().navigate(R.id.goToDate)
         }
     }

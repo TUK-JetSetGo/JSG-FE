@@ -23,7 +23,7 @@
 
 
         <TextView
-            android:id="@+id/tv_addTravel_btn_alone"
+            android:id="@+id/tv_travelPersonnel_btn_alone"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1:1"
@@ -32,14 +32,14 @@
             android:layout_marginEnd="15dp"
             android:text="개인"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_addTravel_btn_group"
+            app:layout_constraintEnd_toStartOf="@id/tv_travelPersonnel_btn_group"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/TextAppearance.JSG.Button"
             android:gravity="center"/>
 
         <TextView
-            android:id="@+id/tv_addTravel_btn_group"
+            android:id="@+id/tv_travelPersonnel_btn_group"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1:1"
@@ -47,7 +47,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="30dp"
             android:text="그룹"
-            app:layout_constraintStart_toEndOf="@id/tv_addTravel_btn_alone"
+            app:layout_constraintStart_toEndOf="@id/tv_travelPersonnel_btn_alone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,15 +55,15 @@
             android:gravity="center"/>
 
         <TextView
-            android:id="@+id/tv_addTravel_text1"
+            android:id="@+id/tv_travelPersonnel_text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인원수를 입력해주세요"
             style="@style/TextAppearance.JSG.Body1"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="@id/tv_addTravel_btn_alone"
-            app:layout_constraintTop_toBottomOf="@id/tv_addTravel_btn_alone"/>
+            app:layout_constraintStart_toStartOf="@id/tv_travelPersonnel_btn_alone"
+            app:layout_constraintTop_toBottomOf="@id/tv_travelPersonnel_btn_alone"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -72,22 +72,22 @@
             android:inputType="number"
             style="@style/TextAppearance.JSG.Body1"
             android:layout_marginEnd="5dp"
-            app:layout_constraintEnd_toStartOf="@id/tv_addTravel_text2"
-            app:layout_constraintTop_toTopOf="@id/tv_addTravel_text1"
-            app:layout_constraintBottom_toBottomOf="@id/tv_addTravel_text1"/>
+            app:layout_constraintEnd_toStartOf="@id/tv_travelPersonnel_text2"
+            app:layout_constraintTop_toTopOf="@id/tv_travelPersonnel_text1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_travelPersonnel_text1"/>
 
         <TextView
-            android:id="@+id/tv_addTravel_text2"
+            android:id="@+id/tv_travelPersonnel_text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="명"
             style="@style/TextAppearance.JSG.Body1"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="@id/tv_addTravel_btn_group"
-            app:layout_constraintTop_toTopOf="@id/tv_addTravel_text1"/>
+            app:layout_constraintEnd_toEndOf="@id/tv_travelPersonnel_btn_group"
+            app:layout_constraintTop_toTopOf="@id/tv_travelPersonnel_text1"/>
 
         <View
-            android:id="@+id/view_addTravel_next_btn"
+            android:id="@+id/view_travelPersonnel_confirm_btn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/btn_next"

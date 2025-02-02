@@ -42,7 +42,7 @@ class TravelCountryFragment: BaseFragment<FragmentTravelCountryBinding>(R.layout
     }
 
     private fun setupConfirmButton() {
-        binding.viewConfirmBtn.setOnSingleClickListener {
+        binding.viewTravelCountryConfirmBtn.setOnSingleClickListener {
             findNavController().navigate(R.id.goToActivityLevel)
         }
     }

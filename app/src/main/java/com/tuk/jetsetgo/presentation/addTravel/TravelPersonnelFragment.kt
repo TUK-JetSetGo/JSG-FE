@@ -41,8 +41,9 @@ class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.l
         bottomNavigationView.visibility = View.GONE
     }
 
+
     private fun setupConfirmButton() {
-        binding.viewConfirmBtn.setOnSingleClickListener {
+        binding.viewTravelPersonnelConfirmBtn.setOnSingleClickListener {
             findNavController().navigate(R.id.goToCountry)
         }
     }

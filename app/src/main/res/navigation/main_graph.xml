@@ -21,7 +21,7 @@
 
     <!-- add travel -->
     <navigation android:id="@+id/addTravelTab"
-        app:startDestination="@+id/addTravelFragment">
+        app:startDestination="@+id/personnelFragment">
         <fragment
             android:id="@+id/personnelFragment"
             android:name="com.tuk.jetsetgo.presentation.addTravel.TravelPersonnelFragment"
