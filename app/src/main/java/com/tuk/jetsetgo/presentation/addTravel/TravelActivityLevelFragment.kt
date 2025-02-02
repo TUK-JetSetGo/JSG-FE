@@ -5,8 +5,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
-import com.umc.jetsetgo.R
-import com.umc.jetsetgo.databinding.FragmentTravelActivityLevelBinding
+import com.tuk.jetsetgo.R
+import com.tuk.jetsetgo.databinding.FragmentTravelActivityLevelBinding
 
 class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBinding>(R.layout.fragment_travel_activity_level) {
     override fun initObserver() {
@@ -42,7 +42,7 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
     }
 
     private fun setupConfirmButton() {
-        binding.viewConfirmBtn.setOnSingleClickListener {
+        binding.viewActivityLevelConfirmBtn.setOnSingleClickListener {
             findNavController().navigate(R.id.goToPurpose)
         }
     }

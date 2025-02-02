@@ -6,9 +6,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
 import com.umc.jetsetgo.R
-import com.umc.jetsetgo.databinding.FragmentTravelPersonnelBinding
+import com.umc.jetsetgo.databinding.tuk
 
-class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.layout.fragment_travel_personnel) {
+class TravelPersonnelFragment : BaseFragment<tuk>(R.layout.fragment_travel_personnel) {
     override fun initObserver() {
 
     }

@@ -5,8 +5,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
-import com.umc.jetsetgo.R
-import com.umc.jetsetgo.databinding.FragmentTravelBudgetBinding
+import com.tuk.jetsetgo.R
+import com.tuk.jetsetgo.databinding.FragmentTravelBudgetBinding
 
 class TravelBudgetFragment: BaseFragment<FragmentTravelBudgetBinding>(R.layout.fragment_travel_budget) {
     override fun initObserver() {
