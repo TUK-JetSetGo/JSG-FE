@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="여행 날짜를\n선택해주세요"
+            android:text="여행지를\n선택해주세요"
             style="@style/TextAppearance.JSG.Head1"
             android:lineSpacingExtra="5dp"
             android:layout_marginStart="30dp"
@@ -22,22 +22,22 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_addTravel_startDate"
+            android:id="@+id/tv_travelCountry_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="시작 날짜"
+            android:text="국가"
             style="@style/TextAppearance.JSG.Body1"
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_addTravel_dropDown_startDate"
+            app:layout_constraintBottom_toTopOf="@id/tv_travelCountry_dropDown_country"
             />
 
         <AutoCompleteTextView
-            android:id="@+id/tv_addTravel_dropDown_startDate"
+            android:id="@+id/tv_travelCountry_dropDown_country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="시작 날짜를 선택해주세요"
+            android:hint="국가를 선택해주세요"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
@@ -50,23 +50,23 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_addTravel_endDate"
+            android:id="@+id/tv_travelCountry_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="종료 날짜"
+            android:text="시(도)"
             style="@style/TextAppearance.JSG.Body1"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_addTravel_dropDown_startDate"
+            app:layout_constraintTop_toBottomOf="@id/tv_travelCountry_dropDown_country"
             />
 
         <AutoCompleteTextView
-            android:id="@+id/tv_addTravel_dropDown_endDate"
+            android:id="@+id/tv_travelCountry_dropDown_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="종료 날짜를 선택해주세요"
+            android:hint="도시를 선택해주세요"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
@@ -74,10 +74,10 @@
             android:layout_marginHorizontal="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_addTravel_endDate"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_travelCountry_city"/>
 
         <View
-            android:id="@+id/view_confirm_btn"
+            android:id="@+id/view_travelCountry_confirm_btn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/btn_next"

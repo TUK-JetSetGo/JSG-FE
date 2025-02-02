@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="여행 목적을\n선택해주세요"
+            android:text="여행 테마를\n선택해주세요"
             style="@style/TextAppearance.JSG.Head1"
             android:lineSpacingExtra="5dp"
             android:layout_marginStart="30dp"
@@ -22,22 +22,22 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_addTravel_purpose"
+            android:id="@+id/tv_travelTheme_purpose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="여행 목적"
+            android:text="여행 테마"
             style="@style/TextAppearance.JSG.Body1"
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_addTravel_dropDown_purpose"
+            app:layout_constraintBottom_toTopOf="@id/tv_travelTheme_dropDown_theme"
             />
 
         <AutoCompleteTextView
-            android:id="@+id/tv_addTravel_dropDown_purpose"
+            android:id="@+id/tv_travelTheme_dropDown_theme"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="여행 목적을 선택해주세요"
+            android:hint="여행 테마를 선택해주세요"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"

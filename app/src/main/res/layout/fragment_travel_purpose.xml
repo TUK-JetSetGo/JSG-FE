@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,10 +11,9 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_addTravel_head1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="원하는 방문지를\n골라볼까요?"
+            android:text="여행 목적을\n선택해주세요"
             style="@style/TextAppearance.JSG.Head1"
             android:lineSpacingExtra="5dp"
             android:layout_marginStart="30dp"
@@ -23,32 +21,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <TextView
+            android:id="@+id/tv_travelPurpose_purpose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="여행 목적"
+            style="@style/TextAppearance.JSG.Body1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_addTravel_head1"
-            app:layout_constraintBottom_toTopOf="@id/view_addTravel_add_btn"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginHorizontal="30dp"
-            tools:listitem="@layout/item_location"
-            android:orientation="vertical"/>
+            app:layout_constraintBottom_toTopOf="@id/tv_travelPurpose_dropDown_purpose"
+            />
 
-        <View
-            android:id="@+id/view_addTravel_add_btn"
+        <AutoCompleteTextView
+            android:id="@+id/tv_travelPurpose_dropDown_purpose"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/btn_next"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintWidth_percent="0.15"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/view_addTravel_save_btn"
+            android:layout_height="wrap_content"
+            android:hint="여행 목적을 선택해주세요"
+            style="@style/TextAppearance.JSG.Body1"
+            android:inputType="none"
+            android:dropDownHeight="wrap_content"
+            android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="20dp"/>
+            android:layout_marginBottom="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <View
-            android:id="@+id/view_addTravel_save_btn"
+            android:id="@+id/view_confirm_btn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/btn_next"

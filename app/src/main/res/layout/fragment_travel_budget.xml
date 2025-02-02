@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="여행 테마를\n선택해주세요"
+            android:text="여행 예산을\n입력해주세요"
             style="@style/TextAppearance.JSG.Head1"
             android:lineSpacingExtra="5dp"
             android:layout_marginStart="30dp"
@@ -22,32 +22,45 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_addTravel_purpose"
+            android:id="@+id/tv_travelBudget_budget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="여행 테마"
+            android:text="여행 예산"
             style="@style/TextAppearance.JSG.Body1"
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_addTravel_dropDown_theme"
+            app:layout_constraintBottom_toTopOf="@id/tv_travelBudget_dropDown_budget"
             />
 
-        <AutoCompleteTextView
-            android:id="@+id/tv_addTravel_dropDown_theme"
+        <EditText
+            android:id="@+id/tv_travelBudget_dropDown_budget"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="여행 테마를 선택해주세요"
+            android:hint="예산을 입력해주세요"
             style="@style/TextAppearance.JSG.Body1"
-            android:inputType="none"
+            android:inputType="number"
             android:dropDownHeight="wrap_content"
             android:dropDownWidth="wrap_content"
-            android:layout_marginHorizontal="30dp"
+            android:layout_marginStart="30dp"
             android:layout_marginBottom="50dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_travelBudget_won"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_travelBudget_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₩"
+            style="@style/TextAppearance.JSG.Body1"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintStart_toEndOf="@id/tv_travelBudget_dropDown_budget"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_travelBudget_dropDown_budget"
+            app:layout_constraintBottom_toBottomOf="@id/tv_travelBudget_dropDown_budget"
+            />
 
         <View
             android:id="@+id/view_confirm_btn"

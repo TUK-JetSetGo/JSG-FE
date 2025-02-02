@@ -3,12 +3,12 @@ package com.tuk.jetsetgo.presentation.addTravel
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tuk.jetsetgo.R
-import com.tuk.jetsetgo.databinding.FragmentAddTravel2Binding
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
+import com.umc.jetsetgo.R
+import com.umc.jetsetgo.databinding.FragmentTravelPersonnelBinding
 
-class SelectCountryFragment: BaseFragment<FragmentAddTravel2Binding>(R.layout.fragment_add_travel_2) {
+class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.layout.fragment_travel_personnel) {
     override fun initObserver() {
 
     }
@@ -43,7 +43,7 @@ class SelectCountryFragment: BaseFragment<FragmentAddTravel2Binding>(R.layout.fr
 
     private fun setupConfirmButton() {
         binding.viewConfirmBtn.setOnSingleClickListener {
-            findNavController().navigate(R.id.goToActivityLevel)
+            findNavController().navigate(R.id.goToCountry)
         }
     }
 }

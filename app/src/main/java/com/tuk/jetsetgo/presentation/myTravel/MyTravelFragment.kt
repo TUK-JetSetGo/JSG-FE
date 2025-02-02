@@ -2,9 +2,10 @@ package com.tuk.jetsetgo.presentation.myTravel
 
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tuk.jetsetgo.R
-import com.tuk.jetsetgo.databinding.FragmentMyTravelBinding
 import com.tuk.jetsetgo.presentation.base.BaseFragment
+import com.umc.jetsetgo.R
+import com.umc.jetsetgo.databinding.FragmentMyTravelBinding
+
 
 class MyTravelFragment : BaseFragment<FragmentMyTravelBinding>(R.layout.fragment_my_travel) {
     override fun initObserver() {
@@ -12,13 +13,7 @@ class MyTravelFragment : BaseFragment<FragmentMyTravelBinding>(R.layout.fragment
     }
 
     override fun initView() {
-        bottomNavigationRemove()
-    }
-
-    private fun bottomNavigationRemove() {
-        // BottomNavigationView 숨기기
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.main_bnv)
-        bottomNavigationView?.visibility = View.GONE
+        setClickListener()
     }
 
     override fun onDestroyView() {
@@ -27,4 +22,9 @@ class MyTravelFragment : BaseFragment<FragmentMyTravelBinding>(R.layout.fragment
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.main_bnv)
         bottomNavigationView.visibility = View.VISIBLE
     }
+
+    private fun setClickListener() {
+        
+    }
+
 }

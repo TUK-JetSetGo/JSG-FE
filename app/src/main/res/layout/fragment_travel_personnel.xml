@@ -87,7 +87,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_addTravel_text1"/>
 
         <View
-            android:id="@+id/view_confirm_btn"
+            android:id="@+id/view_addTravel_next_btn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/btn_next"
