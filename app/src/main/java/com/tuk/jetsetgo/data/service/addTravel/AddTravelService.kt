@@ -10,15 +10,16 @@ import com.tuk.jetsetgo.data.dto.response.addTravel.ThemesResponseDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AddTravelService {
     @GET("travel-spots/country")
     suspend fun fetchSelectCountry(): BaseResponse<SelectCountryResponseDto>
 
-    @GET("travel-spots/country/{countryId}")
+    @GET("travel-spots/city/{countryId}")
     suspend fun fetchSelectCity(
-        @Query("countryId") countryId: Int
+        @Path("countryId") countryId: Int
     ): BaseResponse<SelectCityResponseDto>
 
     @GET("purposes")
