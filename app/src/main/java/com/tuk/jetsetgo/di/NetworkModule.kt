@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.tuk.jetsetgo.JetSetGoApplication
 import com.tuk.jetsetgo.R
 import com.google.gson.GsonBuilder
-import com.tuk.jetsetgo.presentation.test.AuthInterceptor
+import com.tuk.jetsetgo.util.network.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

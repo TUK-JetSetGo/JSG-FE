@@ -1,4 +1,4 @@
-package com.tuk.jetsetgo.presentation.test
+package com.tuk.jetsetgo.util.network
 
 import android.content.SharedPreferences
 import okhttp3.Interceptor
