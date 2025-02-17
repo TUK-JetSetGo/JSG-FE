@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,21 +34,33 @@
             app:layout_constraintBottom_toTopOf="@id/tv_travelCountry_dropDown_country"
             />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/tv_travelCountry_dropDown_country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="국가를 선택해주세요"
+            android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
             android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="50dp"
+            android:padding="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_travelCountry_country_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@id/tv_travelCountry_dropDown_country"
+            app:layout_constraintTop_toTopOf="@id/tv_travelCountry_dropDown_country"
+            app:layout_constraintBottom_toBottomOf="@id/tv_travelCountry_dropDown_country"
+            android:layout_marginEnd="12dp"/>
 
         <TextView
             android:id="@+id/tv_travelCountry_city"
@@ -62,19 +75,33 @@
             app:layout_constraintTop_toBottomOf="@id/tv_travelCountry_dropDown_country"
             />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/tv_travelCountry_dropDown_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="도시를 선택해주세요"
+            android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
             android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="50dp"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_travelCountry_city"/>
+
+        <ImageView
+            android:id="@+id/iv_travelCountry_city_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@id/tv_travelCountry_dropDown_city"
+            app:layout_constraintTop_toTopOf="@id/tv_travelCountry_dropDown_city"
+            app:layout_constraintBottom_toBottomOf="@id/tv_travelCountry_dropDown_city"
+            android:layout_marginEnd="12dp"/>
 
         <View
             android:id="@+id/view_travelCountry_confirm_btn"

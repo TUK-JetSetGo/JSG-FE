@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,21 +34,33 @@
             app:layout_constraintBottom_toTopOf="@id/tv_activityLevel_dropDown_visitCount"
             />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/tv_activityLevel_dropDown_visitCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="개수를 선택해주세요"
+            android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
             android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="50dp"
+            android:padding="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_activityLevel_visitCount_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_dropDown_visitCount"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_dropDown_visitCount"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_dropDown_visitCount"
+            android:layout_marginEnd="12dp"/>
 
         <TextView
             android:id="@+id/tv_activityLevel_time"
@@ -62,20 +75,32 @@
             app:layout_constraintTop_toBottomOf="@id/tv_activityLevel_dropDown_visitCount"
             />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/tv_activityLevel_dropDown_start"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="시작 시간"
+            android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
             android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:padding="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_activityLevel_text1"
-            app:layout_constraintTop_toBottomOf="@id/tv_activityLevel_time"
-            android:gravity="center"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_activityLevel_time"/>
+
+        <ImageView
+            android:id="@+id/iv_activityLevel_start_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_dropDown_start"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_dropDown_start"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_dropDown_start"
+            android:layout_marginEnd="12dp"/>
 
         <TextView
             android:id="@+id/tv_activityLevel_text1"
@@ -89,20 +114,33 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_dropDown_end"
             />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/tv_activityLevel_dropDown_end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="종료 시간"
+            android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
             android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:padding="12dp"
             app:layout_constraintStart_toEndOf="@id/tv_activityLevel_text1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_activityLevel_time"
-            android:gravity="center"/>
+            />
+
+        <ImageView
+            android:id="@+id/iv_activityLevel_end_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_dropDown_end"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_dropDown_end"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_dropDown_end"
+            android:layout_marginEnd="12dp"/>
 
         <View
             android:id="@+id/view_activityLevel_confirm_btn"

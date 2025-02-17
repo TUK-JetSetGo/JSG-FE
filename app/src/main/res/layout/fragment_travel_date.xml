@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,21 +34,33 @@
             app:layout_constraintBottom_toTopOf="@id/tv_travelDate_dropDown_startDate"
             />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/tv_travelDate_dropDown_startDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="시작 날짜를 선택해주세요"
+            android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
             android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="50dp"
+            android:padding="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_travelDate_startDate_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@id/tv_travelDate_dropDown_startDate"
+            app:layout_constraintTop_toTopOf="@id/tv_travelDate_dropDown_startDate"
+            app:layout_constraintBottom_toBottomOf="@id/tv_travelDate_dropDown_startDate"
+            android:layout_marginEnd="12dp"/>
 
         <TextView
             android:id="@+id/tv_travelDate_endDate"
@@ -62,19 +75,34 @@
             app:layout_constraintTop_toBottomOf="@id/tv_travelDate_dropDown_startDate"
             />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/tv_travelDate_dropDown_endDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="종료 날짜를 선택해주세요"
+            android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
             android:dropDownHeight="wrap_content"
             android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="50dp"
+            android:padding="12dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_travelDate_endDate"/>
+
+
+        <ImageView
+            android:id="@+id/iv_travelDate_endDate_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@id/tv_travelDate_dropDown_endDate"
+            app:layout_constraintTop_toTopOf="@id/tv_travelDate_dropDown_endDate"
+            app:layout_constraintBottom_toBottomOf="@id/tv_travelDate_dropDown_endDate"
+            android:layout_marginEnd="12dp"/>
 
         <View
             android:id="@+id/view_travelDate_confirm_btn"
