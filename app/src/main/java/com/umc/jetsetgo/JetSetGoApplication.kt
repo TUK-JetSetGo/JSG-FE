@@ -7,8 +7,10 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.kakao.sdk.common.KakaoSdk
 import com.umc.jetsetgo.util.network.NetworkConnectionChecker
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
 class JetSetGoApplication : Application(), DefaultLifecycleObserver {
@@ -17,6 +19,11 @@ class JetSetGoApplication : Application(), DefaultLifecycleObserver {
         context = applicationContext
         networkConnectionChecker = NetworkConnectionChecker(context)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        val kakaoAppKey = getString(R.string.kakao_app_key)
+        KakaoSdk.init(context,kakaoAppKey)
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 
     override fun onStop(owner: LifecycleOwner) {
