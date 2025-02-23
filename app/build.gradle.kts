@@ -1,9 +1,16 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
+}
+
+val properties = Properties().apply{
+    load(FileInputStream(rootProject.file("local.properties")))
 }
 
 android {
@@ -18,11 +25,18 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "KAKAO_APP_KEY", "\"${properties["KAKAO_APP_KEY"]}\"")
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            manifestPlaceholders["KAKAO_APP_KEY"] = properties["KAKAO_APP_KEY"] as String
+        }
+
         release {
             isMinifyEnabled = false
+            manifestPlaceholders["KAKAO_APP_KEY"] = properties["KAKAO_APP_KEY"] as String
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -96,5 +110,11 @@ dependencies {
     // Coroutines Dependency
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    // Kakao Login
+    implementation ("com.kakao.sdk:v2-user:2.20.6") // 카카오 로그인 API 모듈
+
+    // Timber
+    implementation ("com.jakewharton.timber:timber:5.0.1")
 
 }
