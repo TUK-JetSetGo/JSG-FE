@@ -1,10 +1,10 @@
 package com.tuk.jetsetgo.di
 
 import android.content.SharedPreferences
-import com.tuk.jetsetgo.JetSetGoApplication
 import com.tuk.jetsetgo.R
 import com.google.gson.GsonBuilder
 import com.tuk.jetsetgo.util.network.AuthInterceptor
+import com.umc.jetsetgo.JetSetGoApplication
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

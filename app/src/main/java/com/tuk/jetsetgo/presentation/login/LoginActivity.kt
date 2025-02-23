@@ -6,10 +6,10 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import com.umc.jetsetgo.R
-import com.umc.jetsetgo.databinding.ActivityLoginBinding
-import com.umc.jetsetgo.presentation.MainActivity
-import com.umc.jetsetgo.presentation.base.BaseActivity
+import com.tuk.jetsetgo.R
+import com.tuk.jetsetgo.databinding.ActivityLoginBinding
+import com.tuk.jetsetgo.presentation.MainActivity
+import com.tuk.jetsetgo.presentation.base.BaseActivity
 
 class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     override fun initObserver() {

@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.kakao.sdk.common.KakaoSdk
-import com.umc.jetsetgo.util.network.NetworkConnectionChecker
+import com.tuk.jetsetgo.BuildConfig
+import com.tuk.jetsetgo.R
+import com.tuk.jetsetgo.util.network.NetworkConnectionChecker
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
