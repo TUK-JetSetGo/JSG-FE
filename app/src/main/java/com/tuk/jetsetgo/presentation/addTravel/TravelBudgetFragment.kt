@@ -1,15 +1,20 @@
 package com.tuk.jetsetgo.presentation.addTravel
 
+import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentTravelBudgetBinding
+import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
 import java.text.NumberFormat
 import java.util.Locale
 
 class TravelBudgetFragment: BaseFragment<FragmentTravelBudgetBinding>(R.layout.fragment_travel_budget) {
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+
     override fun initObserver() {
 
     }
@@ -51,7 +56,12 @@ class TravelBudgetFragment: BaseFragment<FragmentTravelBudgetBinding>(R.layout.f
 
     private fun setupConfirmButton() {
         binding.viewTravelBudgetConfirmBtn.setOnSingleClickListener {
+            val budgetText = binding.etTravelBudgetDropDownBudget.text.toString().replace(",", "")
+            val budgetValue = budgetText.toIntOrNull() ?: 0
+            sharedViewModel.setBudget(budgetValue)
+            Log.d("TravelBudgetFragment", "예산: ${sharedViewModel.budget.value}")
             findNavController().navigate(R.id.goToDate)
         }
     }
+
 }

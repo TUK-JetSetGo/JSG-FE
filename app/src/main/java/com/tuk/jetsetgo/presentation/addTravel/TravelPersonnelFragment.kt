@@ -8,11 +8,12 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentTravelPersonnelBinding
+import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
 
 class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.layout.fragment_travel_personnel) {
-    private val sharedViewModel: SharedViewModel by activityViewModels()  // SharedViewModel 초기화
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var isGroupSelected = false  // 그룹 선택 상태 확인
     override fun initObserver() {
 

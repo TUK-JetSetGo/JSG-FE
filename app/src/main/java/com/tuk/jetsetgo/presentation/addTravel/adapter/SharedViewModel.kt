@@ -1,4 +1,4 @@
-package com.tuk.jetsetgo.presentation.addTravel
+package com.tuk.jetsetgo.presentation.addTravel.adapter
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
