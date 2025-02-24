@@ -31,11 +31,11 @@
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_activityLevel_dropDown_visitCount"
+            app:layout_constraintBottom_toTopOf="@id/tv_activityLevel_time_visitCount"
             />
 
         <TextView
-            android:id="@+id/tv_activityLevel_dropDown_visitCount"
+            android:id="@+id/tv_activityLevel_time_visitCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="개수를 선택해주세요"
@@ -57,9 +57,9 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/ic_arrow_down"
-            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_dropDown_visitCount"
-            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_dropDown_visitCount"
-            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_dropDown_visitCount"
+            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_time_visitCount"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_time_visitCount"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_time_visitCount"
             android:layout_marginEnd="12dp"/>
 
         <TextView
@@ -72,11 +72,11 @@
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_activityLevel_dropDown_visitCount"
+            app:layout_constraintTop_toBottomOf="@id/tv_activityLevel_time_visitCount"
             />
 
         <TextView
-            android:id="@+id/tv_activityLevel_dropDown_start"
+            android:id="@+id/tv_activityLevel_time_start"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="시작 시간"
@@ -97,9 +97,9 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/ic_arrow_down"
-            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_dropDown_start"
-            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_dropDown_start"
-            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_dropDown_start"
+            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_time_start"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_time_start"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_time_start"
             android:layout_marginEnd="12dp"/>
 
         <TextView
@@ -108,14 +108,14 @@
             android:layout_height="wrap_content"
             android:text="~"
             style="@style/TextAppearance.JSG.Body1"
-            app:layout_constraintStart_toEndOf="@id/tv_activityLevel_dropDown_start"
-            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_dropDown_end"
-            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_dropDown_start"
-            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_dropDown_end"
+            app:layout_constraintStart_toEndOf="@id/tv_activityLevel_time_start"
+            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_time_end"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_time_start"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_time_end"
             />
 
         <TextView
-            android:id="@+id/tv_activityLevel_dropDown_end"
+            android:id="@+id/tv_activityLevel_time_end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="종료 시간"
@@ -137,9 +137,9 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/ic_arrow_down"
-            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_dropDown_end"
-            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_dropDown_end"
-            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_dropDown_end"
+            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_time_end"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_time_end"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_time_end"
             android:layout_marginEnd="12dp"/>
 
         <View
@@ -152,6 +152,113 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="30dp"/>
+
+        <!-- bottomSheet background -->
+        <View
+            android:id="@+id/view_activityLevel_bottomSheet_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bottomsheet_background"
+            android:visibility="gone"/>
+
+        <!-- TimePicker Start-->
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_bottom_sheet_time_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/shape_bottom_sheet">
+
+                <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                    android:id="@+id/drag_handle_time_start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TimePicker
+                    android:id="@+id/picker_time_start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:timePickerMode="spinner"
+                    android:theme="@style/JSG.TimePicker"
+                    app:layout_constraintTop_toBottomOf="@id/drag_handle_time_start"/>
+
+                <TextView
+                    android:id="@+id/tv_activityLevel_start_save_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="저장"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    style="@style/TextAppearance.JSG.Button"
+                    android:background="@drawable/shape_rect_999_blue_main_fill"
+                    app:layout_constraintDimensionRatio="8:1"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintTop_toBottomOf="@id/picker_time_start"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="20dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+        <!-- TimePicker End-->
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_bottom_sheet_time_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/shape_bottom_sheet">
+
+                <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                    android:id="@+id/drag_handle_time_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TimePicker
+                    android:id="@+id/picker_time_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:timePickerMode="spinner"
+                    android:theme="@style/JSG.TimePicker"
+                    app:layout_constraintTop_toBottomOf="@id/drag_handle_time_end"/>
+
+                <TextView
+                    android:id="@+id/tv_activityLevel_end_save_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="저장"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    style="@style/TextAppearance.JSG.Button"
+                    android:background="@drawable/shape_rect_999_blue_main_fill"
+                    app:layout_constraintDimensionRatio="8:1"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:layout_constraintTop_toBottomOf="@id/picker_time_end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="20dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
