@@ -2,14 +2,17 @@ package com.tuk.jetsetgo.presentation.addTravel
 
 import android.view.View
 import androidx.databinding.adapters.ViewBindingAdapter.setClickListener
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentTravelDateBinding
+import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
 
 class TravelDateFragment: BaseFragment<FragmentTravelDateBinding>(R.layout.fragment_travel_date) {
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var startBottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var endBottomSheetBehavior: BottomSheetBehavior<View>
