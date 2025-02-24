@@ -38,7 +38,7 @@
             android:id="@+id/et_travelBudget_dropDown_budget"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="최소 예산은 10000원 입니다"
+            android:hint="최소 예산은 10,000원 입니다"
             android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
