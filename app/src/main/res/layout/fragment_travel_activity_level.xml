@@ -23,7 +23,6 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_activityLevel_visitCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="하루에 방문할 관광지 개수"
@@ -31,14 +30,14 @@
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_activityLevel_time_visitCount"
+            app:layout_constraintBottom_toTopOf="@id/tv_activityLevel_visitCount"
             />
 
         <TextView
-            android:id="@+id/tv_activityLevel_time_visitCount"
+            android:id="@+id/tv_activityLevel_visitCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="개수를 선택해주세요"
+            android:text="1"
             android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
             android:inputType="none"
@@ -53,13 +52,24 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
-            android:id="@+id/iv_activityLevel_visitCount_arrow"
+            android:id="@+id/iv_activityLevel_plus"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_up"
+            app:layout_constraintEnd_toStartOf="@id/iv_activityLevel_minus"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_visitCount"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_visitCount"
+            android:layout_marginEnd="8dp"/>
+
+        <ImageView
+            android:id="@+id/iv_activityLevel_minus"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/ic_arrow_down"
-            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_time_visitCount"
-            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_time_visitCount"
-            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_time_visitCount"
+            android:backgroundTint="@color/gray_400"
+            app:layout_constraintEnd_toEndOf="@id/tv_activityLevel_visitCount"
+            app:layout_constraintTop_toTopOf="@id/tv_activityLevel_visitCount"
+            app:layout_constraintBottom_toBottomOf="@id/tv_activityLevel_visitCount"
             android:layout_marginEnd="12dp"/>
 
         <TextView
@@ -72,7 +82,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_activityLevel_time_visitCount"
+            app:layout_constraintTop_toBottomOf="@id/tv_activityLevel_visitCount"
             />
 
         <TextView

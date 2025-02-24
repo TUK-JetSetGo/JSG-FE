@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.databinding.adapters.ViewBindingAdapter.setClickListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -27,6 +28,7 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
         setClickListener()
         initBottomSheets()
         initBottomSheetActions()
+        initVisitCountControls()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -54,6 +56,11 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
             val endTime = LocalTime.parse(endTimeStr, formatter)
 
             if (startTime.isBefore(endTime)) {
+                val visitCount = binding.tvActivityLevelVisitCount.text.toString().toIntOrNull() ?: 1
+                sharedViewModel.setDailyVisitCount(visitCount)
+                Log.d("TravelActivityLevelFragment", "방문지 개수: ${sharedViewModel.dailyVisitCount.value}")
+                Log.d("TravelActivityLevelFragment", "시작 시간: ${sharedViewModel.activityStartTime.value}")
+                Log.d("TravelActivityLevelFragment", "종료 시간: ${sharedViewModel.activityEndTime.value}")
                 findNavController().navigate(R.id.goToPurpose)
             } else {
                 Toast.makeText(requireContext(), "활동 시작 시간은 종료 시간보다 빨라야 합니다", Toast.LENGTH_SHORT).show()
@@ -116,7 +123,6 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
             val startTimeVM = String.format("%02d:%02d:00", hour, minute)
             binding.tvActivityLevelTimeStart.text = startTime
             sharedViewModel.setActivityStartTime(startTimeVM)
-            Log.d("TravelActivityLevelFragment", "시작 시간: ${sharedViewModel.activityStartTime.value}")
             startBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
@@ -127,10 +133,46 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
             val endTimeVM = String.format("%02d:%02d:00", hour, minute)
             binding.tvActivityLevelTimeEnd.text = endTime
             sharedViewModel.setActivityEndTime(endTimeVM)
-            Log.d("TravelActivityLevelFragment", "종료 시간: ${sharedViewModel.activityEndTime.value}")
             endBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
     }
 
+    // 방문할 관광지 개수 컨트롤
+    private fun initVisitCountControls() {
+        binding.ivActivityLevelPlus.setOnClickListener {
+            var count = binding.tvActivityLevelVisitCount.text.toString().toIntOrNull() ?: 1
+            if (count < 5) {
+                count++
+                binding.tvActivityLevelVisitCount.text = count.toString()
+                updateVisitCountButtonTints(count)
+            }
+        }
+        binding.ivActivityLevelMinus.setOnClickListener {
+            var count = binding.tvActivityLevelVisitCount.text.toString().toIntOrNull() ?: 1
+            if (count > 1) {
+                count--
+                binding.tvActivityLevelVisitCount.text = count.toString()
+                updateVisitCountButtonTints(count)
+            }
+        }
+    }
 
+    private fun updateVisitCountButtonTints(count: Int) {
+        if (count == 1) {
+            binding.ivActivityLevelMinus.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.gray_400)
+            binding.ivActivityLevelPlus.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.black)
+        } else if (count == 5) {
+            binding.ivActivityLevelPlus.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.gray_400)
+            binding.ivActivityLevelMinus.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.black)
+        } else {
+            binding.ivActivityLevelPlus.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.black)
+            binding.ivActivityLevelMinus.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.black)
+        }
+    }
 }
