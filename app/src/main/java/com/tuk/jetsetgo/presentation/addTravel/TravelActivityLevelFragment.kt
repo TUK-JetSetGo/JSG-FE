@@ -40,6 +40,12 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
             val startTimeFull = binding.tvActivityLevelTimeStart.text.toString()
             val endTimeFull = binding.tvActivityLevelTimeEnd.text.toString()
 
+            // 시간이 선택되지 않았으면 토스트 메시지 표시 후 종료
+            if (startTimeFull.isBlank() || endTimeFull.isBlank()) {
+                Toast.makeText(requireContext(), "활동 시간을 선택해주세요", Toast.LENGTH_SHORT).show()
+                return@setOnSingleClickListener
+            }
+
             val startTimeStr = if (startTimeFull.length >= 5) startTimeFull.substring(0, 5) else startTimeFull
             val endTimeStr = if (endTimeFull.length >= 5) endTimeFull.substring(0, 5) else endTimeFull
 
