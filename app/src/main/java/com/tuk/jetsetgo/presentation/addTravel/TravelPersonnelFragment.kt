@@ -71,12 +71,12 @@ class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.l
                 val groupSize = editText.text.toString().toIntOrNull() ?: 1
                 sharedViewModel.setIsGroup(true)
                 sharedViewModel.setGroupSize(groupSize)
-                Log.d("TravelPersonnel", "isGroup: true, groupSize: $groupSize")
             } else {
                 sharedViewModel.setIsGroup(false)
                 sharedViewModel.setGroupSize(1)
                 Log.d("TravelPersonnel", "isGroup: false, groupSize: 1")
             }
+            Log.d("TravelPersonnel", "isGroup: ${sharedViewModel.isGroup.value}, groupSize: ${sharedViewModel.groupSize.value}")
             findNavController().navigate(R.id.goToCountry)
         }
     }
