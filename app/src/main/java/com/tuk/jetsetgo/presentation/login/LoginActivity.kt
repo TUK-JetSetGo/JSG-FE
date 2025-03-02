@@ -1,4 +1,4 @@
-package com.umc.jetsetgo.presentation.login
+package com.tuk.jetsetgo.presentation.login
 
 import android.content.Intent
 import android.util.Log

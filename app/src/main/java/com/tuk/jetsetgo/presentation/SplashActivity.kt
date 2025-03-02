@@ -1,4 +1,4 @@
-package com.umc.jetsetgo.presentation
+package com.tuk.jetsetgo.presentation
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.ActivitySplashBinding
 import com.tuk.jetsetgo.presentation.base.BaseActivity
-import com.umc.jetsetgo.presentation.login.LoginActivity
+import com.tuk.jetsetgo.presentation.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

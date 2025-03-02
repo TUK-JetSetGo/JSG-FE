@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name="com.umc.jetsetgo.presentation.SplashActivity"
+            android:name=".presentation.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -39,7 +39,7 @@
         </activity>
 
         <activity
-            android:name="com.umc.jetsetgo.presentation.login.LoginActivity"
+            android:name=".presentation.login.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
 
