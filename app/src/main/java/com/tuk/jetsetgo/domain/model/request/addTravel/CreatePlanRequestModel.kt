@@ -1,4 +1,4 @@
-package com.tuk.jetsetgo.domain.model.request
+package com.tuk.jetsetgo.domain.model.request.addTravel
 
 import com.tuk.jetsetgo.data.dto.request.addTravel.CreatePlanRequestDto
 

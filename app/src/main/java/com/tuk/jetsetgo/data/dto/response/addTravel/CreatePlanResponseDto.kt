@@ -1,6 +1,6 @@
 package com.tuk.jetsetgo.data.dto.response.addTravel
 
-import com.tuk.jetsetgo.domain.model.response.CreatePlanResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.CreatePlanResponseModel
 
 data class CreatePlanResponseDto(
     val data: String

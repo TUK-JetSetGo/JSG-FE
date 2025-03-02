@@ -1,6 +1,6 @@
 package com.tuk.jetsetgo.data.dto.response.addTravel
 
-import com.tuk.jetsetgo.domain.model.response.SelectCountryResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCountryResponseModel
 
 data class SelectCountryResponseDto(
     val travelCountryInfoList: List<TravelCountryInfoListDto>

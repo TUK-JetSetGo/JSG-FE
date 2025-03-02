@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tuk.jetsetgo.domain.model.response.PurposeResponseModel
-import com.tuk.jetsetgo.domain.model.response.SelectCityResponseModel
-import com.tuk.jetsetgo.domain.model.response.SelectCountryResponseModel
-import com.tuk.jetsetgo.domain.model.response.ThemesResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.PurposeResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCityResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCountryResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.ThemesResponseModel
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

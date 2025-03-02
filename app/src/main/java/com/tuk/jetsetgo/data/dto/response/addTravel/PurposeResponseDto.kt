@@ -1,6 +1,6 @@
 package com.tuk.jetsetgo.data.dto.response.addTravel
 
-import com.tuk.jetsetgo.domain.model.response.PurposeResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.PurposeResponseModel
 
 data class PurposeResponseDto(
     val travelPurposeInfoList: List<TravelPurposeInfoListDto>

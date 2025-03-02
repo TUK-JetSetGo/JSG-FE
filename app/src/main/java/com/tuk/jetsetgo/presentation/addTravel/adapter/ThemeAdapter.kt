@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemBottomSheetBinding
-import com.tuk.jetsetgo.domain.model.response.ThemesResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.ThemesResponseModel
 
 class ThemeAdapter(private val onItemClick: (ThemesResponseModel.TravelThemeInfoListModel) -> Unit) :
     RecyclerView.Adapter<ThemeAdapter.ThemeViewHolder>() {

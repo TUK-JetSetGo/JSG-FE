@@ -1,4 +1,4 @@
-package com.tuk.jetsetgo.domain.model.response
+package com.tuk.jetsetgo.domain.model.response.addTravel
 
 data class ThemesResponseModel(
     val travelThemeInfoList: List<TravelThemeInfoListModel>

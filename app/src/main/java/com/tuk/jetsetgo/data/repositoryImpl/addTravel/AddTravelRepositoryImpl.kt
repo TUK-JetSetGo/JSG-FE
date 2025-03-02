@@ -1,13 +1,12 @@
 package com.tuk.jetsetgo.data.repositoryImpl.addTravel
 
 import com.tuk.jetsetgo.data.datasource.addTravel.AddTravelDataSource
-import com.tuk.jetsetgo.data.dto.BaseResponse
-import com.tuk.jetsetgo.domain.model.request.CreatePlanRequestModel
-import com.tuk.jetsetgo.domain.model.response.CreatePlanResponseModel
-import com.tuk.jetsetgo.domain.model.response.PurposeResponseModel
-import com.tuk.jetsetgo.domain.model.response.SelectCityResponseModel
-import com.tuk.jetsetgo.domain.model.response.SelectCountryResponseModel
-import com.tuk.jetsetgo.domain.model.response.ThemesResponseModel
+import com.tuk.jetsetgo.domain.model.request.addTravel.CreatePlanRequestModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.CreatePlanResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.PurposeResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCityResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCountryResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.ThemesResponseModel
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
 import javax.inject.Inject
 

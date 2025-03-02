@@ -1,4 +1,4 @@
-package com.tuk.jetsetgo.domain.model.response
+package com.tuk.jetsetgo.domain.model.response.addTravel
 
 data class PurposeResponseModel(
     val travelPurposeInfoList: List<TravelPurposeInfoListModel>

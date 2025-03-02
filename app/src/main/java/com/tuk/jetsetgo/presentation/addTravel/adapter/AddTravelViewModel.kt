@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tuk.jetsetgo.domain.model.request.CreatePlanRequestModel
+import com.tuk.jetsetgo.domain.model.request.addTravel.CreatePlanRequestModel
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
 import com.tuk.jetsetgo.util.network.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel

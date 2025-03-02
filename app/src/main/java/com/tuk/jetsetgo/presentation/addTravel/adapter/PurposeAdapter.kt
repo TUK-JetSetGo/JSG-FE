@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemBottomSheetBinding
-import com.tuk.jetsetgo.domain.model.response.PurposeResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.PurposeResponseModel
 
 class PurposeAdapter(private val onItemClick: (PurposeResponseModel.TravelPurposeInfoListModel) -> Unit) :
     RecyclerView.Adapter<PurposeAdapter.PurposeViewHolder>() {
