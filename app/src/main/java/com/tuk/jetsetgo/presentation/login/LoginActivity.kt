@@ -2,18 +2,31 @@ package com.tuk.jetsetgo.presentation.login
 
 import android.content.Intent
 import android.util.Log
+import androidx.activity.viewModels
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.ActivityLoginBinding
+import com.tuk.jetsetgo.domain.model.request.login.SignUpRequestModel
 import com.tuk.jetsetgo.presentation.MainActivity
 import com.tuk.jetsetgo.presentation.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
+    private val viewModel: LoginViewModel by viewModels()
     override fun initObserver() {
-
+        viewModel.signUpResponse.observe(this) { result ->
+            result.onSuccess { response ->
+                Log.i(TAG, "회원가입 성공: ${response.userId}, ${response.name}")
+                navigateToMain()
+            }
+            result.onFailure { exception ->
+                Log.e(TAG, "회원가입 실패: ${exception.message}")
+            }
+        }
     }
 
     override fun initView() {
@@ -36,7 +49,8 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login)
                 Log.e(TAG, "카카오 계정 로그인 실패", error)
             } else if (token != null) {
                 Log.i(TAG, "카카오 계정 로그인 성공: ${token.accessToken}")
-                navigateToMain()
+//                navigateToMain()
+                viewModel.fetchSignUp(SignUpRequestModel(token.accessToken, "KAKAO"))
             }
         }
 
@@ -55,7 +69,8 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(R.layout.activity_login)
                     UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
                 } else if (token != null) {
                     Log.i(TAG, "카카오톡 로그인 성공: ${token.accessToken}")
-                    navigateToMain()
+//                    navigateToMain()
+                    viewModel.fetchSignUp(SignUpRequestModel(token.accessToken, "KAKAO"))
                 }
             }
         } else {

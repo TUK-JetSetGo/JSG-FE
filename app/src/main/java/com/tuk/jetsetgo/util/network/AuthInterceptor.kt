@@ -9,7 +9,15 @@ class AuthInterceptor @Inject constructor(
     private val spf: SharedPreferences
 ): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val authRequest = chain.request().newBuilder().addHeader("Authorization", "Bearer ${spf.getString("jwt", "")}").build()
-        return chain.proceed(authRequest)
+        val token = spf.getString("jwt", "") ?: "" // null 체크 및 기본값 설정
+
+        val requestBuilder = chain.request().newBuilder()
+
+        // 토큰이 비어있지 않을 때만 Authorization 헤더 추가
+        if (token.isNotEmpty()) {
+            requestBuilder.addHeader("Authorization", "Bearer $token")
+        }
+
+        return chain.proceed(requestBuilder.build())
     }
 }
