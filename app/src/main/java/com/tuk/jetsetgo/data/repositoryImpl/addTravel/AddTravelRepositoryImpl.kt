@@ -29,8 +29,7 @@ class AddTravelRepositoryImpl @Inject constructor(
         addTravelDataSource.fetchThemes().data.toThemesResponseModel()
     }
 
-    override suspend fun fetchCreatePlan(request: CreatePlanRequestModel): Result<CreatePlanResponseModel> = runCatching {
-        addTravelDataSource.fetchCreatePlan(request.toCreatePlanRequestDto()).data.toCreatePlanResponseModel()
+    override suspend fun fetchCreatePlan(request: CreatePlanRequestModel): Result<CreatePlanResponseModel?> = runCatching {
+        addTravelDataSource.fetchCreatePlan(request.toCreatePlanRequestDto()).data?.toCreatePlanResponseModel()
     }
-
 }

@@ -12,5 +12,5 @@ interface AddTravelRepository {
     suspend fun fetchSelectCity(countryId: Int): Result<SelectCityResponseModel>
     suspend fun fetchPurpose(): Result<PurposeResponseModel>
     suspend fun fetchThemes(): Result<ThemesResponseModel>
-    suspend fun fetchCreatePlan(request: CreatePlanRequestModel): Result<CreatePlanResponseModel>
+    suspend fun fetchCreatePlan(request: CreatePlanRequestModel): Result<CreatePlanResponseModel?>
 }

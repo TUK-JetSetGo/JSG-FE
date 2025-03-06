@@ -3,7 +3,6 @@ package com.tuk.jetsetgo.presentation.addTravel
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.tuk.jetsetgo.R

@@ -26,7 +26,7 @@ class AddTravelDataSourceImpl @Inject constructor(
     override suspend fun fetchThemes(): BaseResponse<ThemesResponseDto> =
         addTravelService.fetchThemes()
 
-    override suspend fun fetchCreatePlan(request: CreatePlanRequestDto): BaseResponse<CreatePlanResponseDto> =
+    override suspend fun fetchCreatePlan(request: CreatePlanRequestDto): BaseResponse<CreatePlanResponseDto?> =
         addTravelService.fetchCreatePlan(request)
 
 }

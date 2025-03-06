@@ -31,5 +31,5 @@ interface AddTravelService {
     @POST("travel-plans/create")
     suspend fun fetchCreatePlan(
         @Body request: CreatePlanRequestDto
-    ): BaseResponse<CreatePlanResponseDto>
+    ): BaseResponse<CreatePlanResponseDto?>
 }

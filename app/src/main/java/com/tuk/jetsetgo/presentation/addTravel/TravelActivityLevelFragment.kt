@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.databinding.adapters.ViewBindingAdapter.setClickListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -15,9 +14,11 @@ import com.tuk.jetsetgo.databinding.FragmentTravelActivityLevelBinding
 import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
+@AndroidEntryPoint
 class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBinding>(R.layout.fragment_travel_activity_level) {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 

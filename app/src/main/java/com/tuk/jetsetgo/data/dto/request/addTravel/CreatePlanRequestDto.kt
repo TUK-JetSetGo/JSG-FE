@@ -12,5 +12,5 @@ data class CreatePlanRequestDto(
     val travelPurposeId: Int,
     val travelThemeId: Int,
     val budget: Int,
-    val travelSpotIdList: List<Int>
+    val travelSpotIdList: List<Int>?
 )

@@ -9,9 +9,11 @@ import com.tuk.jetsetgo.databinding.FragmentTravelBudgetBinding
 import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import java.util.Locale
 
+@AndroidEntryPoint
 class TravelBudgetFragment: BaseFragment<FragmentTravelBudgetBinding>(R.layout.fragment_travel_budget) {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 

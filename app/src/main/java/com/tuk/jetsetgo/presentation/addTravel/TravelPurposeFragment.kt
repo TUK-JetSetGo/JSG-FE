@@ -2,7 +2,6 @@ package com.tuk.jetsetgo.presentation.addTravel
 
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager

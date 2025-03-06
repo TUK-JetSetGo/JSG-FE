@@ -1,20 +1,37 @@
 package com.tuk.jetsetgo.presentation.addTravel
 
-import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentTravelLocationBinding
+import com.tuk.jetsetgo.domain.model.request.addTravel.CreatePlanRequestModel
+import com.tuk.jetsetgo.presentation.addTravel.adapter.AddTravelViewModel
+import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.addTravel.adapter.TravelLocationAdapter
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
+import com.tuk.jetsetgo.util.network.UiState
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.layout.fragment_travel_location) {
     private lateinit var travelLocationAdapter: TravelLocationAdapter
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val addTravelViewModel: AddTravelViewModel by viewModels()
+
     private val locationList = mutableListOf("장소1", "장소2", "장소3")
     override fun initObserver() {
-
     }
 
     override fun initView() {
@@ -39,7 +56,44 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
     private fun setupConfirmButton() {
         binding.clTravelLocationConfirmBtn.setOnSingleClickListener {
-            findNavController().navigate(R.id.goToLoading)
+            createTravelRequest()
+        }
+    }
+
+    private fun createTravelRequest() {
+        val request = CreatePlanRequestModel(
+            isGroup = sharedViewModel.isGroup.value,
+            groupSize = sharedViewModel.groupSize.value,
+            travelCityId = sharedViewModel.travelCityId.value,
+            dailyVisitCount = sharedViewModel.dailyVisitCount.value,
+            activityStartTime = sharedViewModel.activityStartTime.value,
+            activityEndTime = sharedViewModel.activityEndTime.value,
+            travelStartDate = sharedViewModel.travelStartDate.value,
+            travelEndDate = sharedViewModel.travelEndDate.value,
+            travelPurposeId = sharedViewModel.travelPurposeId.value,
+            travelThemeId = sharedViewModel.travelThemeId.value,
+            budget = sharedViewModel.budget.value,
+            travelSpotIdList = null  // 일단 null로 설정
+        )
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            addTravelViewModel.createTravel(request)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                addTravelViewModel.createTravelState.collectLatest { state ->
+                    when (state) {
+                        is UiState.Success -> {
+                            Log.d("TravelLocationFragment", "일정 생성 성공")
+                            Toast.makeText(requireContext(), "일정 생성 성공", Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.goToLoading) // 로그인 화면으로 이동
+                        }
+                        is UiState.Error -> {
+                            Toast.makeText(requireContext(), "일정 생성 실패: ${state.error?.message}", Toast.LENGTH_SHORT).show()
+                            Log.e("TravelLocationFragment", "일정 생성 실패")
+                        }
+                        else -> {} // 로딩 상태 처리 가능
+                    }
+                }
+            }
         }
     }
 }

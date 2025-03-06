@@ -27,14 +27,23 @@ class AddTravelViewModel @Inject constructor(
         viewModelScope.launch {
             _createTravelState.value = UiState.Loading
             addTravelRepository.fetchCreatePlan(request)
-                .onSuccess {
+                .onSuccess { response ->
                     Log.d("AddTravelViewModel", "createTravel() 성공")
-                    _createTravelState.value = UiState.Success(true)
+
+                    // response가 null이거나 데이터가 없어도 성공으로 처리
+                    if (response != null) {
+                        _createTravelState.value = UiState.Success(true)
+                    } else {
+                        Log.w("AddTravelViewModel", "서버 응답의 data가 null이지만 성공 처리함.")
+                        _createTravelState.value = UiState.Success(true)
+                    }
                 }
                 .onFailure { exception ->
-                    Log.e("AddTravelViewModel", "createTravel() 실패: ${exception.message}\n${exception.stackTraceToString()}")
-                    _createTravelState.value = UiState.Error(exception)
+                    Log.e("AddTravelViewModel", "createTravel() 실패: ${exception.message}")
                 }
         }
     }
+
+
+
 }
