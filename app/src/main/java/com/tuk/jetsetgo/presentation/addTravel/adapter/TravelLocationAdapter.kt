@@ -13,8 +13,8 @@ class TravelLocationAdapter(
     inner class TravelLocationViewHolder(private val binding: ItemLocationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(location: String, position: Int) {
-            binding.tvAddTravelStartDate.text = location
-            binding.ivAddTravelDelete.setOnClickListener {
+            binding.tvLocationName.text = location
+            binding.ivLocationDelete.setOnClickListener {
                 onDeleteClick(position)
             }
         }
