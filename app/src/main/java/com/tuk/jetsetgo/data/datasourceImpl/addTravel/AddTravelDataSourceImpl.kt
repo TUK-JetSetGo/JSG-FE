@@ -7,6 +7,7 @@ import com.tuk.jetsetgo.data.dto.response.addTravel.CreatePlanResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.PurposeResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.SelectCityResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.SelectCountryResponseDto
+import com.tuk.jetsetgo.data.dto.response.addTravel.SpotInfoResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.ThemesResponseDto
 import com.tuk.jetsetgo.data.service.addTravel.AddTravelService
 import javax.inject.Inject
@@ -29,4 +30,10 @@ class AddTravelDataSourceImpl @Inject constructor(
     override suspend fun fetchCreatePlan(request: CreatePlanRequestDto): BaseResponse<CreatePlanResponseDto?> =
         addTravelService.fetchCreatePlan(request)
 
+    override suspend fun fetchSearchSpots(
+        keyword: String?,
+        category: String?,
+        pageable: String
+    ): BaseResponse<SpotInfoResponseDto> =
+        addTravelService.fetchSearchSpots(keyword, category, pageable)
 }

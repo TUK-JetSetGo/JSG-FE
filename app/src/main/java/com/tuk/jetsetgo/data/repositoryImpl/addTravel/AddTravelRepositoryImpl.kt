@@ -6,6 +6,7 @@ import com.tuk.jetsetgo.domain.model.response.addTravel.CreatePlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.PurposeResponseModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCityResponseModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCountryResponseModel
+import com.tuk.jetsetgo.domain.model.response.addTravel.SpotInfoResponseModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.ThemesResponseModel
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
 import javax.inject.Inject
@@ -31,5 +32,16 @@ class AddTravelRepositoryImpl @Inject constructor(
 
     override suspend fun fetchCreatePlan(request: CreatePlanRequestModel): Result<CreatePlanResponseModel?> = runCatching {
         addTravelDataSource.fetchCreatePlan(request.toCreatePlanRequestDto()).data?.toCreatePlanResponseModel()
+    }
+
+    override suspend fun fetchSearchSpots(
+        keyword: String?,
+        category: String?,
+        page: Int,
+        size: Int,
+        sort: String,
+    ): Result<SpotInfoResponseModel> = runCatching {
+        val pageableJson = """{"page": $page, "size": $size, "sort": ["$sort"]}"""
+        addTravelDataSource.fetchSearchSpots(keyword, category, pageableJson).data.toSpotInfoResponseModel()
     }
 }
