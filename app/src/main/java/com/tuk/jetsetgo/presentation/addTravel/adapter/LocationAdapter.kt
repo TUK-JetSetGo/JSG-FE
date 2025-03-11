@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemLocationBinding
 
-class TravelLocationAdapter(
+class LocationAdapter(
     private val locations: MutableList<String>,
     private val onDeleteClick: (Int) -> Unit
-) : RecyclerView.Adapter<TravelLocationAdapter.TravelLocationViewHolder>() {
+) : RecyclerView.Adapter<LocationAdapter.TravelLocationViewHolder>() {
 
     inner class TravelLocationViewHolder(private val binding: ItemLocationBinding) :
         RecyclerView.ViewHolder(binding.root) {

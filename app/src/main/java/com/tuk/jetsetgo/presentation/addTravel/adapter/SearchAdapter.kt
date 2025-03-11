@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemLastSearchBinding
 
-class TravelSearchAdapter(
+class SearchAdapter(
     private val searches: MutableList<String>,
     private val onDeleteClick: (Int) -> Unit
-) : RecyclerView.Adapter<TravelSearchAdapter.TravelSearchViewHolder>() {
+) : RecyclerView.Adapter<SearchAdapter.TravelSearchViewHolder>() {
 
     inner class TravelSearchViewHolder(private val binding: ItemLastSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {

@@ -93,6 +93,9 @@
             <action
                 android:id="@+id/goToSearch"
                 app:destination="@id/searchFragment" />
+            <action
+                android:id="@+id/goToLoading"
+                app:destination="@id/loadingFragment" />
         </fragment>
         <fragment
             android:id="@+id/searchFragment"
@@ -109,8 +112,8 @@
             android:label="MapFragment"
             tools:layout="@layout/fragment_travel_map">
             <action
-                android:id="@+id/goToLoading"
-                app:destination="@id/loadingFragment" />
+                android:id="@+id/goToLocation"
+                app:destination="@id/locationFragment" />
         </fragment>
         <fragment
             android:id="@+id/loadingFragment"

@@ -1,6 +1,5 @@
 package com.tuk.jetsetgo.presentation.addTravel
 
-import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -10,14 +9,14 @@ import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentTravelSearchBinding
 import com.tuk.jetsetgo.presentation.addTravel.adapter.AddTravelViewModel
 import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
-import com.tuk.jetsetgo.presentation.addTravel.adapter.TravelSearchAdapter
+import com.tuk.jetsetgo.presentation.addTravel.adapter.SearchAdapter
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TravelSearchFragment : BaseFragment<FragmentTravelSearchBinding>(R.layout.fragment_travel_search) {
-    private lateinit var travelSearchAdapter: TravelSearchAdapter
+    private lateinit var searchAdapter: SearchAdapter
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val addTravelViewModel: AddTravelViewModel by viewModels()
@@ -34,10 +33,10 @@ class TravelSearchFragment : BaseFragment<FragmentTravelSearchBinding>(R.layout.
 
     private fun initRecyclerView() {
         binding.rvTravelSearch.layoutManager = LinearLayoutManager(requireContext())
-        travelSearchAdapter = TravelSearchAdapter(searchList) { position ->
-            travelSearchAdapter.removeItem(position)
+        searchAdapter = SearchAdapter(searchList) { position ->
+            searchAdapter.removeItem(position)
         }
-        binding.rvTravelSearch.adapter = travelSearchAdapter
+        binding.rvTravelSearch.adapter = searchAdapter
     }
 
     private fun setupSearchButton() {

@@ -15,7 +15,7 @@ import com.tuk.jetsetgo.databinding.FragmentTravelLocationBinding
 import com.tuk.jetsetgo.domain.model.request.addTravel.CreatePlanRequestModel
 import com.tuk.jetsetgo.presentation.addTravel.adapter.AddTravelViewModel
 import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
-import com.tuk.jetsetgo.presentation.addTravel.adapter.TravelLocationAdapter
+import com.tuk.jetsetgo.presentation.addTravel.adapter.LocationAdapter
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
 import com.tuk.jetsetgo.util.network.UiState
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.layout.fragment_travel_location) {
-    private lateinit var travelLocationAdapter: TravelLocationAdapter
+    private lateinit var locationAdapter: LocationAdapter
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val addTravelViewModel: AddTravelViewModel by viewModels()
@@ -37,16 +37,23 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
     override fun initView() {
         initRecyclerView()
         setupConfirmButton()
+        setupAddButton()
     }
 
     private fun initRecyclerView() {
         binding.rvTravelLocation.layoutManager = LinearLayoutManager(requireContext())
-        travelLocationAdapter = TravelLocationAdapter(locationList) { position ->
-            travelLocationAdapter.removeItem(position)
+        locationAdapter = LocationAdapter(locationList) { position ->
+            locationAdapter.removeItem(position)
             toggleConfirmButtonVisibility()
         }
-        binding.rvTravelLocation.adapter = travelLocationAdapter
+        binding.rvTravelLocation.adapter = locationAdapter
         toggleConfirmButtonVisibility()
+    }
+
+    private fun setupAddButton() {
+        binding.clTravelLocationAddBtn.setOnSingleClickListener {
+            findNavController().navigate(R.id.goToSearch)
+        }
     }
 
     private fun toggleConfirmButtonVisibility() {

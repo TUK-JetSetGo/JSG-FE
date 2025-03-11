@@ -19,7 +19,7 @@
             android:id="@+id/view_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_400"
+            android:background="@color/gray_300"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:text="4.5"
             style="@style/TextAppearance.JSG.Body1"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:textColor="#ee4444"
             android:layout_marginStart="3dp"
             app:layout_constraintStart_toEndOf="@id/iv_map_star"
