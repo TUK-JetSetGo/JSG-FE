@@ -14,11 +14,11 @@ val properties = Properties().apply{
 }
 
 android {
-    namespace = "com.umc.jetsetgo"
+    namespace = "com.tuk.jetsetgo"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.umc.jetsetgo"
+        applicationId = "com.tuk.jetsetgo"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

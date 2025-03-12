@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_loading_gradient">
+
+        <ImageView
+            android:id="@+id/iv_plane"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_plane"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_travelLoading_head1"
+            android:layout_margin="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_travelLoading_head1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일정을 생성 중입니다..."
+            style="@style/TextAppearance.JSG.Head2"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="40dp"/>
+
+        <View
+            android:id="@+id/view_travelLoading_home_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_unselected_home"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="30dp"
+            android:visibility="invisible"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
