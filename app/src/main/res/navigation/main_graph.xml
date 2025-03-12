@@ -3,21 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeTab">
 
     <!-- home -->
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.tuk.jetsetgo.presentation.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+    <navigation android:id="@+id/homeTab"
+        app:startDestination="@+id/homeFragment">
+        <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.tuk.jetsetgo.presentation.home.HomeFragment"
+            android:label="HomeFragment"
+            tools:layout="@layout/fragment_home"/>
+    </navigation>
 
     <!-- review -->
-    <fragment
-        android:id="@+id/reviewFragment"
-        android:name="com.tuk.jetsetgo.presentation.review.ReviewFragment"
-        android:label="ReviewFragment"
-        tools:layout="@layout/fragment_review"/>
+    <navigation android:id="@+id/reviewTab"
+        app:startDestination="@+id/reviewFragment">
+        <fragment
+            android:id="@+id/reviewFragment"
+            android:name="com.tuk.jetsetgo.presentation.review.ReviewFragment"
+            android:label="ReviewFragment"
+            tools:layout="@layout/fragment_review"/>
+    </navigation>
 
     <!-- add travel -->
     <navigation android:id="@+id/addTravelTab"
@@ -127,17 +133,32 @@
     </navigation>
 
     <!-- my Travel -->
-    <fragment
-        android:id="@+id/myTravelFragment"
-        android:name="com.tuk.jetsetgo.presentation.myTravel.MyTravelFragment"
-        android:label="MyTravelFragment"
-        tools:layout="@layout/fragment_my_travel"/>
+    <navigation android:id="@+id/myTravelTab"
+        app:startDestination="@+id/myTravelFragment">
+        <fragment
+            android:id="@+id/myTravelFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.MyTravelFragment"
+            android:label="MyTravelFragment"
+            tools:layout="@layout/fragment_my_travel"/>
+    </navigation>
 
     <!-- my page -->
-    <fragment
-        android:id="@+id/myPageFragment"
-        android:name="com.tuk.jetsetgo.presentation.mypage.MypageFragment"
-        android:label="MyPageFragment"
-        tools:layout="@layout/fragment_mypage"/>
-
+    <navigation android:id="@+id/myPageTab"
+        app:startDestination="@+id/myPageFragment">
+        <fragment
+            android:id="@+id/myPageFragment"
+            android:name="com.tuk.jetsetgo.presentation.mypage.MypageFragment"
+            android:label="MyPageFragment"
+            tools:layout="@layout/fragment_mypage">
+            <action
+                android:id="@+id/goToProfile"
+                app:destination="@id/myProfileFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/myProfileFragment"
+            android:name="com.tuk.jetsetgo.presentation.mypage.MyprofileFragment"
+            android:label="MyProfileFragment"
+            tools:layout="@layout/fragment_myprofile">
+        </fragment>
+    </navigation>
 </navigation>
