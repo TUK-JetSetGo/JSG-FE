@@ -1,7 +1,11 @@
 package com.tuk.jetsetgo.presentation.mypage
 
+import android.app.Dialog
 import android.view.KeyEvent
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentMyprofileBinding
@@ -20,8 +24,8 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
 
     private fun setClickListener(){
         binding.ivMyprofileBack.setOnClickListener { findNavController().popBackStack() }
-        binding.ivMyprofileSave.setOnClickListener { findNavController().popBackStack() }
         binding.ivMyprofileDelete.setOnClickListener { binding.etMyprofileName.setText("") }
+        binding.tvMypageWithdraw.setOnClickListener { showWithdrawDialog() }
     }
 
     private fun editText() {
@@ -42,4 +46,29 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         }
     }
 
+
+    private fun showWithdrawDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.layout_logout_dialog)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.8).toInt(),
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val logoutBtn = dialog.findViewById<TextView>(R.id.tv_dialog_yes)
+        logoutBtn.setOnClickListener {
+            dialog.dismiss()
+            //logoutUser()
+        }
+
+        val cancelBtn = dialog.findViewById<TextView>(R.id.tv_dialog_no)
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
 }
