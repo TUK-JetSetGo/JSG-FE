@@ -238,7 +238,7 @@
             android:id="@+id/tv_mypage_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="로그아웃"
+            android:text="@string/logout"
             android:textSize="16sp"
             android:textColor="@color/gray_600"
             android:fontFamily="@font/pretendard_medium"

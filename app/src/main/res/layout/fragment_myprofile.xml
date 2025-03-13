@@ -182,7 +182,7 @@
             android:id="@+id/tv_mypage_withdraw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="회원탈퇴"
+            android:text="@string/withdraw"
             android:textSize="16sp"
             android:textColor="@color/gray_600"
             android:fontFamily="@font/pretendard_medium"
