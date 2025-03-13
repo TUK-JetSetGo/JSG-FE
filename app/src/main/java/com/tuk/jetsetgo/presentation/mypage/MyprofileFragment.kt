@@ -1,12 +1,17 @@
 package com.tuk.jetsetgo.presentation.mypage
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.KeyEvent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentMyprofileBinding
@@ -27,6 +32,7 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         binding.ivMyprofileBack.setOnClickListener { findNavController().popBackStack() }
         binding.ivMyprofileDelete.setOnClickListener { binding.etMyprofileName.setText("") }
         binding.tvMypageWithdraw.setOnClickListener { showWithdrawDialog() }
+        binding.clMyprofileImage.setOnClickListener { openGallery() }
     }
 
     private fun editText() {
@@ -77,5 +83,23 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         }
 
         dialog.show()
+    }
+
+    private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { uri ->
+                setProfileImage(uri)
+            }
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        imagePickerLauncher.launch(intent)
+    }
+
+    private fun setProfileImage(imageUri: Uri) {
+        binding.ivMyprofileImage.setImageURI(imageUri)
     }
 }
