@@ -1,6 +1,7 @@
 package com.tuk.jetsetgo.presentation.mypage
 
 import android.app.Dialog
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
@@ -29,6 +30,8 @@ class MypageFragment: BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypa
     }
 
     private fun showLogoutDialog() {
+        binding.viewDialogBg.visibility = View.VISIBLE // 배경 뷰 활성화
+
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
@@ -48,6 +51,10 @@ class MypageFragment: BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypa
         val cancelBtn = dialog.findViewById<TextView>(R.id.tv_dialog_no)
         cancelBtn.setOnClickListener {
             dialog.dismiss()
+        }
+
+        dialog.setOnDismissListener {
+            binding.viewDialogBg.visibility = View.GONE
         }
 
         dialog.show()

@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.presentation.mypage
 
 import android.app.Dialog
 import android.view.KeyEvent
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -48,6 +49,8 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
 
 
     private fun showWithdrawDialog() {
+        binding.viewDialogBg.visibility = View.VISIBLE
+
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
@@ -67,6 +70,10 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         val cancelBtn = dialog.findViewById<TextView>(R.id.tv_dialog_no)
         cancelBtn.setOnClickListener {
             dialog.dismiss()
+        }
+
+        dialog.setOnDismissListener {
+            binding.viewDialogBg.visibility = View.GONE
         }
 
         dialog.show()
