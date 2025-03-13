@@ -1,0 +1,10 @@
+package com.tuk.jetsetgo.data.dto.response.addTravel
+
+import com.tuk.jetsetgo.domain.model.response.addTravel.CreatePlanResponseModel
+
+data class CreatePlanResponseDto(
+    val data: String?
+){
+    fun toCreatePlanResponseModel() =
+        CreatePlanResponseModel(data?:"일정 생성 완료")
+}

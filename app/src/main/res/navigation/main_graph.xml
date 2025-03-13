@@ -3,32 +3,162 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeTab">
 
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.umc.jetsetgo.presentation.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home"/>
-    <fragment
-        android:id="@+id/reviewFragment"
-        android:name="com.umc.jetsetgo.presentation.review.ReviewFragment"
-        android:label="ReviewFragment"
-        tools:layout="@layout/fragment_review"/>
-    <fragment
-        android:id="@+id/addTravelFragmentTab"
-        android:name="com.umc.jetsetgo.presentation.addTravel.AddTravelFragment"
-        android:label="AddTravelFragmentTab"
-        tools:layout="@layout/fragment_add_travel"/>
-    <fragment
-        android:id="@+id/myTravelFragment"
-        android:name="com.umc.jetsetgo.presentation.myTravel.MyTravelFragment"
-        android:label="MyTravelFragment"
-        tools:layout="@layout/fragment_my_travel"/>
-    <fragment
-        android:id="@+id/myPageFragment"
-        android:name="com.umc.jetsetgo.presentation.mypage.MypageFragment"
-        android:label="MyPageFragment"
-        tools:layout="@layout/fragment_mypage"/>
+    <!-- home -->
+    <navigation android:id="@+id/homeTab"
+        app:startDestination="@+id/homeFragment">
+        <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.tuk.jetsetgo.presentation.home.HomeFragment"
+            android:label="HomeFragment"
+            tools:layout="@layout/fragment_home"/>
+    </navigation>
 
+    <!-- review -->
+    <navigation android:id="@+id/reviewTab"
+        app:startDestination="@+id/reviewFragment">
+        <fragment
+            android:id="@+id/reviewFragment"
+            android:name="com.tuk.jetsetgo.presentation.review.ReviewFragment"
+            android:label="ReviewFragment"
+            tools:layout="@layout/fragment_review"/>
+    </navigation>
+
+    <!-- add travel -->
+    <navigation android:id="@+id/addTravelTab"
+        app:startDestination="@+id/personnelFragment">
+        <fragment
+            android:id="@+id/personnelFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelPersonnelFragment"
+            android:label="AddTravelFragment"
+            tools:layout="@layout/fragment_travel_personnel">
+            <action
+                android:id="@+id/goToCountry"
+                app:destination="@id/countryFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/countryFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelCountryFragment"
+            android:label="SelectCountryFragment"
+            tools:layout="@layout/fragment_travel_country">
+            <action
+                android:id="@+id/goToActivityLevel"
+                app:destination="@id/activityLevelFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/activityLevelFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelActivityLevelFragment"
+            android:label="ActivityLevelFragment"
+            tools:layout="@layout/fragment_travel_activity_level">
+            <action
+                android:id="@+id/goToPurpose"
+                app:destination="@id/purposeFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/purposeFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelPurposeFragment"
+            android:label="PurposeFragment"
+            tools:layout="@layout/fragment_travel_purpose">
+            <action
+                android:id="@+id/goToTheme"
+                app:destination="@id/themeFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/themeFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelThemeFragment"
+            android:label="ThemeFragment"
+            tools:layout="@layout/fragment_travel_theme">
+            <action
+                android:id="@+id/goToBudget"
+                app:destination="@id/budgetFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/budgetFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelBudgetFragment"
+            android:label="BudgetFragment"
+            tools:layout="@layout/fragment_travel_budget">
+            <action
+                android:id="@+id/goToDate"
+                app:destination="@id/dateFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/dateFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelDateFragment"
+            android:label="DateFragment"
+            tools:layout="@layout/fragment_travel_date">
+            <action
+                android:id="@+id/goToLocation"
+                app:destination="@id/locationFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/locationFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelLocationFragment"
+            android:label="LocationFragment"
+            tools:layout="@layout/fragment_travel_location">
+            <action
+                android:id="@+id/goToSearch"
+                app:destination="@id/searchFragment" />
+            <action
+                android:id="@+id/goToLoading"
+                app:destination="@id/loadingFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/searchFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelSearchFragment"
+            android:label="SearchFragment"
+            tools:layout="@layout/fragment_travel_search">
+            <action
+                android:id="@+id/goToMap"
+                app:destination="@id/mapFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelMapFragment"
+            android:label="MapFragment"
+            tools:layout="@layout/fragment_travel_map">
+            <action
+                android:id="@+id/goToLocation"
+                app:destination="@id/locationFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/loadingFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelLoadingFragment"
+            android:label="LoadingFragment"
+            tools:layout="@layout/fragment_travel_loading">
+            <action
+                android:id="@+id/goToHome"
+                app:destination="@id/homeFragment" />
+        </fragment>
+    </navigation>
+
+    <!-- my Travel -->
+    <navigation android:id="@+id/myTravelTab"
+        app:startDestination="@+id/myTravelFragment">
+        <fragment
+            android:id="@+id/myTravelFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.MyTravelFragment"
+            android:label="MyTravelFragment"
+            tools:layout="@layout/fragment_my_travel"/>
+    </navigation>
+
+    <!-- my page -->
+    <navigation android:id="@+id/myPageTab"
+        app:startDestination="@+id/myPageFragment">
+        <fragment
+            android:id="@+id/myPageFragment"
+            android:name="com.tuk.jetsetgo.presentation.mypage.MypageFragment"
+            android:label="MyPageFragment"
+            tools:layout="@layout/fragment_mypage">
+            <action
+                android:id="@+id/goToProfile"
+                app:destination="@id/myProfileFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/myProfileFragment"
+            android:name="com.tuk.jetsetgo.presentation.mypage.MyprofileFragment"
+            android:label="MyProfileFragment"
+            tools:layout="@layout/fragment_myprofile">
+        </fragment>
+    </navigation>
 </navigation>

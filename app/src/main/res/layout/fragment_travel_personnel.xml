@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="여행 인원수를\n알려주세요"
+            style="@style/TextAppearance.JSG.Head1"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/tv_travelPersonnel_btn_alone"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            android:background="@drawable/shape_rect_20_gray400_fill"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="15dp"
+            android:text="개인"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_travelPersonnel_btn_group"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/TextAppearance.JSG.Button"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_travelPersonnel_btn_group"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            android:background="@drawable/shape_rect_20_gray400_fill"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="30dp"
+            android:text="그룹"
+            app:layout_constraintStart_toEndOf="@id/tv_travelPersonnel_btn_alone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/TextAppearance.JSG.Button"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_travelPersonnel_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인원수를 입력해주세요"
+            style="@style/TextAppearance.JSG.Body1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="@id/tv_travelPersonnel_btn_alone"
+            app:layout_constraintTop_toBottomOf="@id/tv_travelPersonnel_btn_alone"
+            android:visibility="invisible"/>
+
+        <EditText
+            android:id="@+id/et_travelPersonnel_personnel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:inputType="number"
+            style="@style/TextAppearance.JSG.Body1"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_travelPersonnel_text2"
+            app:layout_constraintTop_toTopOf="@id/tv_travelPersonnel_text1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_travelPersonnel_text1"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tv_travelPersonnel_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="명"
+            style="@style/TextAppearance.JSG.Body1"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="@id/tv_travelPersonnel_btn_group"
+            app:layout_constraintTop_toTopOf="@id/tv_travelPersonnel_text1"
+            android:visibility="invisible"/>
+
+        <View
+            android:id="@+id/view_travelPersonnel_confirm_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_next"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="30dp"
+            android:visibility="invisible"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

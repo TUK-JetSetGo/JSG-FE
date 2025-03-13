@@ -1,0 +1,37 @@
+package com.tuk.jetsetgo.di
+
+import com.tuk.jetsetgo.data.service.TestService
+import com.tuk.jetsetgo.data.service.addTravel.AddTravelService
+import com.tuk.jetsetgo.data.service.login.LoginService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object ServiceModule {
+    private inline fun <reified T> Retrofit.buildService(): T {
+        return this.create(T::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTestService(retrofit: Retrofit): TestService {
+        return retrofit.buildService()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAddTravelService(retrofit: Retrofit): AddTravelService {
+        return retrofit.buildService()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginService(retrofit: Retrofit): LoginService {
+        return retrofit.buildService()
+    }
+}

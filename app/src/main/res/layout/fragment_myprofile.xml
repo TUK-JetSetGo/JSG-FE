@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_myprofile_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_mypage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="프로필 수정"
+                android:textSize="20sp"
+                style="@style/TextAppearance.JSG.Topbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <ImageView
+                android:id="@+id/iv_myprofile_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_mypage"
+                app:layout_constraintBottom_toBottomOf="@id/tv_mypage"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray_300"
+            app:layout_constraintTop_toBottomOf="@id/layout_myprofile_topbar"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- 본문 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_myprofile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_myprofile_topbar"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                android:id="@+id/iv_myprofile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_profile_default"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_myprofile_edit"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_edit_btn"
+                app:layout_constraintEnd_toEndOf="@id/iv_myprofile_image"
+                app:layout_constraintBottom_toBottomOf="@id/iv_myprofile_image"
+                android:layout_marginTop="50dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/tv_myprofile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JetSetGo"
+            style="@style/TextAppearance.JSG.Body1"
+            android:textSize="22dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_myprofile_image"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_myprofile_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임"
+            style="@style/TextAppearance.JSG.Body1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_myprofile_image"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="20dp"/>
+
+        <EditText
+            android:id="@+id/et_myprofile_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="JetSetGo"
+            android:inputType="textNoSuggestions"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:maxLines="1"
+            style="@style/TextAppearance.JSG.Body2"
+            app:layout_constraintStart_toEndOf="@id/tv_myprofile_1"
+            app:layout_constraintEnd_toStartOf="@id/iv_myprofile_save"
+            app:layout_constraintTop_toTopOf="@id/tv_myprofile_1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_myprofile_1"
+            android:layout_marginStart="20dp"
+            android:paddingHorizontal="10dp"/>
+
+        <ImageView
+            android:id="@+id/iv_myprofile_save"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:background="@drawable/ic_check_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_myprofile_1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_myprofile_1"
+            android:layout_marginEnd="20dp"/>
+
+        <ImageView
+            android:id="@+id/iv_myprofile_delete"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="@id/et_myprofile_name"
+            app:layout_constraintTop_toTopOf="@id/tv_myprofile_1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_myprofile_1"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_myprofile_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이메일"
+            style="@style/TextAppearance.JSG.Body1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_myprofile_1"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_myprofile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jetsetgo@gmail.com"
+            style="@style/TextAppearance.JSG.Body2"
+            app:layout_constraintStart_toEndOf="@id/tv_myprofile_2"
+            app:layout_constraintTop_toTopOf="@id/tv_myprofile_2"
+            app:layout_constraintBottom_toBottomOf="@id/tv_myprofile_2"
+            android:layout_marginStart="30dp"/>
+
+        <TextView
+            android:id="@+id/tv_myprofile_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가입일"
+            style="@style/TextAppearance.JSG.Body1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_myprofile_2"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_myprofile_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2025-03-01"
+            style="@style/TextAppearance.JSG.Body2"
+            app:layout_constraintStart_toEndOf="@id/tv_myprofile_3"
+            app:layout_constraintTop_toTopOf="@id/tv_myprofile_3"
+            app:layout_constraintBottom_toBottomOf="@id/tv_myprofile_3"
+            android:layout_marginStart="30dp"/>
+
+        <TextView
+            android:id="@+id/tv_mypage_withdraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/withdraw"
+            android:textSize="16sp"
+            android:textColor="@color/gray_600"
+            android:fontFamily="@font/pretendard_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp"
+            />
+
+        <View
+            android:id="@+id/view_dialog_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:alpha="0.3"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
