@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentMyprofileBinding
 import com.tuk.jetsetgo.presentation.base.BaseFragment
@@ -51,6 +52,13 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
             }
             false
         }
+
+        binding.ivMyprofileSave.setOnClickListener {
+            Snackbar.make(it, "수정이 완료되었습니다.", Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.tvMypageWithdraw) // 버튼 위로 스낵바 위치 조정
+                .show()
+        }
+
     }
 
 
