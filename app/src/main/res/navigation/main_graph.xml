@@ -5,7 +5,48 @@
     android:id="@+id/main_graph"
     app:startDestination="@id/homeTab">
 
-    <!-- home -->
+    <!-- signup flow -->
+    <navigation android:id="@+id/signupFlow"
+        app:startDestination="@+id/signupProfileFragment">
+        <fragment
+            android:id="@+id/signupProfileFragment"
+            android:name="com.tuk.jetsetgo.presentation.login.SignupProfileFragment"
+            android:label="SignupProfileFragment"
+            tools:layout="@layout/fragment_signup_profile">
+            <action
+                android:id="@+id/goToActivity"
+                app:destination="@id/signupActivityFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/signupActivityFragment"
+            android:name="com.tuk.jetsetgo.presentation.login.SignupActivityFragment"
+            android:label="SignupActivityFragment"
+            tools:layout="@layout/fragment_signup_activity">
+            <action
+                android:id="@+id/goToTheme"
+                app:destination="@id/signupThemeFragment"/>
+        </fragment>
+        <fragment
+            android:id="@+id/signupThemeFragment"
+            android:name="com.tuk.jetsetgo.presentation.login.SignupThemeFragment"
+            android:label="SignupThemeFragment"
+            tools:layout="@layout/fragment_signup_theme">
+            <action
+                android:id="@+id/goToComplete"
+                app:destination="@id/signupCompleteFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/signupCompleteFragment"
+            android:name="com.tuk.jetsetgo.presentation.login.SignupCompleteFragment"
+            android:label="SignupCompleteFragment"
+            tools:layout="@layout/fragment_signup_complete">
+            <action
+                android:id="@+id/goToHome"
+                app:destination="@id/homeTab" />
+        </fragment>
+    </navigation>
+
+    <!-- home tab -->
     <navigation android:id="@+id/homeTab"
         app:startDestination="@+id/homeFragment">
         <fragment
@@ -15,7 +56,7 @@
             tools:layout="@layout/fragment_home"/>
     </navigation>
 
-    <!-- review -->
+    <!-- review tab -->
     <navigation android:id="@+id/reviewTab"
         app:startDestination="@+id/reviewFragment">
         <fragment
@@ -25,7 +66,7 @@
             tools:layout="@layout/fragment_review"/>
     </navigation>
 
-    <!-- add travel -->
+    <!-- add travel tab -->
     <navigation android:id="@+id/addTravelTab"
         app:startDestination="@+id/personnelFragment">
         <fragment
@@ -132,7 +173,7 @@
         </fragment>
     </navigation>
 
-    <!-- my Travel -->
+    <!-- my Travel tab -->
     <navigation android:id="@+id/myTravelTab"
         app:startDestination="@+id/myTravelFragment">
         <fragment
@@ -142,7 +183,7 @@
             tools:layout="@layout/fragment_my_travel"/>
     </navigation>
 
-    <!-- my page -->
+    <!-- my page tab -->
     <navigation android:id="@+id/myPageTab"
         app:startDestination="@+id/myPageFragment">
         <fragment
