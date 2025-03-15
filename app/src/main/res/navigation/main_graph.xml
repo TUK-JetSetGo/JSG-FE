@@ -14,7 +14,7 @@
             android:label="SignupProfileFragment"
             tools:layout="@layout/fragment_signup_profile">
             <action
-                android:id="@+id/goToActivity"
+                android:id="@+id/goToSignupActivity"
                 app:destination="@id/signupActivityFragment" />
         </fragment>
         <fragment
@@ -23,7 +23,7 @@
             android:label="SignupActivityFragment"
             tools:layout="@layout/fragment_signup_activity">
             <action
-                android:id="@+id/goToTheme"
+                android:id="@+id/goToSignupTheme"
                 app:destination="@id/signupThemeFragment"/>
         </fragment>
         <fragment
@@ -32,7 +32,7 @@
             android:label="SignupThemeFragment"
             tools:layout="@layout/fragment_signup_theme">
             <action
-                android:id="@+id/goToComplete"
+                android:id="@+id/goToSignupComplete"
                 app:destination="@id/signupCompleteFragment" />
         </fragment>
         <fragment
