@@ -13,7 +13,7 @@
 
         <!-- top bar -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_signup_profile_topbar"
+            android:id="@+id/layout_signupProfile_topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="20dp"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tv_signup_profile"
+                android:id="@+id/tv_signupProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="회원가입"
@@ -31,20 +31,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
             <ImageView
-                android:id="@+id/iv_signup_profile_back"
+                android:id="@+id/iv_signupProfile_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_left"
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_signup_profile"
-                app:layout_constraintBottom_toBottomOf="@id/tv_signup_profile"/>
+                app:layout_constraintTop_toTopOf="@id/tv_signupProfile"
+                app:layout_constraintBottom_toBottomOf="@id/tv_signupProfile"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="@color/gray_300"
-            app:layout_constraintTop_toBottomOf="@id/layout_signup_profile_topbar"
+            app:layout_constraintTop_toBottomOf="@id/layout_signupProfile_topbar"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <View
@@ -52,12 +52,12 @@
             android:layout_height="5dp"
             android:background="@drawable/shape_rect_999_blue_main_fill"
             app:layout_constraintWidth_percent="0.25"
-            app:layout_constraintTop_toBottomOf="@id/layout_signup_profile_topbar"
+            app:layout_constraintTop_toBottomOf="@id/layout_signupProfile_topbar"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <!-- 본문 -->
         <TextView
-            android:id="@+id/tv_signup_profile_head"
+            android:id="@+id/tv_signupProfile_head"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="프로필을 설정해주세요"
@@ -67,10 +67,10 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_signup_profile_topbar"/>
+            app:layout_constraintTop_toBottomOf="@id/layout_signupProfile_topbar"/>
 
         <TextView
-            android:id="@+id/tv_signup_profile_body"
+            android:id="@+id/tv_signupProfile_body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="최소 1자, 최대 10자 작성 가능해요"
@@ -78,8 +78,8 @@
             android:textSize="14sp"
             android:textColor="@color/gray_500"
             android:layout_marginTop="5dp"
-            app:layout_constraintStart_toStartOf="@id/tv_signup_profile_head"
-            app:layout_constraintTop_toBottomOf="@id/tv_signup_profile_head"/>
+            app:layout_constraintStart_toStartOf="@id/tv_signupProfile_head"
+            app:layout_constraintTop_toBottomOf="@id/tv_signupProfile_head"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_signup_profile_photo"
+                android:id="@+id/cl_signupProfile_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,7 @@
                 android:layout_marginTop="70dp">
 
                 <ImageView
-                    android:id="@+id/iv_signup_profile_image"
+                    android:id="@+id/iv_signupProfile_image"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:src="@drawable/ic_profile_default"
@@ -107,17 +107,17 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
-                    android:id="@+id/iv_signup_profile_image_edit"
+                    android:id="@+id/iv_signupProfile_image_edit"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/ic_edit_btn"
-                    app:layout_constraintEnd_toEndOf="@id/iv_signup_profile_image"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_signup_profile_image"
+                    app:layout_constraintEnd_toEndOf="@id/iv_signupProfile_image"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_signupProfile_image"
                     android:layout_marginTop="50dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tv_signup_profile_name"
+                android:id="@+id/tv_signupProfile_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="ex) JetSetGo"
@@ -130,10 +130,10 @@
                 android:padding="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_signup_profile_photo"/>
+                app:layout_constraintTop_toBottomOf="@id/cl_signupProfile_photo"/>
 
             <TextView
-                android:id="@+id/tv_signup_profile_count"
+                android:id="@+id/tv_signupProfile_count"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -141,11 +141,11 @@
                 android:textSize="14sp"
                 android:textColor="@color/blue_main"
                 android:layout_marginTop="5dp"
-                app:layout_constraintEnd_toStartOf="@id/tv_signup_profile_10"
-                app:layout_constraintTop_toBottomOf="@id/tv_signup_profile_name"/>
+                app:layout_constraintEnd_toStartOf="@id/tv_signupProfile_10"
+                app:layout_constraintTop_toBottomOf="@id/tv_signupProfile_name"/>
 
             <TextView
-                android:id="@+id/tv_signup_profile_10"
+                android:id="@+id/tv_signupProfile_10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="/10"
@@ -154,12 +154,12 @@
                 android:textColor="@color/gray_500"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                app:layout_constraintEnd_toEndOf="@id/tv_signup_profile_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_signup_profile_name"/>
+                app:layout_constraintEnd_toEndOf="@id/tv_signupProfile_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_signupProfile_name"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-            android:id="@+id/view_signup_profile_next_btn"
+            android:id="@+id/view_signupProfile_next_btn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/btn_next"
