@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <!-- top bar -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_signup_profile_topbar"
             android:layout_width="match_parent"
@@ -20,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tv_mypage"
+                android:id="@+id/tv_signup_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="회원가입"
@@ -36,8 +37,8 @@
                 android:src="@drawable/ic_arrow_left"
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_mypage"
-                app:layout_constraintBottom_toBottomOf="@id/tv_mypage"/>
+                app:layout_constraintTop_toTopOf="@id/tv_signup_profile"
+                app:layout_constraintBottom_toBottomOf="@id/tv_signup_profile"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <View
             android:layout_width="match_parent"
@@ -50,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="5dp"
             android:background="@drawable/shape_rect_999_blue_main_fill"
-            app:layout_constraintWidth_percent="0.33"
+            app:layout_constraintWidth_percent="0.25"
             app:layout_constraintTop_toBottomOf="@id/layout_signup_profile_topbar"
             app:layout_constraintStart_toStartOf="parent"/>
 
