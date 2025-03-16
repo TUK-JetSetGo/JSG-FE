@@ -10,20 +10,20 @@ data class SpotInfoResponseDto(
     val isLast: Boolean
 ) {
     data class TouristSpotInfoListDto(
-        val id: Int,
-        val name: String,
-        val tel: String,
-        val category: String,
-        val businessStatus: String,
-        val address: String,
-        val thumbnailUrl: String,
-        val thumbnailUrls: String,
-        val latitude: Int,
-        val longitude: Int,
-        val activityLevel: String,
-        val homePage: String,
-        val naverBookingUrl: String,
-        val travelCityId: Int
+        val id: Int?,
+        val name: String?,
+        val tel: String?,
+        val category: String?,
+        val businessStatus: String?,
+        val address: String?,
+        val thumbnailUrl: String?,
+        val thumbnailUrls: String?,
+        val latitude: Double?,
+        val longitude: Double?,
+        val activityLevel: String?,
+        val homePage: String?,
+        val naverBookingUrl: String?,
+        val travelCityId: Int?
     ) {
         fun toTouristSpotInfoListModel() =
             SpotInfoResponseModel.TouristSpotInfoListModel(

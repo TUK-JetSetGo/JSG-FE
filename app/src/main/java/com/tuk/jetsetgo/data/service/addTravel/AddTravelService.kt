@@ -44,6 +44,6 @@ interface AddTravelService {
     suspend fun fetchSearchSpots(
         @Query("keyword") keyword: String?,
         @Query("category") category: String?,
-        @Query("pageable") pageable: String
+        @Query("pageable") pageable: String?
     ): BaseResponse<SpotInfoResponseDto>
 }

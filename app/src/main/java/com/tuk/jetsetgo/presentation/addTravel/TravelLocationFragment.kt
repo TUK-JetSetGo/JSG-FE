@@ -52,7 +52,7 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
     private fun setupAddButton() {
         binding.clTravelLocationAddBtn.setOnSingleClickListener {
-            findNavController().navigate(R.id.goToSearch)
+            findNavController().navigate(R.id.goToMap)
         }
     }
 

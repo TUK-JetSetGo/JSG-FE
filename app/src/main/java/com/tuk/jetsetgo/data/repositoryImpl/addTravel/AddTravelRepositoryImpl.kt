@@ -37,9 +37,9 @@ class AddTravelRepositoryImpl @Inject constructor(
     override suspend fun fetchSearchSpots(
         keyword: String?,
         category: String?,
-        page: Int,
-        size: Int,
-        sort: String,
+        page: Int?,
+        size: Int?,
+        sort: String?,
     ): Result<SpotInfoResponseModel> = runCatching {
         val pageableJson = """{"page": $page, "size": $size, "sort": ["$sort"]}"""
         addTravelDataSource.fetchSearchSpots(keyword, category, pageableJson).data.toSpotInfoResponseModel()
