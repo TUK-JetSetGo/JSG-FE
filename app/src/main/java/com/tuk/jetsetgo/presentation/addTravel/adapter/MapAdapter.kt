@@ -23,21 +23,31 @@ class MapAdapter(
 
     inner class MapViewHolder(private val binding: ItemMapBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        private val categoryAdapter = CategoryAdapter()
+        private val thumbnailAdapter = ThumbnailAdapter()
+        init {
+            binding.rvMapKeyword.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                adapter = categoryAdapter
+            }
+            binding.rvMapPicture.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                adapter = thumbnailAdapter
+            }
+        }
+
         fun bind(item: SpotInfoResponseModel.TouristSpotInfoListModel) {
             binding.tvMapName.text = item.name
             binding.tvMapAddress.text = item.address
 
-//            // 키워드 RecyclerView 설정
-//            val keywordAdapter = KeywordAdapter(item.category)
-//            binding.rvMapKeyword.adapter = keywordAdapter
-//            binding.rvMapKeyword.layoutManager =
-//                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
-//
-//            // 사진 RecyclerView 설정
-//            val pictureAdapter = PictureAdapter(item.thumbnailUrls)
-//            binding.rvMapPicture.adapter = pictureAdapter
-//            binding.rvMapPicture.layoutManager =
-//                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+            // 키워드 RecyclerView 설정
+            val categories = item.category?.replace("[", "")?.replace("]", "")?.split(",")?.map { it.trim().replace("\"", "") }
+            categoryAdapter.submitList(categories)
+
+            // 사진 RecyclerView 설정
+            val thumbnails = item.thumbnailUrls?.replace("[", "")?.replace("]", "")?.split(",")?.map { it.trim().replace("\"", "") } ?: emptyList()
+
+            thumbnailAdapter.submitList(thumbnails)
 
             // 추가 버튼 클릭 리스너 설정
             binding.viewMapAddBtn.setOnClickListener {
