@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemKeywordBinding
 
-class KeywordAdapter(
+class MapKeywordAdapter(
     private val keywords: List<String>
-) : RecyclerView.Adapter<KeywordAdapter.KeywordViewHolder>() {
+) : RecyclerView.Adapter<MapKeywordAdapter.KeywordViewHolder>() {
 
     inner class KeywordViewHolder(private val binding: ItemKeywordBinding) :
         RecyclerView.ViewHolder(binding.root) {

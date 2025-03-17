@@ -18,14 +18,14 @@ class MapAdapter(
             binding.tvMapName.text = mapData.name
 
             // 키워드 RecyclerView 설정
-            val keywordAdapter = KeywordAdapter(mapData.keywords)
-            binding.rvMapKeyword.adapter = keywordAdapter
+            val mapKeywordAdapter = MapKeywordAdapter(mapData.keywords)
+            binding.rvMapKeyword.adapter = mapKeywordAdapter
             binding.rvMapKeyword.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
             // 사진 RecyclerView 설정
-            val pictureAdapter = PictureAdapter(mapData.pictures)
-            binding.rvMapPicture.adapter = pictureAdapter
+            val mapPictureAdapter = MapPictureAdapter(mapData.pictures)
+            binding.rvMapPicture.adapter = mapPictureAdapter
             binding.rvMapPicture.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 

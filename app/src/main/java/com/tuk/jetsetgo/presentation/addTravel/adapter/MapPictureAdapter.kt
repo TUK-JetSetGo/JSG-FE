@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.tuk.jetsetgo.databinding.ItemPictureBinding
+import com.tuk.jetsetgo.databinding.ItemMapPictureBinding
 
-class PictureAdapter(
+class MapPictureAdapter(
     private val pictures: List<String> // URL 또는 로컬 이미지 경로 리스트
-) : RecyclerView.Adapter<PictureAdapter.PictureViewHolder>() {
+) : RecyclerView.Adapter<MapPictureAdapter.PictureViewHolder>() {
 
-    inner class PictureViewHolder(private val binding: ItemPictureBinding) :
+    inner class PictureViewHolder(private val binding: ItemMapPictureBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(picture: String) {
             // 예제: Glide를 사용하여 이미지 로드
@@ -21,7 +21,7 @@ class PictureAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureViewHolder {
-        val binding = ItemPictureBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemMapPictureBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PictureViewHolder(binding)
     }
 
