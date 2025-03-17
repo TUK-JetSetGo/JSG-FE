@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -11,12 +12,64 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_myTravel_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_myTravel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내 계획"
+                android:textSize="20sp"
+                style="@style/TextAppearance.JSG.Topbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <ImageView
+                android:id="@+id/iv_myTravel_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_myTravel"
+                app:layout_constraintBottom_toBottomOf="@id/tv_myTravel"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray_300"
+            app:layout_constraintTop_toBottomOf="@id/layout_myTravel_topbar"
+            app:layout_constraintStart_toStartOf="parent"/>
+        
+        <!-- 본문 -->
         <TextView
+            android:id="@+id/tv_myTravel_nothing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="my travel"
+            android:text="계획이 없습니다"
+            style="@style/TextAppearance.JSG.Body1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_travelLocation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_line"
+            tools:listitem="@layout/item_my_travel"
+            android:orientation="vertical"
+            android:layout_marginVertical="1dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
