@@ -10,6 +10,7 @@ import com.tuk.jetsetgo.databinding.ItemMapBinding
 import com.tuk.jetsetgo.domain.model.response.addTravel.SpotInfoResponseModel
 
 class MapAdapter(
+    private val onItemClick: (SpotInfoResponseModel.TouristSpotInfoListModel) -> Unit,
     private val onAddButtonClick: (SpotInfoResponseModel.TouristSpotInfoListModel) -> Unit
 ): ListAdapter<SpotInfoResponseModel.TouristSpotInfoListModel, MapAdapter.MapViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MapViewHolder {
@@ -46,8 +47,11 @@ class MapAdapter(
 
             // 사진 RecyclerView 설정
             val thumbnails = item.thumbnailUrls?.replace("[", "")?.replace("]", "")?.split(",")?.map { it.trim().replace("\"", "") } ?: emptyList()
-
             thumbnailAdapter.submitList(thumbnails)
+
+            binding.root.setOnClickListener {
+                onItemClick(item)
+            }
 
             // 추가 버튼 클릭 리스너 설정
             binding.viewMapAddBtn.setOnClickListener {
