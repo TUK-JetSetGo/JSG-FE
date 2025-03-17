@@ -10,8 +10,8 @@ data class SpotInfoResponseDto(
     val isLast: Boolean
 ) {
     data class TouristSpotInfoListDto(
-        val id: Int?,
-        val name: String?,
+        val id: Int,
+        val name: String,
         val tel: String?,
         val category: String?,
         val businessStatus: String?,

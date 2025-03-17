@@ -63,6 +63,18 @@ class TravelMapFragment : BaseFragment<FragmentTravelMapBinding>(R.layout.fragme
             },
             onAddButtonClick = { selectedSpot ->
                 Log.d("TravelMapFragment", "추가 버튼 클릭: ${selectedSpot.name}")
+                // 기존 리스트에 새로운 장소 이름 추가
+                val updatedList = sharedViewModel.travelSpotName.value.toMutableList().apply {
+                    add(selectedSpot.name)
+                }
+                sharedViewModel.setTravelSpotName(updatedList)
+
+                // 기존 리스트에 새로운 장소 ID 추가
+                val updatedIdList = sharedViewModel.travelSpotIdList.value.toMutableList().apply {
+                    add(selectedSpot.id)
+                }
+                sharedViewModel.setTravelSpotIdList(updatedIdList)
+
                 findNavController().navigateUp()
             }
         )

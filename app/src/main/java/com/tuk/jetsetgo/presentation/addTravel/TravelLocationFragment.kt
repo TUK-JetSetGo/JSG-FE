@@ -42,12 +42,21 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
     private fun initRecyclerView() {
         binding.rvTravelLocation.layoutManager = LinearLayoutManager(requireContext())
-        locationAdapter = LocationAdapter(locationList) { position ->
-            locationAdapter.removeItem(position)
+        locationAdapter = LocationAdapter { removedItem ->
+            val updatedList = sharedViewModel.travelSpotName.value.toMutableList().apply {
+                remove(removedItem)
+            }
+            sharedViewModel.setTravelSpotName(updatedList)
             toggleConfirmButtonVisibility()
         }
         binding.rvTravelLocation.adapter = locationAdapter
-        toggleConfirmButtonVisibility()
+        viewLifecycleOwner.lifecycleScope.launch {
+            sharedViewModel.travelSpotName.collectLatest { locations ->
+                Log.d("TravelLocationFragment", "업데이트된 장소 리스트: $locations")
+                locationAdapter.submitList(locations)
+                toggleConfirmButtonVisibility()
+            }
+        }
     }
 
     private fun setupAddButton() {
@@ -58,7 +67,7 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
     private fun toggleConfirmButtonVisibility() {
         binding.clTravelLocationConfirmBtn.visibility =
-            if (locationList.isNotEmpty()) View.VISIBLE else View.GONE
+            if (locationAdapter.currentList.isNotEmpty()) View.VISIBLE else View.GONE
     }
 
     private fun setupConfirmButton() {
@@ -80,7 +89,7 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
             travelPurposeId = sharedViewModel.travelPurposeId.value,
             travelThemeId = sharedViewModel.travelThemeId.value,
             budget = sharedViewModel.budget.value,
-            travelSpotIdList = null  // 일단 null로 설정
+            travelSpotIdList = sharedViewModel.travelSpotIdList.value
         )
 
         viewLifecycleOwner.lifecycleScope.launch {
