@@ -15,5 +15,5 @@ interface AddTravelDataSource {
     suspend fun fetchPurpose(): BaseResponse<PurposeResponseDto>
     suspend fun fetchThemes(): BaseResponse<ThemesResponseDto>
     suspend fun fetchCreatePlan(request: CreatePlanRequestDto): BaseResponse<CreatePlanResponseDto?>
-    suspend fun fetchSearchSpots(keyword: String?, category: String?, pageable: String): BaseResponse<SpotInfoResponseDto>
+    suspend fun fetchSearchSpots(keyword: String?, category: String?, pageable: String?): BaseResponse<SpotInfoResponseDto>
 }

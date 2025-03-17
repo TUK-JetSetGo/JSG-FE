@@ -93,12 +93,12 @@ class TravelThemeFragment:BaseFragment<FragmentTravelThemeBinding>(R.layout.frag
 
     private fun setupClickListener() {
         // TextView 클릭 시 바텀시트 열기
-        binding.tvTravelThemeDropDownTheme.setOnClickListener {
+        binding.tvTravelThemeDropDownTheme.setOnSingleClickListener {
             toggleBottomSheetState()
         }
 
         // 배경 터치 시 바텀시트 닫기
-        binding.viewTravelThemeBackground.setOnClickListener {
+        binding.viewTravelThemeBackground.setOnSingleClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
     }

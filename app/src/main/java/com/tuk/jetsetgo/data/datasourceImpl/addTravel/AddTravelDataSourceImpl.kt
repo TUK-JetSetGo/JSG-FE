@@ -33,7 +33,7 @@ class AddTravelDataSourceImpl @Inject constructor(
     override suspend fun fetchSearchSpots(
         keyword: String?,
         category: String?,
-        pageable: String
+        pageable: String?
     ): BaseResponse<SpotInfoResponseDto> =
         addTravelService.fetchSearchSpots(keyword, category, pageable)
 }

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.umc.jetsetgo.JetSetGoApplication"
+        android:name="com.tuk.jetsetgo.JetSetGoApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -21,6 +21,10 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="${KAKAO_APP_KEY}"/>
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="${NAVER_CLIENT_ID}" />
 
         <activity
             android:name="com.tuk.jetsetgo.presentation.MainActivity"

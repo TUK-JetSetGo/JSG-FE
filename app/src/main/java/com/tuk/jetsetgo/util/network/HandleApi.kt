@@ -1,7 +1,7 @@
 package com.tuk.jetsetgo.util.network
 
 import com.tuk.jetsetgo.di.NetworkModule
-import com.umc.jetsetgo.JetSetGoApplication
+import com.tuk.jetsetgo.JetSetGoApplication
 import retrofit2.Response
 
 suspend fun <T : Any, R : Any> handleApi(

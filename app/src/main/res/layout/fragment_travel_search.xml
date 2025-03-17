@@ -26,21 +26,22 @@
 
         <EditText
             android:id="@+id/et_travelSearch_search"
+            style="@style/TextAppearance.JSG.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="장소를 입력해주세요"
-            android:background="@drawable/shape_rect_10_white_fill_gray400_line_1"
-            style="@style/TextAppearance.JSG.Body1"
-            android:inputType="none"
-            android:dropDownHeight="wrap_content"
-            android:dropDownWidth="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/shape_rect_10_white_fill_gray400_line_1"
+            android:dropDownWidth="wrap_content"
+            android:dropDownHeight="wrap_content"
+            android:hint="장소를 입력해주세요"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
             android:padding="12dp"
             android:paddingStart="35dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_travelSearch_arrow"
