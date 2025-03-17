@@ -42,16 +42,16 @@ class MapAdapter(
             binding.tvMapAddress.text = item.address
 
             // 키워드 RecyclerView 설정
-            val categories = item.category?.replace("[", "")?.replace("]", "")?.split(",")?.map { it.trim().replace("\"", "") }
-            categoryAdapter.submitList(categories)
+            val mapKeywordAdapter = MapKeywordAdapter(mapData.keywords)
+            binding.rvMapKeyword.adapter = mapKeywordAdapter
+            binding.rvMapKeyword.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
             // 사진 RecyclerView 설정
-            val thumbnails = item.thumbnailUrls?.replace("[", "")?.replace("]", "")?.split(",")?.map { it.trim().replace("\"", "") } ?: emptyList()
-            thumbnailAdapter.submitList(thumbnails)
-
-            binding.root.setOnClickListener {
-                onItemClick(item)
-            }
+            val mapPictureAdapter = MapPictureAdapter(mapData.pictures)
+            binding.rvMapPicture.adapter = mapPictureAdapter
+            binding.rvMapPicture.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
             // 추가 버튼 클릭 리스너 설정
             binding.viewMapAddBtn.setOnClickListener {

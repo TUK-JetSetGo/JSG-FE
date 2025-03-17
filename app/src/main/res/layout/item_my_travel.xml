@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_myTravel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/shape_rect_10_gray300_fill">
+
+            <TextView
+                android:id="@+id/tv_myTravel_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="서울"
+                style="@style/TextAppearance.JSG.Body1"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="20dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_myTravel_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4박 5일"
+                style="@style/TextAppearance.JSG.Body1"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/tv_myTravel_place"
+                app:layout_constraintTop_toTopOf="@id/tv_myTravel_place"
+                app:layout_constraintBottom_toBottomOf="@id/tv_myTravel_place"
+                />
+
+            <TextView
+                android:id="@+id/tv_myTravel_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2024.03.01 - 2024.03.05"
+                style="@style/TextAppearance.JSG.Body1"
+                android:textColor="@color/black_700"
+                app:layout_constraintStart_toStartOf="@id/tv_myTravel_place"
+                app:layout_constraintTop_toBottomOf="@id/tv_myTravel_place"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_myTravel_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="완료"
+                android:background="@drawable/shape_rect_999_blue_main_fill"
+                style="@style/TextAppearance.JSG.Body1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_myTravel_date"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
