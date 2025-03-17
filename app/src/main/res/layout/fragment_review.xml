@@ -16,6 +16,7 @@
             android:id="@+id/tv_review_dropDown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="국내여행"
             android:hint="여행 목적을 선택해주세요"
             android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
             style="@style/TextAppearance.JSG.Body1"
@@ -27,6 +28,16 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="30dp"/>
+
+        <ImageView
+            android:id="@+id/iv_review_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="@id/tv_review_dropDown"
+            app:layout_constraintTop_toTopOf="@id/tv_review_dropDown"
+            app:layout_constraintBottom_toBottomOf="@id/tv_review_dropDown"
+            android:layout_marginEnd="12dp"/>
 
         <TextView
             android:id="@+id/tv_review_head"
