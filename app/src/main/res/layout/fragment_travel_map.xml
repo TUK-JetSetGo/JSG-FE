@@ -7,111 +7,150 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <View
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/image_map"/>
+            android:layout_height="match_parent">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/shape_rect_10_gray500_shadow"
-            app:layout_constraintStart_toStartOf="@id/tv_travelMap_search"
-            app:layout_constraintEnd_toEndOf="@id/tv_travelMap_search"
-            app:layout_constraintTop_toTopOf="@id/tv_travelMap_search"
-            app:layout_constraintBottom_toBottomOf="@id/tv_travelMap_search"
-            android:layout_marginBottom="-10dp"
-            android:alpha="0.25"/>
+            <FrameLayout
+                android:id="@+id/map_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="285dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <TextView
-            android:id="@+id/tv_travelMap_search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="장소를 입력해주세요"
-            android:background="@drawable/shape_rect_10_white_fill_gray400_line_1"
-            style="@style/TextAppearance.JSG.Body1"
-            android:inputType="none"
-            android:dropDownHeight="wrap_content"
-            android:dropDownWidth="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:padding="12dp"
-            android:paddingStart="35dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_rect_10_gray500_shadow"
+                app:layout_constraintStart_toStartOf="@id/tv_travelMap_search"
+                app:layout_constraintEnd_toEndOf="@id/tv_travelMap_search"
+                app:layout_constraintTop_toTopOf="@id/tv_travelMap_search"
+                app:layout_constraintBottom_toBottomOf="@id/tv_travelMap_search"
+                android:layout_marginBottom="-10dp"
+                android:alpha="0.25"/>
 
-        <ImageView
-            android:id="@+id/iv_travelMap_arrow"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/ic_arrow_left"
-            app:layout_constraintDimensionRatio="1:2"
-            app:layout_constraintStart_toStartOf="@id/tv_travelMap_search"
-            app:layout_constraintTop_toTopOf="@id/tv_travelMap_search"
-            app:layout_constraintBottom_toBottomOf="@id/tv_travelMap_search"
-            android:layout_margin="12dp"/>
+            <TextView
+                android:id="@+id/tv_travelMap_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="장소를 입력해주세요"
+                android:background="@drawable/shape_rect_10_white_fill_gray400_line_1"
+                style="@style/TextAppearance.JSG.Body1"
+                android:inputType="none"
+                android:dropDownHeight="wrap_content"
+                android:dropDownWidth="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:padding="12dp"
+                android:paddingStart="35dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
-            android:id="@+id/iv_travelMap_delete"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintEnd_toStartOf="@id/iv_travelMap_search"
-            app:layout_constraintTop_toTopOf="@id/tv_travelMap_search"
-            app:layout_constraintBottom_toBottomOf="@id/tv_travelMap_search"
-            android:background="@drawable/ic_close"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_margin="16dp"/>
+            <ImageView
+                android:id="@+id/iv_travelMap_arrow"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/ic_arrow_left"
+                app:layout_constraintDimensionRatio="1:2"
+                app:layout_constraintStart_toStartOf="@id/tv_travelMap_search"
+                app:layout_constraintTop_toTopOf="@id/tv_travelMap_search"
+                app:layout_constraintBottom_toBottomOf="@id/tv_travelMap_search"
+                android:layout_margin="12dp"/>
 
-        <ImageView
-            android:id="@+id/iv_travelMap_search"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="@id/tv_travelMap_search"
-            app:layout_constraintTop_toTopOf="@id/tv_travelMap_search"
-            app:layout_constraintBottom_toBottomOf="@id/tv_travelMap_search"
-            android:background="@drawable/ic_search"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_margin="14dp"/>
+            <ImageView
+                android:id="@+id/iv_travelMap_delete"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toStartOf="@id/iv_travelMap_search"
+                app:layout_constraintTop_toTopOf="@id/tv_travelMap_search"
+                app:layout_constraintBottom_toBottomOf="@id/tv_travelMap_search"
+                android:background="@drawable/ic_close"
+                app:layout_constraintDimensionRatio="1:1"
+                android:layout_margin="16dp"/>
 
-        <!-- bottomSheet -->
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            <ImageView
+                android:id="@+id/iv_travelMap_search"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="@id/tv_travelMap_search"
+                app:layout_constraintTop_toTopOf="@id/tv_travelMap_search"
+                app:layout_constraintBottom_toBottomOf="@id/tv_travelMap_search"
+                android:background="@drawable/ic_search"
+                app:layout_constraintDimensionRatio="1:1"
+                android:layout_margin="14dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:behavior_peekHeight="300dp"
+            android:background="@drawable/shape_bottom_sheet"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_bottom_sheet"
+            <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                android:id="@+id/drag_handle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:background="@drawable/shape_bottom_sheet">
+                app:layout_constraintTop_toTopOf="parent"/>
 
-                <com.google.android.material.bottomsheet.BottomSheetDragHandleView
-                    android:id="@+id/drag_handle"
-                    android:layout_width="match_parent"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_travelMap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/drag_handle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                tools:listitem="@layout/item_map"
+                android:orientation="vertical"/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_no_place"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_no_place_head"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.JSG.Head1"
+                    android:text="검색된 결과가 없습니다."
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_travelMap"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/drag_handle"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    style="@style/TextAppearance.JSG.Body1"
+                    android:text="검색하여 장소 정보를 받아보세요."
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    tools:listitem="@layout/item_map"
-                    android:orientation="vertical"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_no_place_head"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

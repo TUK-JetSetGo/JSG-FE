@@ -25,17 +25,21 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "NAVER_CLIENT_ID", "\""+properties["NAVER_CLIENT_ID"]+"\"")
+        buildConfigField("String", "NAVER_CLIENT_SECRET", "\""+properties["NAVER_CLIENT_SECRET"]+"\"")
         buildConfigField("String", "KAKAO_APP_KEY", "\"${properties["KAKAO_APP_KEY"]}\"")
     }
 
     buildTypes {
         debug {
             isMinifyEnabled = false
+            manifestPlaceholders["NAVER_CLIENT_ID"] = properties["NAVER_CLIENT_ID"] as String
             manifestPlaceholders["KAKAO_APP_KEY"] = properties["KAKAO_APP_KEY"] as String
         }
 
         release {
             isMinifyEnabled = false
+            manifestPlaceholders["NAVER_CLIENT_ID"] = properties["NAVER_CLIENT_ID"] as String
             manifestPlaceholders["KAKAO_APP_KEY"] = properties["KAKAO_APP_KEY"] as String
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -116,5 +120,8 @@ dependencies {
 
     // Timber
     implementation ("com.jakewharton.timber:timber:5.0.1")
+
+    // naver map
+    implementation("com.naver.maps:map-sdk:3.20.0")
 
 }

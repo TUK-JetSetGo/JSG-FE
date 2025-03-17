@@ -2,38 +2,44 @@ package com.tuk.jetsetgo.presentation.addTravel.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemLastSearchBinding
 
 class SearchAdapter(
-    private val searches: MutableList<String>,
-    private val onDeleteClick: (Int) -> Unit
-) : RecyclerView.Adapter<SearchAdapter.TravelSearchViewHolder>() {
+    private val onItemClick: (String) -> Unit,
+    private val onDeleteClick: (String) -> Unit
+) : ListAdapter<String, SearchAdapter.SearchViewHolder>(DiffCallback()) {
 
-    inner class TravelSearchViewHolder(private val binding: ItemLastSearchBinding) :
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
+        val binding = ItemLastSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SearchViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    inner class SearchViewHolder(private val binding: ItemLastSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(search: String, position: Int) {
-            binding.ivLastSearchName.text = search
+        fun bind(item: String) {
+            binding.tvLastSearchName.text = item
+
+            // 아이템 클릭 시 검색 실행
+            binding.root.setOnClickListener {
+                onItemClick(item)
+            }
+
+            // 삭제 버튼 클릭 시 아이템 삭제
             binding.ivLastSearchDelete.setOnClickListener {
-                onDeleteClick(position)
+                onDeleteClick(item)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelSearchViewHolder {
-        val binding = ItemLastSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TravelSearchViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: TravelSearchViewHolder, position: Int) {
-        holder.bind(searches[position], position)
-    }
-
-    override fun getItemCount(): Int = searches.size
-
-    fun removeItem(position: Int) {
-        searches.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, searches.size)
+    class DiffCallback : DiffUtil.ItemCallback<String>() {
+        override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
     }
 }

@@ -71,8 +71,8 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
 
 
     private fun setClickListener() {
-        binding.tvActivityLevelTimeStart.setOnClickListener { toggleBottomSheetState(startBottomSheetBehavior) }
-        binding.tvActivityLevelTimeEnd.setOnClickListener { toggleBottomSheetState(endBottomSheetBehavior) }
+        binding.tvActivityLevelTimeStart.setOnSingleClickListener { toggleBottomSheetState(startBottomSheetBehavior) }
+        binding.tvActivityLevelTimeEnd.setOnSingleClickListener { toggleBottomSheetState(endBottomSheetBehavior) }
     }
 
     private fun initBottomSheets() {

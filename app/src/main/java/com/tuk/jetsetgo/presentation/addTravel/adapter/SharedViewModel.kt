@@ -39,6 +39,9 @@ class SharedViewModel : ViewModel() {
     private val _budget = MutableStateFlow(0)
     val budget: StateFlow<Int> = _budget
 
+    private val _travelSpotName = MutableStateFlow<List<String>>(emptyList())
+    val travelSpotName: StateFlow<List<String>> = _travelSpotName
+
     private val _travelSpotIdList = MutableStateFlow<List<Int>>(emptyList())
     val travelSpotIdList: StateFlow<List<Int>> = _travelSpotIdList
 
@@ -54,5 +57,6 @@ class SharedViewModel : ViewModel() {
     fun setTravelPurposeId(value: Int) { _travelPurposeId.value = value }
     fun setTravelThemeId(value: Int) { _travelThemeId.value = value }
     fun setBudget(value: Int) { _budget.value = value }
+    fun setTravelSpotName(value: List<String>) { _travelSpotName.value = value }
     fun setTravelSpotIdList(value: List<Int>) { _travelSpotIdList.value = value }
 }

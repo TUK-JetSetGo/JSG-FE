@@ -17,8 +17,8 @@ interface AddTravelRepository {
     suspend fun fetchSearchSpots(
         keyword: String?,
         category: String?,
-        page: Int,
-        size: Int,
-        sort: String
+        page: Int?,
+        size: Int?,
+        sort: String?
     ): Result<SpotInfoResponseModel>
 }
