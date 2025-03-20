@@ -178,7 +178,17 @@
             android:id="@+id/myTravelFragment"
             android:name="com.tuk.jetsetgo.presentation.myTravel.MyTravelFragment"
             android:label="MyTravelFragment"
-            tools:layout="@layout/fragment_my_travel"/>
+            tools:layout="@layout/fragment_my_travel">
+            <action
+                android:id="@+id/goToSchedule"
+                app:destination="@id/detailScheduleFragment"/>
+        </fragment>
+        <fragment
+            android:id="@+id/detailScheduleFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.DetailScheduleFragment"
+            android:label="DetailScheduleFragment"
+            tools:layout="@layout/fragment_detail_schedule"/>
+
     </navigation>
 
     <!-- my page tab -->
@@ -200,5 +210,6 @@
             tools:layout="@layout/fragment_myprofile">
         </fragment>
     </navigation>
+
 
 </navigation>

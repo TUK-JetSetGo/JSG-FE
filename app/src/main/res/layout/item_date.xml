@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rect_999_black_fill"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="18dp">
+
+        <TextView
+            android:id="@+id/tv_date_dayOfTheWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월"
+            style="@style/TextAppearance.JSG.Body2"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_date_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            style="@style/TextAppearance.JSG.Head1"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date_dayOfTheWeek"
+            android:layout_marginTop="8dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
