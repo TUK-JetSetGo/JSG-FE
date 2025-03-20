@@ -17,6 +17,10 @@ class TravelAdapter(
             binding.tvMyTravelDuration.text = travelData.duration
             binding.tvMyTravelDate.text = travelData.date
             binding.tvMyTravelState.text = travelData.state
+
+            binding.root.setOnClickListener {
+                onTravelClick()
+            }
         }
     }
 
