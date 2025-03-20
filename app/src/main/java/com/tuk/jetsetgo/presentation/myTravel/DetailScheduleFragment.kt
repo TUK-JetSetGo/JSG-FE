@@ -23,11 +23,11 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     private val scheduleList = listOf(
         ScheduleData("이동", "30분","AM 09:00","AM 09:30"),
-        ScheduleData("N서울타워", "2시간","AM 9:30","AM 11:30"),
+        ScheduleData("N서울타워", "60분","AM 9:30","AM 11:30"),
         ScheduleData("이동", "20분","AM 11:30","AM 11:50"),
-        ScheduleData("알돈 을지로점", "1시간10분","AM 11:50","PM 01:00"),
+        ScheduleData("알돈 을지로점", "70분","AM 11:50","PM 01:00"),
         ScheduleData("이동", "10분","PM 01:00","PM 01:10"),
-        ScheduleData("오뷔르 베이커리", "1시간20분","PM 01:10","PM 2:30")
+        ScheduleData("오뷔르 베이커리", "80분","PM 01:10","PM 2:30")
     )
     override fun initObserver() {
 

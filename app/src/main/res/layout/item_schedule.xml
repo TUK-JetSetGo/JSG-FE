@@ -116,7 +116,7 @@
                     android:id="@+id/tv_schedule_end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AM 9:00 ~ AM 9:30"
+                    android:text="AM 9:30"
                     style="@style/TextAppearance.JSG.Body1"
                     android:textSize="14dp"
                     android:textColor="@color/black_700"
