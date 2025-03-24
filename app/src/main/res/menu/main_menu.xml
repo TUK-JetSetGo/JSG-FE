@@ -21,7 +21,7 @@
     <item
         android:id="@+id/myTravelTab"
         android:icon="@drawable/sel_main_icon_bnv_mytravel"
-        android:title="내 일정" />
+        android:title="내 계획" />
 
     <item
         android:id="@+id/myPageTab"
