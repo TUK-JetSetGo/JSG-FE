@@ -1,7 +1,9 @@
 package com.tuk.jetsetgo.presentation.myTravel
 
 import android.view.View
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +38,12 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             ScheduleData("카페", "90분","AM 10:20","AM 11:50")
         ),
         2 to listOf(
+            ScheduleData("쇼핑", "120분","PM 01:00","PM 03:00")
+        ),
+        3 to listOf(
+            ScheduleData("쇼핑", "120분","PM 01:00","PM 03:00")
+        ),
+        4 to listOf(
             ScheduleData("쇼핑", "120분","PM 01:00","PM 03:00")
         )
     )
@@ -89,20 +97,64 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
         for (i in 0 until numberOfDays) {
             val tab = tabLayout.newTab()
-            tab.text = "Day ${i + 1}" // 예: Day 1, Day 2 ...
+            tab.customView = createTabView(i)
             tabLayout.addTab(tab)
         }
+
+        // 기본 첫 탭 선택 시 리스트 + 스타일 모두 초기화
+        val firstSchedule = scheduleByDay[0] ?: emptyList()
+        scheduleAdapter.updateList(firstSchedule)
+
+        // 첫 탭을 선택된 스타일로 적용
+        updateTabSelectedState(tabLayout.getTabAt(0)!!, true)
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val position = tab.position
                 val selectedList = scheduleByDay[position] ?: emptyList()
                 scheduleAdapter.updateList(selectedList)
+
+                updateTabSelectedState(tab, true)
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                tab?.let { updateTabSelectedState(it, false) }
+            }
+
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
+
+    private fun createTabView(position: Int): View {
+        val view = layoutInflater.inflate(R.layout.item_date, null)
+        val tvDayOfWeek = view.findViewById<TextView>(R.id.tv_date_dayOfTheWeek)
+        val tvDay = view.findViewById<TextView>(R.id.tv_date_day)
+
+        // 예시: Day 1 → "월 / 1"
+        val dayOfWeekList = listOf("화", "수", "목", "금", "토", "일", "월")
+        val dayIndex = position % 7
+        tvDayOfWeek.text = dayOfWeekList[dayIndex]
+        tvDay.text = "${position + 1}"
+
+        return view
+    }
+
+    private fun updateTabSelectedState(tab: TabLayout.Tab, isSelected: Boolean) {
+        val tabView = tab.customView ?: return
+        val clDate = tabView.findViewById<ConstraintLayout>(R.id.cl_date)
+        val tvDayOfWeek = tabView.findViewById<TextView>(R.id.tv_date_dayOfTheWeek)
+        val tvDay = tabView.findViewById<TextView>(R.id.tv_date_day)
+
+        if (isSelected) {
+            clDate.setBackgroundResource(R.drawable.shape_rect_999_black_fill) // 선택 배경
+            tvDayOfWeek.setTextColor(resources.getColor(R.color.white, null))
+            tvDay.setTextColor(resources.getColor(R.color.white, null))
+        } else {
+            clDate.setBackgroundResource(R.drawable.shape_rect_999_white_fill) // 비선택 배경
+            tvDayOfWeek.setTextColor(resources.getColor(R.color.black, null))
+            tvDay.setTextColor(resources.getColor(R.color.black, null))
+        }
+    }
+
 
 }
