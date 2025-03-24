@@ -3,11 +3,10 @@ package com.tuk.jetsetgo.presentation.myTravel.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tuk.jetsetgo.databinding.ItemMyTravelBinding
 import com.tuk.jetsetgo.databinding.ItemScheduleBinding
 
 class ScheduleAdapter(
-    private val schedules: List<ScheduleData>,
+    private var schedules: List<ScheduleData>,  // 🔁 var로 변경
     private val onScheduleClick: () -> Unit
 ) : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
 
@@ -18,6 +17,10 @@ class ScheduleAdapter(
             binding.tvScheduleTotalTime.text = scheduleData.totalTime
             binding.tvScheduleStart.text = scheduleData.startTime
             binding.tvScheduleEnd.text = scheduleData.endTime
+
+            binding.root.setOnClickListener {
+                onScheduleClick()
+            }
         }
     }
 
@@ -31,4 +34,11 @@ class ScheduleAdapter(
     }
 
     override fun getItemCount(): Int = schedules.size
+
+    // 리스트 갱신용 함수
+    fun updateList(newSchedules: List<ScheduleData>) {
+        this.schedules = newSchedules
+        notifyDataSetChanged()
+    }
 }
+

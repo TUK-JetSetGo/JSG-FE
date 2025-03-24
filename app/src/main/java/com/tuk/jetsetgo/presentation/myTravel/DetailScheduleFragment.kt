@@ -6,6 +6,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentDetailScheduleBinding
 import com.tuk.jetsetgo.databinding.FragmentMyTravelBinding
@@ -21,14 +22,24 @@ import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelData
 class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.layout.fragment_detail_schedule) {
     private lateinit var scheduleAdapter: ScheduleAdapter
 
-    private val scheduleList = listOf(
-        ScheduleData("이동", "30분","AM 09:00","AM 09:30"),
-        ScheduleData("N서울타워", "60분","AM 9:30","AM 11:30"),
-        ScheduleData("이동", "20분","AM 11:30","AM 11:50"),
-        ScheduleData("알돈 을지로점", "70분","AM 11:50","PM 01:00"),
-        ScheduleData("이동", "10분","PM 01:00","PM 01:10"),
-        ScheduleData("오뷔르 베이커리", "80분","PM 01:10","PM 2:30")
+    private val scheduleByDay = mapOf(
+        0 to listOf(
+            ScheduleData("이동", "30분","AM 09:00","AM 09:30"),
+            ScheduleData("N서울타워", "60분","AM 9:30","AM 11:30"),
+            ScheduleData("이동", "30분","AM 09:00","AM 09:30"),
+            ScheduleData("N서울타워", "60분","AM 9:30","AM 11:30"),
+            ScheduleData("이동", "30분","AM 09:00","AM 09:30"),
+            ScheduleData("N서울타워", "60분","AM 9:30","AM 11:30"),
+        ),
+        1 to listOf(
+            ScheduleData("이동", "20분","AM 10:00","AM 10:20"),
+            ScheduleData("카페", "90분","AM 10:20","AM 11:50")
+        ),
+        2 to listOf(
+            ScheduleData("쇼핑", "120분","PM 01:00","PM 03:00")
+        )
     )
+
     override fun initObserver() {
 
     }
@@ -37,6 +48,7 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         setClickListener()
         initRecyclerView()
         setBackPressedCallback()
+        setupTabs()
     }
 
     override fun onDestroyView() {
@@ -52,9 +64,14 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     private fun initRecyclerView() {
         binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
-        scheduleAdapter = ScheduleAdapter(scheduleList) {
-            // findNavController().navigate(R.id.goToLocation)
+
+        // 초기값은 Day 1 (position = 0)
+        val initialSchedule = scheduleByDay[0] ?: emptyList()
+
+        scheduleAdapter = ScheduleAdapter(initialSchedule) {
+            // 클릭 이벤트 정의
         }
+
         binding.rvSchedule.adapter = scheduleAdapter
     }
 
@@ -65,4 +82,27 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             }
         })
     }
+
+    private fun setupTabs() {
+        val tabLayout = binding.tabLayoutScheduleDate
+        val numberOfDays = scheduleByDay.size
+
+        for (i in 0 until numberOfDays) {
+            val tab = tabLayout.newTab()
+            tab.text = "Day ${i + 1}" // 예: Day 1, Day 2 ...
+            tabLayout.addTab(tab)
+        }
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val position = tab.position
+                val selectedList = scheduleByDay[position] ?: emptyList()
+                scheduleAdapter.updateList(selectedList)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+    }
+
 }
