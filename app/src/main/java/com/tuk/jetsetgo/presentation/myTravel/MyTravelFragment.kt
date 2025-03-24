@@ -46,7 +46,7 @@ class MyTravelFragment : BaseFragment<FragmentMyTravelBinding>(R.layout.fragment
     private fun initRecyclerView() {
         binding.rvTravelLocation.layoutManager = LinearLayoutManager(requireContext())
         travelAdapter = TravelAdapter(travelList) {
-            // findNavController().navigate(R.id.goToLocation)
+            findNavController().navigate(R.id.goToSchedule)
         }
         binding.rvTravelLocation.adapter = travelAdapter
     }
