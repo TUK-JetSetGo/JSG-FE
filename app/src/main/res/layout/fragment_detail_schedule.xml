@@ -125,6 +125,15 @@
                     android:layout_marginTop="20dp"/>
 
                 <View
+                    android:id="@+id/view_schedule_circle"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/shape_rect_999_blue_main_fill"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_schedule"
+                    android:layout_marginStart="10dp" />
+
+                <View
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     app:layout_constraintTop_toBottomOf="@id/rv_schedule"
