@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentMyTravelBinding
-import com.tuk.jetsetgo.presentation.addTravel.adapter.MapAdapter
-import com.tuk.jetsetgo.presentation.addTravel.adapter.MapData
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelData
