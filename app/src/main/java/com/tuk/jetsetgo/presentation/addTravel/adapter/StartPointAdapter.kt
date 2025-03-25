@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemStartPointBinding
 
 class StartPointAdapter(
-    private val itemCount: Int
+    private val itemCount: Int,
+    private val onItemClick: (position: Int) -> Unit
 ) : RecyclerView.Adapter<StartPointAdapter.StartPointViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StartPointViewHolder {
@@ -27,7 +28,12 @@ class StartPointAdapter(
         fun bind(position: Int) {
             val day = position + 1
             binding.tvStartPointDay.text = "${day}일차"
-            // 위치 관련 바인딩이 필요하면 여기에 추가 가능
+
+            // 아이템 전체에 클릭 리스너 설정
+            binding.root.setOnClickListener {
+                onItemClick(position)
+            }
         }
     }
 }
+

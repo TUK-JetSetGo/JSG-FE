@@ -28,9 +28,12 @@ class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R
     }
 
     private fun initRecyclerView() {
-        startPointAdapter = StartPointAdapter(itemCount = 4) // 지금은 4일차까지
+        startPointAdapter = StartPointAdapter(itemCount = 4) { position ->
+            findNavController().navigate(R.id.goToMap)
+        }
         binding.rvTravelStartPoint.adapter = startPointAdapter
     }
+
 
 
     private fun setupConfirmButton() {
