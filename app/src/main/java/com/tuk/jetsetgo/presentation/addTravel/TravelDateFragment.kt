@@ -51,7 +51,7 @@ class TravelDateFragment: BaseFragment<FragmentTravelDateBinding>(R.layout.fragm
                 val startDate = java.time.LocalDate.parse(startDateStr, formatter)
                 val endDate = java.time.LocalDate.parse(endDateStr, formatter)
                 if (endDate.isAfter(startDate)) {
-                    findNavController().navigate(R.id.goToLocation)
+                    findNavController().navigate(R.id.goToStartPoint)
                 } else {
                     Toast.makeText(requireContext(), "여행 종료 날짜는 시작 날짜보다 이후여야 합니다", Toast.LENGTH_SHORT).show()
                 }
