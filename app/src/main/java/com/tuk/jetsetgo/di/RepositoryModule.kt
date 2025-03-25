@@ -5,11 +5,13 @@ import android.content.Context
 import com.tuk.jetsetgo.data.repositoryImpl.TestRepositoryImpl
 import com.tuk.jetsetgo.data.repositoryImpl.addTravel.AddTravelRepositoryImpl
 import com.tuk.jetsetgo.data.repositoryImpl.login.LoginRepositoryImpl
+import com.tuk.jetsetgo.data.repositoryImpl.myTravel.MyTravelRepositoryImpl
 import com.tuk.jetsetgo.data.service.TestService
 import com.tuk.jetsetgo.data.service.addTravel.AddTravelService
 import com.tuk.jetsetgo.domain.repository.TestRepository
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
 import com.tuk.jetsetgo.domain.repository.login.LoginRepository
+import com.tuk.jetsetgo.domain.repository.myTravel.MyTravelRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +48,10 @@ object RepositoryModule {
     fun providesLoginRepository(
         loginRepositoryImpl: LoginRepositoryImpl
     ): LoginRepository = loginRepositoryImpl
+
+    @Singleton
+    @Provides
+    fun providesMyTravelRepository(
+        myTravelRepositoryImpl: MyTravelRepositoryImpl
+    ): MyTravelRepository = myTravelRepositoryImpl
 }
