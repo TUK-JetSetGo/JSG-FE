@@ -150,8 +150,8 @@
             android:label="LocationFragment"
             tools:layout="@layout/fragment_travel_location">
             <action
-                android:id="@+id/gotoSearch"
-                app:destination="@id/searchFragment" />
+                android:id="@+id/goToMap"
+                app:destination="@id/mapFragment" />
             <action
                 android:id="@+id/goToLoading"
                 app:destination="@id/loadingFragment" />
