@@ -4,21 +4,15 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentDetailScheduleBinding
-import com.tuk.jetsetgo.databinding.FragmentMyTravelBinding
-import com.tuk.jetsetgo.presentation.addTravel.adapter.MapAdapter
-import com.tuk.jetsetgo.presentation.addTravel.adapter.MapData
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
-import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelAdapter
-import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelData
 
 
 class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.layout.fragment_detail_schedule) {

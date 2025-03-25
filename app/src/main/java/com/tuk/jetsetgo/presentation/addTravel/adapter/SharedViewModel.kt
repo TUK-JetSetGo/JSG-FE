@@ -45,6 +45,12 @@ class SharedViewModel : ViewModel() {
     private val _travelSpotIdList = MutableStateFlow<List<Int>>(emptyList())
     val travelSpotIdList: StateFlow<List<Int>> = _travelSpotIdList
 
+    private val _dailyStartPointList = MutableStateFlow<List<Int>>(emptyList())
+    val dailyStartPointList: StateFlow<List<Int>> = _dailyStartPointList
+
+    private val _preferredTransport = MutableStateFlow("")
+    val preferredTransport: StateFlow<String> = _preferredTransport
+
     // 각 입력값을 업데이트하는 setter 함수들
     fun setIsGroup(value: Boolean) { _isGroup.value = value }
     fun setGroupSize(value: Int) { _groupSize.value = value }
@@ -59,4 +65,6 @@ class SharedViewModel : ViewModel() {
     fun setBudget(value: Int) { _budget.value = value }
     fun setTravelSpotName(value: List<String>) { _travelSpotName.value = value }
     fun setTravelSpotIdList(value: List<Int>) { _travelSpotIdList.value = value }
+    fun setDailyStartPointList(value: List<Int>) { _dailyStartPointList.value = value }
+    fun setPreferredTransport(value: String) { _preferredTransport.value = value }
 }

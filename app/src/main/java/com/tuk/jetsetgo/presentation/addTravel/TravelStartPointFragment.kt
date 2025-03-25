@@ -3,6 +3,7 @@ package com.tuk.jetsetgo.presentation.addTravel
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentTravelStartPointBinding
 import com.tuk.jetsetgo.presentation.addTravel.adapter.AddTravelViewModel
@@ -28,14 +29,18 @@ class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R
     }
 
     private fun initRecyclerView() {
-        startPointAdapter = StartPointAdapter(itemCount = 4) // 지금은 4일차까지
+        binding.rvTravelStartPoint.layoutManager = LinearLayoutManager(requireContext())
+        startPointAdapter = StartPointAdapter(itemCount = 4) { position ->
+            findNavController().navigate(R.id.goToMap)
+        }
         binding.rvTravelStartPoint.adapter = startPointAdapter
     }
 
 
+
     private fun setupConfirmButton() {
         binding.clTravelStartPointConfirmBtn.setOnSingleClickListener {
-            findNavController().navigate(R.id.goToLoading)
+            findNavController().navigate(R.id.goToLocation)
         }
     }
 }

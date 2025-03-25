@@ -89,7 +89,9 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
             travelPurposeId = sharedViewModel.travelPurposeId.value,
             travelThemeId = sharedViewModel.travelThemeId.value,
             budget = sharedViewModel.budget.value,
-            travelSpotIdList = sharedViewModel.travelSpotIdList.value
+            travelSpotIdList = sharedViewModel.travelSpotIdList.value,
+            dailyStartPointList = sharedViewModel.dailyStartPointList.value,
+            preferredTransport = sharedViewModel.preferredTransport.value
         )
 
         viewLifecycleOwner.lifecycleScope.launch {
