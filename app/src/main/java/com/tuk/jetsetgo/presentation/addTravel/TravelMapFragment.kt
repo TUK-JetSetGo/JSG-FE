@@ -71,7 +71,7 @@ class TravelMapFragment : BaseFragment<FragmentTravelMapBinding>(R.layout.fragme
 
                 // 기존 리스트에 새로운 장소 ID 추가
                 val updatedIdList = sharedViewModel.travelSpotIdList.value.toMutableList().apply {
-                    add(selectedSpot.id)
+                    add(selectedSpot.touristSpotId)
                 }
                 sharedViewModel.setTravelSpotIdList(updatedIdList)
 
