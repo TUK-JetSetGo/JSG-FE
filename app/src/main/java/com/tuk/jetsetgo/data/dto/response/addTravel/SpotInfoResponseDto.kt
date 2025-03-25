@@ -10,7 +10,7 @@ data class SpotInfoResponseDto(
     val isLast: Boolean
 ) {
     data class TouristSpotInfoListDto(
-        val id: Int,
+        val touristSpotId: Int,
         val name: String,
         val tel: String?,
         val category: String?,
@@ -27,7 +27,7 @@ data class SpotInfoResponseDto(
     ) {
         fun toTouristSpotInfoListModel() =
             SpotInfoResponseModel.TouristSpotInfoListModel(
-                id,
+                touristSpotId,
                 name,
                 tel,
                 category,

@@ -61,7 +61,7 @@ class MapAdapter(
     }
     class DiffCallback : DiffUtil.ItemCallback<SpotInfoResponseModel.TouristSpotInfoListModel>() {
         override fun areItemsTheSame(oldItem: SpotInfoResponseModel.TouristSpotInfoListModel, newItem: SpotInfoResponseModel.TouristSpotInfoListModel): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.touristSpotId == newItem.touristSpotId
         }
 
         override fun areContentsTheSame(oldItem: SpotInfoResponseModel.TouristSpotInfoListModel, newItem: SpotInfoResponseModel.TouristSpotInfoListModel): Boolean {
