@@ -186,9 +186,26 @@
             android:label="LoadingFragment"
             tools:layout="@layout/fragment_travel_loading">
             <action
-                android:id="@+id/goToHome"
-                app:destination="@id/homeFragment" />
+                android:id="@+id/goToComplete"
+                app:destination="@id/completeFragment" />
         </fragment>
+        <fragment
+            android:id="@+id/completeFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelCompleteFragment"
+            android:label="CompleteFragment"
+            tools:layout="@layout/fragment_travel_complete">
+            <action
+                android:id="@+id/goToHome"
+                app:destination="@id/homeTab" />
+            <action
+                android:id="@+id/goToDetailSchedule"
+                app:destination="@id/detailScheduleFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/detailScheduleFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.DetailScheduleFragment"
+            android:label="DetailScheduleFragment"
+            tools:layout="@layout/fragment_detail_schedule"/>
     </navigation>
 
     <!-- my Travel tab -->

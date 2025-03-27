@@ -33,7 +33,7 @@ class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R
 
     private fun initRecyclerView() {
         binding.rvTravelStartPoint.layoutManager = LinearLayoutManager(requireContext())
-        startPointAdapter = StartPointAdapter(itemCount = 4) { position ->
+        startPointAdapter = StartPointAdapter(itemCount = 5) { position ->
             val action = TravelStartPointFragmentDirections.goToMap(lastFragmentId = 1)
             findNavController().navigate(action)
         }

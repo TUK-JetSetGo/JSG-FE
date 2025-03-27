@@ -72,11 +72,12 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
     private fun setupConfirmButton() {
         binding.clTravelLocationConfirmBtn.setOnSingleClickListener {
-            createTravelRequest()
+            //createTravelRequest()
+            findNavController().navigate(R.id.goToLoading)
         }
     }
 
-    private fun createTravelRequest() {
+    /*private fun createTravelRequest() {
         val request = CreatePlanRequestModel(
             isGroup = sharedViewModel.isGroup.value,
             groupSize = sharedViewModel.groupSize.value,
@@ -102,7 +103,7 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
                         is UiState.Success -> {
                             Log.d("TravelLocationFragment", "일정 생성 성공")
                             Toast.makeText(requireContext(), "일정 생성 성공", Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.goToLoading) // 로그인 화면으로 이동
+                            findNavController().navigate(R.id.goToLoading) // 로딩 화면으로 이동
                         }
                         is UiState.Error -> {
                             Toast.makeText(requireContext(), "일정 생성 실패: ${state.error?.message}", Toast.LENGTH_SHORT).show()
@@ -113,5 +114,5 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
                 }
             }
         }
-    }
+    }*/
 }
