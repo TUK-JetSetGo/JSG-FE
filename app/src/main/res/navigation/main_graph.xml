@@ -139,7 +139,11 @@
             tools:layout="@layout/fragment_travel_start_point">
             <action
                 android:id="@+id/goToMap"
-                app:destination="@id/mapFragment" />
+                app:destination="@id/mapFragment">
+                <argument
+                    android:name="lastFragmentId"
+                    app:argType="integer" />
+            </action>
             <action
                 android:id="@+id/goToLocation"
                 app:destination="@id/locationFragment" />
@@ -151,7 +155,11 @@
             tools:layout="@layout/fragment_travel_location">
             <action
                 android:id="@+id/goToMap"
-                app:destination="@id/mapFragment" />
+                app:destination="@id/mapFragment">
+                <argument
+                    android:name="lastFragmentId"
+                    app:argType="integer" />
+            </action>
             <action
                 android:id="@+id/goToLoading"
                 app:destination="@id/loadingFragment" />

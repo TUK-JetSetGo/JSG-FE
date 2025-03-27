@@ -30,7 +30,6 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val addTravelViewModel: AddTravelViewModel by viewModels()
 
-    private val locationList = mutableListOf("장소1", "장소2", "장소3")
     override fun initObserver() {
     }
 
@@ -61,7 +60,8 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
     private fun setupAddButton() {
         binding.clTravelLocationAddBtn.setOnSingleClickListener {
-            findNavController().navigate(R.id.goToMap)
+            val action = TravelStartPointFragmentDirections.goToMap(lastFragmentId = 2)
+            findNavController().navigate(action)
         }
     }
 

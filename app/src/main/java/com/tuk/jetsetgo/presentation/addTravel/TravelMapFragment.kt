@@ -30,6 +30,10 @@ class TravelMapFragment : BaseFragment<FragmentTravelMapBinding>(R.layout.fragme
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var naverMap: NaverMap
 
+    private val lastFragmentId: Int? by lazy {
+        arguments?.getInt("lastFragmentId")
+    }
+
     override fun initObserver() {
         viewModel.searchResults.observe(viewLifecycleOwner) { result ->
             result.onSuccess { response ->
@@ -48,6 +52,7 @@ class TravelMapFragment : BaseFragment<FragmentTravelMapBinding>(R.layout.fragme
     }
 
     private fun initRecyclerView() {
+        val lastFragmentId = lastFragmentId ?: return
         binding.rvTravelMap.layoutManager = LinearLayoutManager(requireContext())
         mapAdapter = MapAdapter(
             onItemClick = { selectedSpot ->
@@ -63,18 +68,42 @@ class TravelMapFragment : BaseFragment<FragmentTravelMapBinding>(R.layout.fragme
             },
             onAddButtonClick = { selectedSpot ->
                 Log.d("TravelMapFragment", "추가 버튼 클릭: ${selectedSpot.name}")
-                // 기존 리스트에 새로운 장소 이름 추가
-                val updatedList = sharedViewModel.travelSpotName.value.toMutableList().apply {
-                    add(selectedSpot.name)
-                }
-                sharedViewModel.setTravelSpotName(updatedList)
+                Log.d("TravelMapFragment", "lastFragmentId: ${lastFragmentId}")
+                when (lastFragmentId) {
+                    1 -> { // StartPoint update
+                        // 기존 리스트에 새로운 장소 이름 추가
+                        val updatedList =
+                            sharedViewModel.dailyStartPointName.value.toMutableList().apply {
+                                add(selectedSpot.name)
+                            }
+                        sharedViewModel.setDailyStartPointName(updatedList)
 
-                // 기존 리스트에 새로운 장소 ID 추가
-                val updatedIdList = sharedViewModel.travelSpotIdList.value.toMutableList().apply {
-                    add(selectedSpot.touristSpotId)
-                }
-                sharedViewModel.setTravelSpotIdList(updatedIdList)
+                        // 기존 리스트에 새로운 장소 ID 추가
+                        val updatedIdList =
+                            sharedViewModel.dailyStartPointList.value.toMutableList().apply {
+                                add(selectedSpot.touristSpotId)
+                            }
+                        sharedViewModel.setDailyStartPointList(updatedIdList)
+                        Log.d("TravelMapFragment", "StartPoint update: ${sharedViewModel.dailyStartPointName.value}, ${sharedViewModel.dailyStartPointList.value}")
+                    }
+                    2 -> { // Location update
+                        // 기존 리스트에 새로운 장소 이름 추가
+                        val updatedList = sharedViewModel.travelSpotName.value.toMutableList().apply {
+                            add(selectedSpot.name)
+                        }
+                        sharedViewModel.setTravelSpotName(updatedList)
 
+                        // 기존 리스트에 새로운 장소 ID 추가
+                        val updatedIdList = sharedViewModel.travelSpotIdList.value.toMutableList().apply {
+                            add(selectedSpot.touristSpotId)
+                        }
+                        sharedViewModel.setTravelSpotIdList(updatedIdList)
+                        Log.d("TravelMapFragment", "Location update: ${sharedViewModel.travelSpotName.value}, ${sharedViewModel.travelSpotIdList.value}")
+                    }
+                    else -> {
+                        Log.w("TravelMapFragment", "알 수 없는 lastFragmentId: $lastFragmentId")
+                    }
+                }
                 findNavController().navigateUp()
             }
         )

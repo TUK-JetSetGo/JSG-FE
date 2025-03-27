@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.presentation.addTravel
 
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuk.jetsetgo.R
@@ -12,6 +13,8 @@ import com.tuk.jetsetgo.presentation.addTravel.adapter.StartPointAdapter
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R.layout.fragment_travel_start_point) {
@@ -31,9 +34,16 @@ class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R
     private fun initRecyclerView() {
         binding.rvTravelStartPoint.layoutManager = LinearLayoutManager(requireContext())
         startPointAdapter = StartPointAdapter(itemCount = 4) { position ->
-            findNavController().navigate(R.id.goToMap)
+            val action = TravelStartPointFragmentDirections.goToMap(lastFragmentId = 1)
+            findNavController().navigate(action)
         }
         binding.rvTravelStartPoint.adapter = startPointAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            sharedViewModel.dailyStartPointName.collectLatest { names ->
+                startPointAdapter.submitStartPointNames(names)
+            }
+        }
     }
 
 

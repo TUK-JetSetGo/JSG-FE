@@ -10,6 +10,13 @@ class StartPointAdapter(
     private val onItemClick: (position: Int) -> Unit
 ) : RecyclerView.Adapter<StartPointAdapter.StartPointViewHolder>() {
 
+    private var startPointNames: List<String> = emptyList()
+
+    fun submitStartPointNames(names: List<String>) {
+        startPointNames = names
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StartPointViewHolder {
         val binding = ItemStartPointBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StartPointViewHolder(binding)
@@ -29,11 +36,15 @@ class StartPointAdapter(
             val day = position + 1
             binding.tvStartPointDay.text = "${day}일차"
 
-            // 아이템 전체에 클릭 리스너 설정
+            // startPointName이 있으면 보여주고, 없으면 빈칸
+            binding.tvStartPointLocation.text = startPointNames.getOrNull(position) ?: ""
+
+            // 클릭 시 Map으로 이동
             binding.root.setOnClickListener {
                 onItemClick(position)
             }
         }
     }
 }
+
 
