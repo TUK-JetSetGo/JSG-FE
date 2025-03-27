@@ -1,5 +1,6 @@
 package com.tuk.jetsetgo.presentation.addTravel
 
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -23,17 +24,29 @@ class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val addTravelViewModel: AddTravelViewModel by viewModels()
 
+    private val days: Int? by lazy {
+        arguments?.getInt("days")
+    }
+
     override fun initObserver() {
     }
 
     override fun initView() {
+        val days = days ?: return
+        Log.d("TravelStartPointFragment", "여행일수: ${days}일")
+
+        sharedViewModel.setDailyStartPointName(List(days) { "" })
+        sharedViewModel.setDailyStartPointList(List(days) { 0 })
+
         initRecyclerView()
         setupConfirmButton()
     }
 
     private fun initRecyclerView() {
+        val days = days ?: return
+
         binding.rvTravelStartPoint.layoutManager = LinearLayoutManager(requireContext())
-        startPointAdapter = StartPointAdapter(itemCount = 5) { position ->
+        startPointAdapter = StartPointAdapter(itemCount = days) { position ->
             val action = TravelStartPointFragmentDirections.goToMap(lastFragmentId = 1)
             findNavController().navigate(action)
         }

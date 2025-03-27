@@ -130,7 +130,11 @@
             tools:layout="@layout/fragment_travel_date">
             <action
                 android:id="@+id/goToStartPoint"
-                app:destination="@id/startPointFragment" />
+                app:destination="@id/startPointFragment" >
+                <argument
+                    android:name="days"
+                    app:argType="integer" />
+            </action>
         </fragment>
         <fragment
             android:id="@+id/startPointFragment"
