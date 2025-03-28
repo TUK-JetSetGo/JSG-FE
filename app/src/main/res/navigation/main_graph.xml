@@ -147,6 +147,9 @@
                 <argument
                     android:name="lastFragmentId"
                     app:argType="integer" />
+                <argument
+                    android:name="selectedPosition"
+                    app:argType="integer" />
             </action>
             <action
                 android:id="@+id/goToLocation"

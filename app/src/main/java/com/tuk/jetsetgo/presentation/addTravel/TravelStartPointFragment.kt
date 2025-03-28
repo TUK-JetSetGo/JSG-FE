@@ -35,8 +35,12 @@ class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R
         val days = days ?: return
         Log.d("TravelStartPointFragment", "여행일수: ${days}일")
 
-        sharedViewModel.setDailyStartPointName(List(days) { "" })
-        sharedViewModel.setDailyStartPointList(List(days) { 0 })
+        if (sharedViewModel.dailyStartPointName.value.isEmpty()) {
+            sharedViewModel.setDailyStartPointName(List(days) { "" })
+            sharedViewModel.setDailyStartPointList(List(days) { 0 })
+        }else {
+            Log.d("TravelStartPointFragment", "현재 출발지 리스트 = ${sharedViewModel.dailyStartPointName.value}")
+        }
 
         initRecyclerView()
         setupConfirmButton()
@@ -47,7 +51,7 @@ class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R
 
         binding.rvTravelStartPoint.layoutManager = LinearLayoutManager(requireContext())
         startPointAdapter = StartPointAdapter(itemCount = days) { position ->
-            val action = TravelStartPointFragmentDirections.goToMap(lastFragmentId = 1)
+            val action = TravelStartPointFragmentDirections.goToMap(lastFragmentId = 1, selectedPosition = position)
             findNavController().navigate(action)
         }
         binding.rvTravelStartPoint.adapter = startPointAdapter
