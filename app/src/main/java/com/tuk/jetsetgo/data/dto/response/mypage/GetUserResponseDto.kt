@@ -1,5 +1,7 @@
 package com.tuk.jetsetgo.data.dto.response.mypage
 
+import com.tuk.jetsetgo.domain.model.response.mypage.GetUserResponseModel
+
 data class GetUserResponseDto(
     val createdAt: String,
     val email: String,
@@ -7,6 +9,6 @@ data class GetUserResponseDto(
     val updatedAt: String,
     val userId: Int
 ){
-    fun toGetUserResponseDto() =
-        GetUserResponseDto(createdAt, email, name, updatedAt, userId)
+    fun toGetUserResponseModel() =
+        GetUserResponseModel(createdAt, email, name, updatedAt, userId)
 }
