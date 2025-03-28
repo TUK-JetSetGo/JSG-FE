@@ -72,12 +72,11 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
     private fun setupConfirmButton() {
         binding.clTravelLocationConfirmBtn.setOnSingleClickListener {
-            //createTravelRequest()
-            findNavController().navigate(R.id.goToLoading)
+            createTravelRequest()
         }
     }
 
-    /*private fun createTravelRequest() {
+    private fun createTravelRequest() {
         val request = CreatePlanRequestModel(
             isGroup = sharedViewModel.isGroup.value,
             groupSize = sharedViewModel.groupSize.value,
@@ -114,5 +113,5 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
                 }
             }
         }
-    }*/
+    }
 }
