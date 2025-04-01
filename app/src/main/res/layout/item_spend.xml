@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_spend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_spend_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지출 내역"
+            style="@style/TextAppearance.JSG.Head1"
+            android:textSize="18dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="20dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_spend_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000,000"
+            style="@style/TextAppearance.JSG.Head1"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_spend_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지출자"
+            style="@style/TextAppearance.JSG.Body1"
+            android:textSize="14dp"
+            android:textColor="@color/black_700"
+            android:lineSpacingExtra="-5dp"
+            app:layout_constraintStart_toStartOf="@id/tv_spend_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_spend_title"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_spend_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  |  "
+            style="@style/TextAppearance.JSG.Body1"
+            android:textSize="14dp"
+            android:textColor="@color/gray_400"
+            app:layout_constraintStart_toEndOf="@id/tv_spend_person"
+            app:layout_constraintTop_toTopOf="@id/tv_spend_person"
+            app:layout_constraintBottom_toBottomOf="@id/tv_spend_person"
+            />
+
+        <TextView
+            android:id="@+id/tv_spend_participants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="참여자1, 참여자2"
+            style="@style/TextAppearance.JSG.Body1"
+            android:textSize="14dp"
+            android:textColor="@color/black_700"
+            android:lineSpacingExtra="-5dp"
+            app:layout_constraintStart_toEndOf="@id/tv_spend_line"
+            app:layout_constraintTop_toBottomOf="@id/tv_spend_title"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_spend_person"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_300"
+            app:layout_constraintTop_toBottomOf="@id/view_3"
+            android:layout_marginHorizontal="18dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

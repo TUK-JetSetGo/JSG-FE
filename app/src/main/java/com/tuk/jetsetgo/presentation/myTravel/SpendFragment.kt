@@ -4,49 +4,47 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.tuk.jetsetgo.R
-import com.tuk.jetsetgo.databinding.FragmentDetailScheduleBinding
-import com.tuk.jetsetgo.databinding.FragmentMyTravelBinding
-import com.tuk.jetsetgo.presentation.addTravel.adapter.MapAdapter
-import com.tuk.jetsetgo.presentation.addTravel.adapter.MapData
+import com.tuk.jetsetgo.databinding.FragmentSpendBinding
 import com.tuk.jetsetgo.presentation.base.BaseFragment
-import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleAdapter
-import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
-import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelAdapter
-import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelData
+import com.tuk.jetsetgo.presentation.myTravel.adapter.SpendAdapter
+import com.tuk.jetsetgo.presentation.myTravel.adapter.SpendData
 
+class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend) {
 
-class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.layout.fragment_detail_schedule) {
-    private lateinit var scheduleAdapter: ScheduleAdapter
+    private lateinit var spendAdapter: SpendAdapter
 
-    private val scheduleByDay = mapOf(
+    private val spendByDay = mapOf(
         0 to listOf(
-            ScheduleData("이동", "30분","AM 09:00","AM 09:30"),
-            ScheduleData("N서울타워", "60분","AM 9:30","AM 11:30"),
-            ScheduleData("이동", "30분","AM 09:00","AM 09:30"),
-            ScheduleData("N서울타워", "60분","AM 9:30","AM 11:30"),
-            ScheduleData("이동", "30분","AM 09:00","AM 09:30"),
-            ScheduleData("N서울타워", "60분","AM 9:30","AM 11:30"),
+            SpendData("식당", "100,000", "다희","기찬, 다희, 준하, 동훈"),
+            SpendData("카페", "70,000", "기찬","준하, 동훈"),
+            SpendData("쇼핑", "200,000", "준하","기찬, 다희"),
+            SpendData("편의점", "40,000", "동훈","기찬, 다희, 준하, 동훈"),
         ),
         1 to listOf(
-            ScheduleData("이동", "20분","AM 10:00","AM 10:20"),
-            ScheduleData("카페", "90분","AM 10:20","AM 11:50")
+            SpendData("식당", "100,000", "다희","기찬, 다희, 준하, 동훈"),
+            SpendData("카페", "70,000", "기찬","준하, 동훈"),
         ),
         2 to listOf(
-            ScheduleData("쇼핑", "120분","PM 01:00","PM 03:00")
+            SpendData("쇼핑", "200,000", "준하","기찬, 다희"),
+            SpendData("편의점", "40,000", "동훈","기찬, 다희, 준하, 동훈"),
         ),
         3 to listOf(
-            ScheduleData("쇼핑", "120분","PM 01:00","PM 03:00")
+            SpendData("식당", "100,000", "다희","기찬, 다희, 준하, 동훈"),
+            SpendData("카페", "70,000", "기찬","준하, 동훈"),
+            SpendData("쇼핑", "200,000", "준하","기찬, 다희"),
+            SpendData("편의점", "40,000", "동훈","기찬, 다희, 준하, 동훈"),
         ),
         4 to listOf(
-            ScheduleData("쇼핑", "120분","PM 01:00","PM 03:00")
+            SpendData("식당", "100,000", "다희","기찬, 다희, 준하, 동훈"),
+            SpendData("쇼핑", "200,000", "준하","기찬, 다희"),
+            SpendData("편의점", "40,000", "동훈","기찬, 다희, 준하, 동훈"),
         )
     )
+
 
     override fun initObserver() {
 
@@ -59,28 +57,8 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         setupTabs()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.main_bnv)
-        bottomNavigationView.visibility = View.VISIBLE
-    }
-
     private fun setClickListener() {
-        binding.viewHamburgerMenu.setOnClickListener { findNavController().navigate(R.id.goToSpend) }
-    }
 
-    private fun initRecyclerView() {
-        binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
-
-        // 초기값은 Day 1 (position = 0)
-        val initialSchedule = scheduleByDay[0] ?: emptyList()
-
-        scheduleAdapter = ScheduleAdapter(initialSchedule) {
-            // 클릭 이벤트 정의
-        }
-
-        binding.rvSchedule.adapter = scheduleAdapter
     }
 
     private fun setBackPressedCallback() {
@@ -91,9 +69,22 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         })
     }
 
+    private fun initRecyclerView() {
+        binding.rvSpend.layoutManager = LinearLayoutManager(requireContext())
+
+        // 초기값은 Day 1 (position = 0)
+        val initialSpend = spendByDay[0] ?: emptyList()
+
+        spendAdapter = SpendAdapter(initialSpend) {
+            // 클릭 이벤트 정의
+        }
+
+        binding.rvSpend.adapter = spendAdapter
+    }
+
     private fun setupTabs() {
-        val tabLayout = binding.tabLayoutScheduleDate
-        val numberOfDays = scheduleByDay.size
+        val tabLayout = binding.tabLayoutSpendDate
+        val numberOfDays = spendByDay.size
 
         for (i in 0 until numberOfDays) {
             val tab = tabLayout.newTab()
@@ -102,8 +93,8 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         }
 
         // 기본 첫 탭 선택 시 리스트 + 스타일 모두 초기화
-        val firstSchedule = scheduleByDay[0] ?: emptyList()
-        scheduleAdapter.updateList(firstSchedule)
+        val firstDay = spendByDay[0] ?: emptyList()
+        spendAdapter.updateList(firstDay)
 
         // 첫 탭을 선택된 스타일로 적용
         updateTabSelectedState(tabLayout.getTabAt(0)!!, true)
@@ -111,8 +102,8 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val position = tab.position
-                val selectedList = scheduleByDay[position] ?: emptyList()
-                scheduleAdapter.updateList(selectedList)
+                val selectedList = spendByDay[position] ?: emptyList()
+                spendAdapter.updateList(selectedList)
 
                 updateTabSelectedState(tab, true)
             }
@@ -155,6 +146,4 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             tvDay.setTextColor(resources.getColor(R.color.black, null))
         }
     }
-
-
 }
