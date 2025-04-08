@@ -46,10 +46,8 @@ class MypageFragment: BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypa
     }
 
     private fun getUser() {
-        // 1. API 요청
         mypageViewModel.getUser()
 
-        // 2. StateFlow 수집 및 UI 반영
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mypageViewModel.getUserState.collectLatest { state ->

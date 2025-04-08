@@ -169,7 +169,7 @@
             android:layout_marginStart="20dp"/>
 
         <TextView
-            android:id="@+id/tv_myprofile_date"
+            android:id="@+id/tv_myprofile_create_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2025-03-01"
