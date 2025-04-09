@@ -240,7 +240,16 @@
             android:id="@+id/spendFragment"
             android:name="com.tuk.jetsetgo.presentation.myTravel.SpendFragment"
             android:label="SpendFragment"
-            tools:layout="@layout/fragment_spend"/>
+            tools:layout="@layout/fragment_spend">
+            <action
+                android:id="@+id/goToAddSpend"
+                app:destination="@id/addSpendFragment"/>
+        </fragment>
+        <fragment
+            android:id="@+id/addSpendFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.AddSpendFragment"
+            android:label="AddSpendFragment"
+            tools:layout="@layout/fragment_add_spend"/>
 
     </navigation>
 
