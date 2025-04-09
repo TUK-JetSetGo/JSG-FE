@@ -5,20 +5,36 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentMyprofileBinding
+import com.tuk.jetsetgo.domain.model.request.mypage.PatchUserRequestModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
+import com.tuk.jetsetgo.presentation.mypage.adapter.MypageViewModel
+import com.tuk.jetsetgo.util.network.UiState
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragment_myprofile) {
+
+    private val mypageViewModel: MypageViewModel by activityViewModels()
+
     override fun initObserver() {
 
     }
@@ -26,7 +42,76 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
     override fun initView() {
         setClickListener()
         editText()
-        binding.tvMyprofileName.text = "${binding.tvMyprofileName.text} 님"
+        getUser()
+        patchUser()
+    }
+
+    private fun getUser() {
+        mypageViewModel.getUser()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mypageViewModel.getUserState.collectLatest { state ->
+                    when (state) {
+                        is UiState.Loading -> {
+                            Log.d("MyprofileFragment", "Loading user data")
+                            // 로딩 인디케이터 띄우기 등
+                        }
+
+                        is UiState.Success -> {
+                            // userInfo에서 실제 유저 정보 꺼내오기
+                            val user = mypageViewModel.userInfo.value
+                            if (user != null) {
+                                Log.d("MyprofileFragment", "유저 정보 UI 업데이트: $user")
+                                binding.tvMyprofileName.text = "${user.name} 님"
+                                binding.etMyprofileName.setText(user.name)
+                                binding.tvMyprofileEmail.text = user.email
+                                binding.tvMyprofileCreateDate.text = user.createdAt.substringBefore("T")
+                            }
+                        }
+
+                        is UiState.Error -> {
+                            Toast.makeText(requireContext(), "사용자 정보 로드 실패", Toast.LENGTH_SHORT).show()
+                            Log.e("MyprofileFragment", "사용자 정보 로드 실패: ${state.error?.message}")
+                        }
+
+                        UiState.Empty -> {
+                            Log.d("MyprofileFragment", "userInfo 상태: Empty")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun patchUser(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mypageViewModel.patchUserState.collectLatest { state ->
+                    when (state) {
+                        is UiState.Loading -> {
+                            Log.d("MyprofileFragment", "사용자 정보 수정 중...")
+                        }
+
+                        is UiState.Success -> {
+                            val newName = binding.etMyprofileName.text.toString().trim()
+                            binding.tvMyprofileName.text = "$newName 님"
+
+                            Snackbar.make(binding.root, "수정이 완료되었습니다.", Snackbar.LENGTH_SHORT)
+                                .setAnchorView(binding.tvMypageWithdraw)
+                                .show()
+                        }
+
+                        is UiState.Error -> {
+                            Toast.makeText(requireContext(), "이름 수정 실패", Toast.LENGTH_SHORT).show()
+                            Log.e("MyprofileFragment", "이름 수정 실패: ${state.error?.message}")
+                        }
+
+                        UiState.Empty -> Unit
+                    }
+                }
+            }
+        }
     }
 
     private fun setClickListener(){
@@ -54,10 +139,14 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         }
 
         binding.ivMyprofileSave.setOnClickListener {
-            Snackbar.make(it, "수정이 완료되었습니다.", Snackbar.LENGTH_SHORT)
-                .setAnchorView(binding.tvMypageWithdraw) // 버튼 위로 스낵바 위치 조정
-                .show()
+            val newName = binding.etMyprofileName.text.toString().trim()
+            if (newName.isNotEmpty()) {
+                mypageViewModel.patchUser(PatchUserRequestModel(name = newName))
+            } else {
+                Toast.makeText(requireContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
     }
 
@@ -68,17 +157,17 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
-        dialog.setContentView(R.layout.layout_logout_dialog)
+        dialog.setContentView(R.layout.layout_withdraw_dialog)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.window?.setLayout(
             (resources.displayMetrics.widthPixels * 0.8).toInt(),
             WindowManager.LayoutParams.WRAP_CONTENT
         )
 
-        val logoutBtn = dialog.findViewById<TextView>(R.id.tv_dialog_yes)
-        logoutBtn.setOnClickListener {
+        val withdrawBtn = dialog.findViewById<TextView>(R.id.tv_dialog_yes)
+        withdrawBtn.setOnClickListener {
             dialog.dismiss()
-            //logoutUser()
+            //deleteUser()
         }
 
         val cancelBtn = dialog.findViewById<TextView>(R.id.tv_dialog_no)

@@ -3,6 +3,7 @@ package com.tuk.jetsetgo.di
 import com.tuk.jetsetgo.data.service.TestService
 import com.tuk.jetsetgo.data.service.addTravel.AddTravelService
 import com.tuk.jetsetgo.data.service.login.LoginService
+import com.tuk.jetsetgo.data.service.mypage.MypageService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +33,12 @@ object ServiceModule {
     @Provides
     @Singleton
     fun provideLoginService(retrofit: Retrofit): LoginService {
+        return retrofit.buildService()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMypageService(retrofit: Retrofit): MypageService {
         return retrofit.buildService()
     }
 }

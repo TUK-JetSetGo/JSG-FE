@@ -2,8 +2,10 @@ package com.tuk.jetsetgo.di
 
 import com.tuk.jetsetgo.data.datasource.addTravel.AddTravelDataSource
 import com.tuk.jetsetgo.data.datasource.login.LoginDataSource
+import com.tuk.jetsetgo.data.datasource.mypage.MypageDataSource
 import com.tuk.jetsetgo.data.datasourceImpl.addTravel.AddTravelDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.login.LoginDataSourceImpl
+import com.tuk.jetsetgo.data.datasourceImpl.mypage.MypageDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,5 +24,10 @@ object DataSourceModule {
     @Singleton
     fun provideLoginDataSource(loginDataSourceImpl: LoginDataSourceImpl): LoginDataSource =
         loginDataSourceImpl
+
+    @Provides
+    @Singleton
+    fun provideMypageDataSource(mypageDataSourceImpl: MypageDataSourceImpl): MypageDataSource =
+        mypageDataSourceImpl
 
 }
