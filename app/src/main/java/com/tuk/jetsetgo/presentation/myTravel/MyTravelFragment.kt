@@ -2,7 +2,6 @@ package com.tuk.jetsetgo.presentation.myTravel
 
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,7 +13,6 @@ import com.tuk.jetsetgo.databinding.FragmentMyTravelBinding
 import com.tuk.jetsetgo.domain.model.response.myTravel.MyPlanResponseModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelAdapter
-import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -231,7 +231,16 @@
             android:id="@+id/detailScheduleFragment"
             android:name="com.tuk.jetsetgo.presentation.myTravel.DetailScheduleFragment"
             android:label="DetailScheduleFragment"
-            tools:layout="@layout/fragment_detail_schedule"/>
+            tools:layout="@layout/fragment_detail_schedule">
+            <action
+                android:id="@+id/goToSpend"
+                app:destination="@id/spendFragment"/>
+        </fragment>
+        <fragment
+            android:id="@+id/spendFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.SpendFragment"
+            android:label="SpendFragment"
+            tools:layout="@layout/fragment_spend"/>
 
     </navigation>
 

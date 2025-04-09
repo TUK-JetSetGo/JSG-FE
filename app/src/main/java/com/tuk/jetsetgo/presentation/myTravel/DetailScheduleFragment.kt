@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -86,7 +85,7 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     }
 
     private fun setClickListener() {
-
+        binding.viewHamburgerMenu.setOnClickListener { findNavController().navigate(R.id.goToSpend) }
     }
 
     private fun initRecyclerView() {
