@@ -2,24 +2,38 @@ package com.tuk.jetsetgo.presentation.myTravel.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemScheduleBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class ScheduleAdapter(
-    private var schedules: List<ScheduleData>,  // 🔁 var로 변경
     private val onScheduleClick: () -> Unit
-) : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
+) : ListAdapter<ScheduleData, ScheduleAdapter.ScheduleViewHolder>(DiffCallback()) {
 
     inner class ScheduleViewHolder(private val binding: ItemScheduleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(scheduleData: ScheduleData) {
             binding.tvScheduleTitle.text = scheduleData.title
             binding.tvScheduleTotalTime.text = scheduleData.totalTime
-            binding.tvScheduleStart.text = scheduleData.startTime
-            binding.tvScheduleEnd.text = scheduleData.endTime
+            binding.tvScheduleStart.text = formatToAmPmTime(scheduleData.startTime)
+            binding.tvScheduleEnd.text = formatToAmPmTime(scheduleData.endTime)
 
             binding.root.setOnClickListener {
                 onScheduleClick()
+            }
+        }
+
+        private fun formatToAmPmTime(isoString: String): String {
+            return try {
+                val formatter = DateTimeFormatter.ISO_DATE_TIME
+                val time = LocalDateTime.parse(isoString, formatter)
+                time.format(DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN)) // 예: 오전 9:00, 오후 3:00
+            } catch (e: Exception) {
+                "시간 없음"
             }
         }
     }
@@ -30,15 +44,17 @@ class ScheduleAdapter(
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
-        holder.bind(schedules[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = schedules.size
+    class DiffCallback : DiffUtil.ItemCallback<ScheduleData>() {
+        override fun areItemsTheSame(oldItem: ScheduleData, newItem: ScheduleData): Boolean {
+            return oldItem.title == newItem.title && oldItem.startTime == newItem.startTime
+        }
 
-    // 리스트 갱신용 함수
-    fun updateList(newSchedules: List<ScheduleData>) {
-        this.schedules = newSchedules
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: ScheduleData, newItem: ScheduleData): Boolean {
+            return oldItem == newItem
+        }
     }
 }
 

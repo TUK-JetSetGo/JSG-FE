@@ -47,9 +47,9 @@ object NetworkModule {
         return OkHttpClient.Builder().apply {
             addInterceptor(authInterceptor) // 인증 인터셉터 추가
             addInterceptor(interceptor)
-            connectTimeout(5, TimeUnit.SECONDS)
-            readTimeout(5, TimeUnit.SECONDS)
-            writeTimeout(5, TimeUnit.SECONDS)
+            connectTimeout(100, TimeUnit.SECONDS)
+            readTimeout(100, TimeUnit.SECONDS)
+            writeTimeout(100, TimeUnit.SECONDS)
         }.build()
     }
 

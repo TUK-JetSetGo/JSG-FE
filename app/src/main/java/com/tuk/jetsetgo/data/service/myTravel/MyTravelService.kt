@@ -13,6 +13,7 @@ interface MyTravelService {
     suspend fun fetchMyTravelList(): BaseResponse<MyPlanResponseDto>
 
     // 여행 일정 조회 API
+    @GET("travel-plans/{travelPlanId}")
     suspend fun fetchTravelPlan(
         @Path("travelPlanId") travelPlanId: Int,
         @Query("dayIndex") dayIndex: Int

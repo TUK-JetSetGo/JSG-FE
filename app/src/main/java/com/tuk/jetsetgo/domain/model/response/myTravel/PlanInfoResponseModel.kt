@@ -4,9 +4,9 @@ data class PlanInfoResponseModel(
     val travelPlanId: Int,
     val travelStartDate: String,
     val travelEndDate: String,
-    val itineraryInfoList: List<ItineraryInfoListModel>
+    val itineraryInfo: ItineraryInfoModel?
 ) {
-    data class ItineraryInfoListModel(
+    data class ItineraryInfoModel(
         val itineraryId: Int,
         val dayIndex: Int,
         val routeInfoList: List<RouteInfoListModel>

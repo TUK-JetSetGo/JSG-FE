@@ -6,9 +6,9 @@ data class PlanInfoResponseDto(
     val travelPlanId: Int,
     val travelStartDate: String,
     val travelEndDate: String,
-    val itineraryInfoList: List<ItineraryInfoListDto>
+    val itineraryInfo: ItineraryInfoDto?
 ) {
-    data class ItineraryInfoListDto(
+    data class ItineraryInfoDto(
         val itineraryId: Int,
         val dayIndex: Int,
         val routeInfoList: List<RouteInfoListDto>
@@ -37,14 +37,14 @@ data class PlanInfoResponseDto(
                 val travelCityId: Int
             ) {
                 fun toTouristSpotInfoModel() =
-                    PlanInfoResponseModel.ItineraryInfoListModel.RouteInfoListModel.TouristSpotInfoModel(touristSpotId, name, tel, category, businessStatus, address, thumbnailUrl, thumbnailUrls, latitude, longitude, activityLevel, homePage, naverBookingUrl, travelCityId)
+                    PlanInfoResponseModel.ItineraryInfoModel.RouteInfoListModel.TouristSpotInfoModel(touristSpotId, name, tel, category, businessStatus, address, thumbnailUrl, thumbnailUrls, latitude, longitude, activityLevel, homePage, naverBookingUrl, travelCityId)
             }
             fun toRouteInfoListModel() =
-                PlanInfoResponseModel.ItineraryInfoListModel.RouteInfoListModel(routeId, orderIndex, visitStartTime, visitEndTime, touristSpotInfo.toTouristSpotInfoModel())
+                PlanInfoResponseModel.ItineraryInfoModel.RouteInfoListModel(routeId, orderIndex, visitStartTime, visitEndTime, touristSpotInfo.toTouristSpotInfoModel())
         }
-        fun toItineraryInfoListModel() =
-            PlanInfoResponseModel.ItineraryInfoListModel(itineraryId, dayIndex, routeInfoList.map { it.toRouteInfoListModel() })
+        fun toItineraryInfoModel() =
+            PlanInfoResponseModel.ItineraryInfoModel(itineraryId, dayIndex, routeInfoList.map { it.toRouteInfoListModel() })
     }
     fun toPlanInfoResponseModel() =
-        PlanInfoResponseModel(travelPlanId, travelStartDate, travelEndDate, itineraryInfoList.map { it.toItineraryInfoListModel() })
+        PlanInfoResponseModel(travelPlanId, travelStartDate, travelEndDate, itineraryInfo?.toItineraryInfoModel())
 }

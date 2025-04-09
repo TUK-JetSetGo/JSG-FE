@@ -1,10 +1,13 @@
 package com.tuk.jetsetgo.presentation.myTravel
 
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,61 +27,54 @@ import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.format.TextStyle
+import java.time.temporal.ChronoUnit
+import java.util.Locale
 
 
 @AndroidEntryPoint
 class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.layout.fragment_detail_schedule), OnMapReadyCallback {
+    private val viewModel: MyTravelViewModel by activityViewModels()
     private lateinit var scheduleAdapter: ScheduleAdapter
     private var currentPath: PathOverlay? = null
     private var naverMap: NaverMap? = null
     private val markers = mutableListOf<Marker>()
+    private var isTabSetup = false
 
-
-    private val scheduleByDay = mapOf(
-        0 to listOf(
-            ScheduleData("돌하르방미술관", "60분","AM 9:30","AM 11:30",33.5388536,126.6888142),
-            ScheduleData("이동", "30분","AM 09:00","AM 09:30", null,null),
-            ScheduleData("함덕해수욕장", "60분","AM 9:30","AM 11:30",33.5431082,126.6696924),
-            ScheduleData("이동", "30분","AM 09:00","AM 09:30", null,null),
-            ScheduleData("금능석물원", "60분","AM 9:30","AM 11:30",33.3848796,126.2272967),
-        ),
-        1 to listOf(
-            ScheduleData("항파두리항몽유적지", "90분","AM 10:20","AM 11:50",33.4527482,126.407778),
-            ScheduleData("이동", "20분","AM 10:00","AM 10:20", null,null),
-            ScheduleData("비자림", "90분","AM 10:20","AM 11:50",33.4843445,126.8066615)
-        ),
-        2 to listOf(
-            ScheduleData("제주김녕미로공원", "120분","PM 01:00","PM 03:00",33.5362944,126.7720257),
-            ScheduleData("이동", "20분","AM 10:00","AM 10:20", null,null),
-            ScheduleData("비자림", "90분","AM 10:20","AM 11:50",33.4843445,126.8066615),
-            ScheduleData("이동", "20분","AM 10:00","AM 10:20", null,null),
-            ScheduleData("항파두리항몽유적지", "90분","AM 10:20","AM 11:50",33.4527482,126.407778),
-        ),
-        3 to listOf(
-            ScheduleData("렛츠런파크 제주", "120분","PM 01:00","PM 03:00",33.4098459,126.3931367),
-            ScheduleData("이동", "20분","AM 10:00","AM 10:20", null,null),
-            ScheduleData("금능석물원", "60분","AM 9:30","AM 11:30",33.3848796,126.2272967),
-            ScheduleData("이동", "20분","AM 10:00","AM 10:20", null,null),
-            ScheduleData("제주김녕미로공원", "120분","PM 01:00","PM 03:00",33.5362944,126.7720257)
-        ),
-        4 to listOf(
-            ScheduleData("비자림", "90분","AM 10:20","AM 11:50",33.4843445,126.8066615),
-            ScheduleData("이동", "20분","AM 10:00","AM 10:20", null,null),
-            ScheduleData("렛츠런파크 제주", "120분","PM 01:00","PM 03:00",33.4098459,126.3931367),
-            ScheduleData("이동", "20분","AM 10:00","AM 10:20", null,null),
-            ScheduleData("금능석물원", "60분","AM 9:30","AM 11:30",33.3848796,126.2272967)
-        )
-    )
+    private var initialScheduleList: List<ScheduleData>? = null
+    private var isInitialCameraMoved = false
 
     override fun initObserver() {
+        viewModel.travelPlanId.observe(viewLifecycleOwner) { id ->
+            Log.d("DetailSchedule", "travelPlanId 수신: $id")
+            viewModel.fetchTravelPlan(travelPlanId = id, dayIndex = 1)
+        }
+        viewModel.travelPlan.observe(viewLifecycleOwner) { response ->
+            val totalDays = ChronoUnit.DAYS.between(
+                LocalDate.parse(response.travelStartDate),
+                LocalDate.parse(response.travelEndDate)
+            ).toInt() + 1
 
+            if (!isTabSetup) {
+                setupTabs(totalDays)
+                isTabSetup = true
+            }
+
+            // 초기 탭 선택 시 일정 리스트 & 지도 마커 표시
+            val dayIndex = viewModel.currentDayIndex.value ?: 1
+            val scheduleList = viewModel.convertToScheduleData(response)
+            scheduleAdapter.submitList(scheduleList)
+            initialScheduleList = scheduleList
+            drawMapMarkers(scheduleList)
+        }
     }
 
     override fun initView() {
         setClickListener()
         initRecyclerView()
         setBackPressedCallback()
-        setupTabs()
+//        setupTabs()
         setupNaverMap()
     }
 
@@ -90,16 +86,16 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     }
 
     private fun setClickListener() {
-        
+
     }
 
     private fun initRecyclerView() {
         binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
 
         // 초기값은 Day 1 (position = 0)
-        val initialSchedule = scheduleByDay[0] ?: emptyList()
+//        val initialSchedule = scheduleByDay[0] ?: emptyList()
 
-        scheduleAdapter = ScheduleAdapter(initialSchedule) {
+        scheduleAdapter = ScheduleAdapter {
             // 클릭 이벤트 정의
         }
 
@@ -114,30 +110,39 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         })
     }
 
-    private fun setupTabs() {
+    private fun setupTabs(dayCount: Int) {
         val tabLayout = binding.tabLayoutScheduleDate
-        val numberOfDays = scheduleByDay.size
+//        val numberOfDays = scheduleByDay.size
+        tabLayout.removeAllTabs()
 
-        for (i in 0 until numberOfDays) {
+        for (i in 0 until dayCount) {
             val tab = tabLayout.newTab()
             tab.customView = createTabView(i)
             tabLayout.addTab(tab)
         }
 
-        // 기본 첫 탭 선택 시 리스트 + 스타일 모두 초기화
-        val firstSchedule = scheduleByDay[0] ?: emptyList()
-        scheduleAdapter.updateList(firstSchedule)
+//        // 기본 첫 탭 선택 시 리스트 + 스타일 모두 초기화
+//        val firstSchedule = scheduleByDay[0] ?: emptyList()
+//        scheduleAdapter.updateList(firstSchedule)
 
         // 첫 탭을 선택된 스타일로 적용
         updateTabSelectedState(tabLayout.getTabAt(0)!!, true)
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                val position = tab.position
-                val selectedList = scheduleByDay[position] ?: emptyList()
-                scheduleAdapter.updateList(selectedList)
+                val dayIndex = tab.position + 1
 
-                drawPathForDay(position)
+                viewModel.setCurrentDayIndex(dayIndex)
+
+                viewModel.travelPlanId.value?.let { travelPlanId ->
+                    viewModel.fetchTravelPlan(travelPlanId, dayIndex)
+                }
+
+
+//                val selectedList = scheduleByDay[position] ?: emptyList()
+//                scheduleAdapter.updateList(selectedList)
+//
+//                drawPathForDay(position)
 
                 updateTabSelectedState(tab, true)
 
@@ -156,11 +161,14 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         val tvDayOfWeek = view.findViewById<TextView>(R.id.tv_date_dayOfTheWeek)
         val tvDay = view.findViewById<TextView>(R.id.tv_date_day)
 
-        // 예시: Day 1 → "월 / 1"
-        val dayOfWeekList = listOf("화", "수", "목", "금", "토", "일", "월")
-        val dayIndex = position % 7
-        tvDayOfWeek.text = dayOfWeekList[dayIndex]
-        tvDay.text = "${position + 1}"
+        val startDate = LocalDate.parse(viewModel.travelPlan.value?.travelStartDate ?: LocalDate.now().toString())
+        val targetDate = startDate.plusDays(position.toLong())
+
+        val dayOfWeek = targetDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+        val day = targetDate.dayOfMonth
+
+        tvDayOfWeek.text = dayOfWeek
+        tvDay.text = "$day"
 
         return view
     }
@@ -192,13 +200,19 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
-        drawPathForDay(0) // 초기 경로 표시
+
         naverMap.uiSettings.isZoomControlEnabled = false
+
+        // 처음 들어왔을 때 마커가 먼저 세팅되었고, naverMap 준비 후 이동 안됐던 경우
+        if (!isInitialCameraMoved && initialScheduleList != null) {
+            drawMapMarkers(initialScheduleList!!)
+            isInitialCameraMoved = true
+        }
 
     }
 
-    private fun drawPathForDay(dayIndex: Int) {
-        val scheduleList = scheduleByDay[dayIndex] ?: return
+    private fun drawMapMarkers(scheduleList: List<ScheduleData>) {
+        if (naverMap == null) return
 
         markers.forEach { it.map = null }
         markers.clear()
