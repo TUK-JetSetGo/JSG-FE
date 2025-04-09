@@ -14,7 +14,7 @@
         android:background="@color/transparency">
 
         <TextView
-            android:id="@+id/tv_addSpend_name"
+            android:id="@+id/tv_addSpend_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="항목"
@@ -26,11 +26,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-
         <View
             android:layout_width="16dp"
             android:layout_height="16dp"
-            app:layout_constraintStart_toEndOf="@id/tv_addSpend_name"
-            app:layout_constraintTop_toTopOf="@id/tv_addSpend_name"/>
+            app:layout_constraintStart_toEndOf="@id/tv_addSpend_category"
+            app:layout_constraintTop_toTopOf="@id/tv_addSpend_category"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
