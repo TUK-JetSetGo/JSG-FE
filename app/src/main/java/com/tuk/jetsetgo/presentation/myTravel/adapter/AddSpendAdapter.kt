@@ -3,14 +3,17 @@ package com.tuk.jetsetgo.presentation.myTravel.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.ItemAddSpendCategoryBinding
 import com.tuk.jetsetgo.databinding.ItemSpendBinding
 
 class AddSpendAdapter(
-    private val items: List<String>
+    private val items: List<String>,
+    private val singleSelection: Boolean = false // default = 다중선택, true면 단일선택
 ) : RecyclerView.Adapter<AddSpendAdapter.AddSpendViewHolder>() {
 
-    private val selectedPositions = mutableSetOf<Int>()
+    private var selectedPosition: Int = RecyclerView.NO_POSITION
+    private val selectedPositions = mutableSetOf<Int>() // 다중선택용
 
     inner class AddSpendViewHolder(
         private val binding: ItemAddSpendCategoryBinding
@@ -18,21 +21,33 @@ class AddSpendAdapter(
         fun bind(name: String, position: Int) {
             binding.tvAddSpendCategory.text = name
 
-            val isSelected = selectedPositions.contains(position)
-            val backgroundRes = if (isSelected) {
-                com.tuk.jetsetgo.R.drawable.shape_rect_20_blue_main_fill
+            val isSelected = if (singleSelection) {
+                position == selectedPosition
             } else {
-                com.tuk.jetsetgo.R.drawable.shape_rect_999_gray300_fill
+                selectedPositions.contains(position)
+            }
+
+            val backgroundRes = if (isSelected) {
+                R.drawable.shape_rect_20_blue_main_fill
+            } else {
+                R.drawable.shape_rect_999_gray300_fill
             }
             binding.tvAddSpendCategory.setBackgroundResource(backgroundRes)
 
             binding.root.setOnClickListener {
-                if (selectedPositions.contains(position)) {
-                    selectedPositions.remove(position)
+                if (singleSelection) {
+                    val previousPosition = selectedPosition
+                    selectedPosition = position
+                    notifyItemChanged(previousPosition)
+                    notifyItemChanged(position)
                 } else {
-                    selectedPositions.add(position)
+                    if (selectedPositions.contains(position)) {
+                        selectedPositions.remove(position)
+                    } else {
+                        selectedPositions.add(position)
+                    }
+                    notifyItemChanged(position)
                 }
-                notifyItemChanged(position)
             }
         }
     }
@@ -52,3 +67,4 @@ class AddSpendAdapter(
 
     override fun getItemCount(): Int = items.size
 }
+

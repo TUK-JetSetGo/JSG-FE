@@ -28,6 +28,7 @@ class AddSpendFragment : BaseFragment<FragmentAddSpendBinding>(R.layout.fragment
 
     private fun setClickListener() {
         binding.ivAddSpendBack.setOnClickListener { findNavController().popBackStack() }
+        binding.tvAddSpendComplete.setOnClickListener { findNavController().popBackStack() }
 
         binding.tvAddSpendSplit.setOnClickListener {
             setPaymentMethod(isSplit = true)
@@ -50,7 +51,7 @@ class AddSpendFragment : BaseFragment<FragmentAddSpendBinding>(R.layout.fragment
         val dummyData = listOf("기찬", "다희", "준하", "동훈")
 
         // 결제자
-        addSpendAdapter = AddSpendAdapter(dummyData)
+        addSpendAdapter = AddSpendAdapter(dummyData, singleSelection = true)
         binding.rvPayer.apply {
             adapter = addSpendAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

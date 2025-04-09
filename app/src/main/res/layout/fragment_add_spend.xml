@@ -159,7 +159,7 @@
                     android:id="@+id/tv_addSpend_split"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="n빵"
+                    android:text="더치페이"
                     android:background="@drawable/shape_rect_999_blue_main_fill"
                     style="@style/TextAppearance.JSG.Body2"
                     android:textSize="16sp"
@@ -180,7 +180,7 @@
                     android:id="@+id/tv_addSpend_individual"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="각자"
+                    android:text="각자계산"
                     android:background="@drawable/shape_rect_999_gray300_fill"
                     style="@style/TextAppearance.JSG.Body2"
                     android:textSize="16sp"
@@ -189,7 +189,7 @@
                     app:layout_constraintStart_toEndOf="@id/view_4"
                     app:layout_constraintTop_toTopOf="@id/tv_addSpend_split"/>
 
-                <!-- n빵 -->
+                <!-- 더치페이 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_addSpend_split"
                     android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                         android:layout_marginBottom="-4dp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- 각자 -->
+                <!-- 각자계산 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_addSpend_individual"
                     android:layout_width="match_parent"
