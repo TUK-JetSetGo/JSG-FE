@@ -22,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentMyprofileBinding
+import com.tuk.jetsetgo.domain.model.request.mypage.PatchUserRequestModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.mypage.adapter.MypageViewModel
 import com.tuk.jetsetgo.util.network.UiState
@@ -42,6 +43,7 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         setClickListener()
         editText()
         getUser()
+        patchUser()
     }
 
     private fun getUser() {
@@ -82,6 +84,36 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         }
     }
 
+    private fun patchUser(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mypageViewModel.patchUserState.collectLatest { state ->
+                    when (state) {
+                        is UiState.Loading -> {
+                            Log.d("MyprofileFragment", "사용자 정보 수정 중...")
+                        }
+
+                        is UiState.Success -> {
+                            val newName = binding.etMyprofileName.text.toString().trim()
+                            binding.tvMyprofileName.text = "$newName 님"
+
+                            Snackbar.make(binding.root, "수정이 완료되었습니다.", Snackbar.LENGTH_SHORT)
+                                .setAnchorView(binding.tvMypageWithdraw)
+                                .show()
+                        }
+
+                        is UiState.Error -> {
+                            Toast.makeText(requireContext(), "이름 수정 실패", Toast.LENGTH_SHORT).show()
+                            Log.e("MyprofileFragment", "이름 수정 실패: ${state.error?.message}")
+                        }
+
+                        UiState.Empty -> Unit
+                    }
+                }
+            }
+        }
+    }
+
     private fun setClickListener(){
         binding.ivMyprofileBack.setOnClickListener { findNavController().popBackStack() }
         binding.ivMyprofileDelete.setOnClickListener { binding.etMyprofileName.setText("") }
@@ -107,10 +139,14 @@ class MyprofileFragment: BaseFragment<FragmentMyprofileBinding>(R.layout.fragmen
         }
 
         binding.ivMyprofileSave.setOnClickListener {
-            Snackbar.make(it, "수정이 완료되었습니다.", Snackbar.LENGTH_SHORT)
-                .setAnchorView(binding.tvMypageWithdraw) // 버튼 위로 스낵바 위치 조정
-                .show()
+            val newName = binding.etMyprofileName.text.toString().trim()
+            if (newName.isNotEmpty()) {
+                mypageViewModel.patchUser(PatchUserRequestModel(name = newName))
+            } else {
+                Toast.makeText(requireContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
     }
 

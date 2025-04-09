@@ -53,6 +53,7 @@ class MypageViewModel @Inject constructor(
             mypageRepository.patchUser(request)
                 .onSuccess { response ->
                     Log.d("MypageViewModel", "patchUser() 성공")
+                    _patchUserState.value = UiState.Success(true)
                 }
                 .onFailure { exception ->
                     Log.e("MypageViewModel", "patchUser() 실패: ${exception.message}")
