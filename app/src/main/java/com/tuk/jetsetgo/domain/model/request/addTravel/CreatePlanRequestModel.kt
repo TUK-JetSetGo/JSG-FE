@@ -14,8 +14,10 @@ data class CreatePlanRequestModel(
     val travelPurposeId: Int,
     val travelThemeId: Int,
     val budget: Int,
-    val travelSpotIdList: List<Int>?
+    val travelSpotIdList: List<Int>?,
+    val dailyStartPointList: List<Int>?,
+    val preferredTransport: String
 ){
     fun toCreatePlanRequestDto() =
-        CreatePlanRequestDto(isGroup, groupSize, travelCityId, dailyVisitCount, activityStartTime, activityEndTime, travelStartDate, travelEndDate, travelPurposeId, travelThemeId, budget, travelSpotIdList)
+        CreatePlanRequestDto(isGroup, groupSize, travelCityId, dailyVisitCount, activityStartTime, activityEndTime, travelStartDate, travelEndDate, travelPurposeId, travelThemeId, budget, travelSpotIdList, dailyStartPointList, preferredTransport)
 }

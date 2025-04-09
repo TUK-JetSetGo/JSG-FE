@@ -4,5 +4,7 @@ data class ScheduleData(
     val title: String,
     val totalTime: String,
     val startTime: String,
-    val endTime: String
+    val endTime: String,
+    val latitude: Double?,
+    val longitude: Double?
 )

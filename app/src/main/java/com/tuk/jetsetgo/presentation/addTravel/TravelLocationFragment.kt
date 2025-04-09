@@ -30,7 +30,6 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val addTravelViewModel: AddTravelViewModel by viewModels()
 
-    private val locationList = mutableListOf("장소1", "장소2", "장소3")
     override fun initObserver() {
     }
 
@@ -61,7 +60,8 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
     private fun setupAddButton() {
         binding.clTravelLocationAddBtn.setOnSingleClickListener {
-            findNavController().navigate(R.id.goToMap)
+            val action = TravelLocationFragmentDirections.goToMap(lastFragmentId = 2)
+            findNavController().navigate(action)
         }
     }
 
@@ -89,7 +89,9 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
             travelPurposeId = sharedViewModel.travelPurposeId.value,
             travelThemeId = sharedViewModel.travelThemeId.value,
             budget = sharedViewModel.budget.value,
-            travelSpotIdList = sharedViewModel.travelSpotIdList.value
+            travelSpotIdList = sharedViewModel.travelSpotIdList.value,
+            dailyStartPointList = sharedViewModel.dailyStartPointList.value,
+            preferredTransport = sharedViewModel.preferredTransport.value
         )
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -100,7 +102,7 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
                         is UiState.Success -> {
                             Log.d("TravelLocationFragment", "일정 생성 성공")
                             Toast.makeText(requireContext(), "일정 생성 성공", Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.goToLoading) // 로그인 화면으로 이동
+                            findNavController().navigate(R.id.goToLoading) // 로딩 화면으로 이동
                         }
                         is UiState.Error -> {
                             Toast.makeText(requireContext(), "일정 생성 실패: ${state.error?.message}", Toast.LENGTH_SHORT).show()
