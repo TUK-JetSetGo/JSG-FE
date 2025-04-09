@@ -58,7 +58,7 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
     }
 
     private fun setClickListener() {
-
+        binding.ivSpendAddBtn.setOnClickListener { findNavController().navigate(R.id.goToAddSpend) }
     }
 
     private fun setBackPressedCallback() {
