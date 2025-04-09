@@ -51,10 +51,13 @@ class TravelDateFragment: BaseFragment<FragmentTravelDateBinding>(R.layout.fragm
                 val startDate = java.time.LocalDate.parse(startDateStr, formatter)
                 val endDate = java.time.LocalDate.parse(endDateStr, formatter)
                 if (endDate.isAfter(startDate)) {
-                    findNavController().navigate(R.id.goToLocation)
+                    val days = java.time.temporal.ChronoUnit.DAYS.between(startDate, endDate).toInt() + 1
+                    val action = TravelDateFragmentDirections.goToStartPoint(days = days)
+                    findNavController().navigate(action)
                 } else {
                     Toast.makeText(requireContext(), "여행 종료 날짜는 시작 날짜보다 이후여야 합니다", Toast.LENGTH_SHORT).show()
                 }
+
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "날짜 형식이 올바르지 않습니다", Toast.LENGTH_SHORT).show()
             }

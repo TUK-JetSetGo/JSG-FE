@@ -129,6 +129,29 @@
             android:label="DateFragment"
             tools:layout="@layout/fragment_travel_date">
             <action
+                android:id="@+id/goToStartPoint"
+                app:destination="@id/startPointFragment" >
+                <argument
+                    android:name="days"
+                    app:argType="integer" />
+            </action>
+        </fragment>
+        <fragment
+            android:id="@+id/startPointFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelStartPointFragment"
+            android:label="StartPointFragment"
+            tools:layout="@layout/fragment_travel_start_point">
+            <action
+                android:id="@+id/goToMap"
+                app:destination="@id/mapFragment">
+                <argument
+                    android:name="lastFragmentId"
+                    app:argType="integer" />
+                <argument
+                    android:name="selectedPosition"
+                    app:argType="integer" />
+            </action>
+            <action
                 android:id="@+id/goToLocation"
                 app:destination="@id/locationFragment" />
         </fragment>
@@ -139,7 +162,11 @@
             tools:layout="@layout/fragment_travel_location">
             <action
                 android:id="@+id/goToMap"
-                app:destination="@id/mapFragment" />
+                app:destination="@id/mapFragment">
+                <argument
+                    android:name="lastFragmentId"
+                    app:argType="integer" />
+            </action>
             <action
                 android:id="@+id/goToLoading"
                 app:destination="@id/loadingFragment" />
@@ -166,9 +193,26 @@
             android:label="LoadingFragment"
             tools:layout="@layout/fragment_travel_loading">
             <action
-                android:id="@+id/goToHome"
-                app:destination="@id/homeFragment" />
+                android:id="@+id/goToComplete"
+                app:destination="@id/completeFragment" />
         </fragment>
+        <fragment
+            android:id="@+id/completeFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelCompleteFragment"
+            android:label="CompleteFragment"
+            tools:layout="@layout/fragment_travel_complete">
+            <action
+                android:id="@+id/goToHome"
+                app:destination="@id/homeTab" />
+            <action
+                android:id="@+id/goToDetailSchedule"
+                app:destination="@id/detailScheduleFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/detailScheduleFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.DetailScheduleFragment"
+            android:label="DetailScheduleFragment"
+            tools:layout="@layout/fragment_detail_schedule"/>
     </navigation>
 
     <!-- my Travel tab -->

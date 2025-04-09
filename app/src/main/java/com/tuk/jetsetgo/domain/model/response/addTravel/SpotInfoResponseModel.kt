@@ -8,7 +8,7 @@ data class SpotInfoResponseModel(
     val isLast: Boolean
 ) {
     data class TouristSpotInfoListModel(
-        val id: Int,
+        val touristSpotId: Int,
         val name: String,
         val tel: String?,
         val category: String?,

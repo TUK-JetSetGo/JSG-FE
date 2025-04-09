@@ -8,10 +8,13 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentTravelActivityLevelBinding
 import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
+import com.tuk.jetsetgo.presentation.addTravel.adapter.ThemeAdapter
+import com.tuk.jetsetgo.presentation.addTravel.adapter.TransportationAdapter
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.util.extension.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,15 +24,18 @@ import java.time.format.DateTimeFormatter
 @AndroidEntryPoint
 class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBinding>(R.layout.fragment_travel_activity_level) {
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var transportationAdapter: TransportationAdapter
 
     private lateinit var startBottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var endBottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var transportationBottomSheetBehavior: BottomSheetBehavior<View>
 
     override fun initObserver() {
         setClickListener()
         initBottomSheets()
         initBottomSheetActions()
         initVisitCountControls()
+        setupTransportationRecyclerView()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -62,6 +68,7 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
                 Log.d("TravelActivityLevelFragment", "방문지 개수: ${sharedViewModel.dailyVisitCount.value}")
                 Log.d("TravelActivityLevelFragment", "시작 시간: ${sharedViewModel.activityStartTime.value}")
                 Log.d("TravelActivityLevelFragment", "종료 시간: ${sharedViewModel.activityEndTime.value}")
+                Log.d("TravelActivityLevelFragment", "이동 수단: ${sharedViewModel.preferredTransport.value}")
                 findNavController().navigate(R.id.goToPurpose)
             } else {
                 Toast.makeText(requireContext(), "활동 시작 시간은 종료 시간보다 빨라야 합니다", Toast.LENGTH_SHORT).show()
@@ -73,11 +80,42 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
     private fun setClickListener() {
         binding.tvActivityLevelTimeStart.setOnSingleClickListener { toggleBottomSheetState(startBottomSheetBehavior) }
         binding.tvActivityLevelTimeEnd.setOnSingleClickListener { toggleBottomSheetState(endBottomSheetBehavior) }
+        binding.tvActivityLevelDropDownTransportation.setOnSingleClickListener { toggleBottomSheetState(transportationBottomSheetBehavior) }
     }
+
+    private fun setupTransportationRecyclerView() {
+        transportationAdapter = TransportationAdapter { selected ->
+            // 한글 → 영문 코드로 매핑
+            val code = when (selected) {
+                "자동차" -> "CAR"
+                "도보" -> "WALK"
+                "자전거" -> "BIKE"
+                "대중교통" -> "PUBLIC_TRANSPORT"
+                else -> ""
+            }
+
+            // UI 업데이트
+            binding.tvActivityLevelDropDownTransportation.text = selected
+
+            // ViewModel 업데이트
+            sharedViewModel.setPreferredTransport(code)
+
+            // 바텀시트 닫기
+            transportationBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+
+        binding.rvTheme.adapter = transportationAdapter
+        binding.rvTheme.layoutManager = LinearLayoutManager(requireContext())
+
+        val transportationList = listOf("자동차", "도보", "자전거", "대중교통")
+        transportationAdapter.updateList(transportationList)
+    }
+
 
     private fun initBottomSheets() {
         startBottomSheetBehavior = createBottomSheet(binding.clBottomSheetTimeStart)
         endBottomSheetBehavior = createBottomSheet(binding.clBottomSheetTimeEnd)
+        transportationBottomSheetBehavior = createBottomSheet(binding.llBottomSheetTransportation)
     }
 
     private fun createBottomSheet(sheet: View): BottomSheetBehavior<View> {
