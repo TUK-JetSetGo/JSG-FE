@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.data.service.myTravel
 
 import com.tuk.jetsetgo.data.dto.BaseResponse
 import com.tuk.jetsetgo.data.dto.request.myTravel.ExpenseRequestDto
+import com.tuk.jetsetgo.data.dto.response.myTravel.ExpenseDateResponseDto
 import com.tuk.jetsetgo.data.dto.response.myTravel.ExpenseDetailResponseDto
 import com.tuk.jetsetgo.data.dto.response.myTravel.MyPlanResponseDto
 import com.tuk.jetsetgo.data.dto.response.myTravel.PlanInfoResponseDto
