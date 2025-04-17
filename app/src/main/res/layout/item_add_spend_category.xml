@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/transparency">
+
+        <TextView
+            android:id="@+id/tv_addSpend_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="항목"
+            android:background="@drawable/shape_rect_999_gray300_fill"
+            style="@style/TextAppearance.JSG.Body2"
+            android:textSize="16sp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            app:layout_constraintStart_toEndOf="@id/tv_addSpend_category"
+            app:layout_constraintTop_toTopOf="@id/tv_addSpend_category"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

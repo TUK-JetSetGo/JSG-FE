@@ -85,7 +85,7 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     }
 
     private fun setClickListener() {
-        binding.viewHamburgerMenu.setOnClickListener { findNavController().navigate(R.id.goToSpend) }
+        binding.viewHamburgerMenu.setOnClickListener { findNavController().navigate(R.id.goToSettle) }
     }
 
     private fun initRecyclerView() {
