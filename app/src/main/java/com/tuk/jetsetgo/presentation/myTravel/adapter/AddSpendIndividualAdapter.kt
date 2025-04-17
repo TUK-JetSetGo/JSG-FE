@@ -5,7 +5,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tuk.jetsetgo.databinding.ItemAddSpendPriceBinding
+import com.tuk.jetsetgo.databinding.ItemInputPriceBinding
 
 class AddSpendIndividualAdapter(
     private val items: List<String>,
@@ -15,7 +15,7 @@ class AddSpendIndividualAdapter(
     private val priceList = MutableList(items.size) { 0 }
 
     inner class IndividualViewHolder(
-        private val binding: ItemAddSpendPriceBinding
+        private val binding: ItemInputPriceBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(name: String, position: Int) {
@@ -39,7 +39,7 @@ class AddSpendIndividualAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndividualViewHolder {
-        val binding = ItemAddSpendPriceBinding.inflate(
+        val binding = ItemInputPriceBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

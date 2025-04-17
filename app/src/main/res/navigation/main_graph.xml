@@ -238,6 +238,9 @@
             <action
                 android:id="@+id/goToSettle"
                 app:destination="@id/settleFragment"/>
+            <action
+                android:id="@+id/goToChecklist"
+                app:destination="@id/checklistFragment"/>
         </fragment>
         <fragment
             android:id="@+id/spendFragment"
@@ -262,6 +265,11 @@
                 android:id="@+id/settleToSpend"
                 app:destination="@id/spendFragment"/>
         </fragment>
+        <fragment
+            android:id="@+id/checklistFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.ChecklistFragment"
+            android:label="ChecklistFragment"
+            tools:layout="@layout/fragment_checklist"/>
 
     </navigation>
 

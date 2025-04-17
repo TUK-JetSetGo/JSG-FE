@@ -105,6 +105,10 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                         findNavController().navigate(R.id.goToSettle)
                         true
                     }
+                    R.id.action_checklist -> {
+                        findNavController().navigate(R.id.goToChecklist)
+                        true
+                    }
                     else -> false
                 }
             }

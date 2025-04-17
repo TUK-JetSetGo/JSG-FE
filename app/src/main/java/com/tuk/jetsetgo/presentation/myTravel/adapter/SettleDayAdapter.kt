@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.R
-import com.tuk.jetsetgo.databinding.ItemAddSpendCategoryBinding
 import com.tuk.jetsetgo.databinding.ItemSettleBinding
 
 class SettleDayAdapter(

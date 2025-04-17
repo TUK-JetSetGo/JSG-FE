@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.R
-import com.tuk.jetsetgo.databinding.ItemAddSpendCategoryBinding
+import com.tuk.jetsetgo.databinding.ItemCategoryBinding
 
 class SettlePayerAdapter(
     private val payerList: List<String>,
@@ -13,7 +13,7 @@ class SettlePayerAdapter(
 
     private var selectedPosition = RecyclerView.NO_POSITION
 
-    inner class PayerViewHolder(val binding: ItemAddSpendCategoryBinding) :
+    inner class PayerViewHolder(val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(name: String) {
             binding.tvAddSpendCategory.text = name
@@ -29,7 +29,7 @@ class SettlePayerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PayerViewHolder {
-        val binding = ItemAddSpendCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PayerViewHolder(binding)
     }
 
