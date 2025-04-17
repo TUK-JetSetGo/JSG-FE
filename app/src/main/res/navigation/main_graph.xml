@@ -257,7 +257,11 @@
             android:id="@+id/settleFragment"
             android:name="com.tuk.jetsetgo.presentation.myTravel.SettleFragment"
             android:label="SettleFragment"
-            tools:layout="@layout/fragment_settle"/>
+            tools:layout="@layout/fragment_settle">
+            <action
+                android:id="@+id/settleToSpend"
+                app:destination="@id/spendFragment"/>
+        </fragment>
 
     </navigation>
 
