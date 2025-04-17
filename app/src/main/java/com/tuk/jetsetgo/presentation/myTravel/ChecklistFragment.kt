@@ -1,5 +1,6 @@
 package com.tuk.jetsetgo.presentation.myTravel
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,6 +29,7 @@ class ChecklistFragment : BaseFragment<FragmentChecklistBinding>(R.layout.fragme
         }
 
         viewModel.checklistItems.observe(viewLifecycleOwner) { items ->
+            Log.d("ChecklistFragment", "옵저버 감지됨! 아이템 수: ${items.size}") // ✅ 옵저버가 데이터 받고 있는지 확인
             checklistItemAdapter = ChecklistItemAdapter(items)
             binding.rvChecklistItems.adapter = checklistItemAdapter
         }

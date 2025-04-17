@@ -1,9 +1,9 @@
 package com.tuk.jetsetgo.presentation.myTravel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tuk.jetsetgo.domain.repository.myTravel.MyTravelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -12,26 +12,33 @@ class ChecklistViewModel @Inject constructor(
     //private val repository: MyTravelRepository
 ):ViewModel() {
 
-    // 프리셋 리스트 (예: 바다, 산, 캠핑 등)
     private val _presetList = MutableLiveData<List<String>>()
     val presetList: LiveData<List<String>> get() = _presetList
 
-    // 선택된 프리셋의 준비물 목록
     private val _checklistItems = MutableLiveData<List<String>>()
     val checklistItems: LiveData<List<String>> get() = _checklistItems
 
+    private val dummyChecklistMap = mapOf(
+        "바다" to listOf("수영복", "썬크림", "선글라스", "비치타월", "슬리퍼"),
+        "산행" to listOf("등산화", "모자", "물병", "간식", "우비", "지도"),
+        "캠핑" to listOf("텐트", "침낭", "버너", "랜턴", "모기약", "접이식 의자"),
+        "해외" to listOf("여권", "환전", "멀티 어댑터", "세면도구", "복대", "비상약")
+    )
+
     init {
-        _presetList.value = listOf("바다 여행", "산행", "캠핑")
-        _checklistItems.value = listOf("썬크림", "수건", "슬리퍼") // 기본 더미
+        _presetList.value = dummyChecklistMap.keys.toList()
+        onPresetSelected("바다 여행") // ✅ 기본 프리셋
+        Log.d("ChecklistViewModel", "초기 프리셋 설정 완료")
     }
 
+
     fun onPresetSelected(preset: String) {
-        _checklistItems.value = when (preset) {
-            "산행" -> listOf("등산화", "물", "지팡이")
-            "캠핑" -> listOf("텐트", "버너", "침낭")
-            else -> listOf("썬크림", "수건", "슬리퍼")
-        }
+        Log.d("ChecklistViewModel", "onPresetSelected 호출됨: $preset") // ✅ 프리셋에 따른 로딩 확인
+        val data = dummyChecklistMap[preset].orEmpty()
+        Log.d("ChecklistViewModel", "불러온 준비물 목록: $data") // ✅ 데이터 비어있는지 확인
+        _checklistItems.value = data
     }
+
 
     fun addItem(item: String) {
         val updatedList = _checklistItems.value.orEmpty().toMutableList().apply { add(item) }
