@@ -85,4 +85,9 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="WhitePopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/shape_rect_20_white_fill</item>
+    </style>
+
+
 </resources>

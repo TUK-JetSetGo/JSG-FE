@@ -3,6 +3,7 @@ package com.tuk.jetsetgo.presentation.myTravel
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -75,6 +76,7 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         setBackPressedCallback()
 //        setupTabs()
         setupNaverMap()
+        setupMenu()
     }
 
     override fun onDestroyView() {
@@ -85,9 +87,30 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     }
 
     private fun setClickListener() {
-        binding.viewHamburgerMenu.setOnClickListener { findNavController().navigate(R.id.goToSettle) }
+
     }
 
+    private fun setupMenu(){
+        binding.viewHamburgerMenu.setOnClickListener { anchor ->
+            val popup = PopupMenu(requireContext(), anchor, 0, 0, R.style.WhitePopupMenu)
+            popup.menuInflater.inflate(R.menu.menu_detail_schedule, popup.menu)
+            popup.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_spend -> {
+                        findNavController().navigate(R.id.goToSpend)
+                        true
+                    }
+                    R.id.action_settle -> {
+                        findNavController().navigate(R.id.goToSettle)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popup.show()
+        }
+
+    }
     private fun initRecyclerView() {
         binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
 
