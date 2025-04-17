@@ -13,7 +13,7 @@ class SettlePayAdapter(
     inner class PayViewHolder(val binding: ItemSettlePayBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: String) {
-            binding.tvSettlePayTitle.text = data
+            binding.tvSettlePayTitle.text = data.substringBefore("에게") + "에게"
             binding.tvSettleTotalPayPrice.text = data.substringAfter("에게")
         }
     }
