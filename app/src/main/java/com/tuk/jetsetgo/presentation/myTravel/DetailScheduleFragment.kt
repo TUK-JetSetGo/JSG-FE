@@ -79,6 +79,7 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     override fun onDestroyView() {
         super.onDestroyView()
+        isTabSetup = false
 
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.main_bnv)
         bottomNavigationView.visibility = View.VISIBLE
