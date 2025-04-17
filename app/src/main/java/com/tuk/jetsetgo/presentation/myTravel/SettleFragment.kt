@@ -26,7 +26,7 @@ class SettleFragment : BaseFragment<FragmentSettleBinding>(R.layout.fragment_set
     }
 
     private fun setClickListener() {
-
+        binding.tvSettleModifyBtn.setOnClickListener { findNavController().navigate(R.id.settleToSpend) }
     }
 
     private fun setBackPressedCallback() {
