@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_settle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_settle_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1일차"
+            style="@style/TextAppearance.JSG.Head1"
+            android:textSize="18dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="20dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_settle_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000,000"
+            style="@style/TextAppearance.JSG.Head1"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/view_settle_btn"
+            app:layout_constraintTop_toTopOf="@id/tv_settle_title"
+            android:layout_marginEnd="16dp"/>
+        
+        <View
+            android:id="@+id/view_settle_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_arrow_down"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_settle_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_settle_title"
+            android:layout_marginEnd="20dp"/>
+        
+        <View
+            android:id="@+id/view_box"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/gray_300"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rv_settle_list"
+            app:layout_constraintBottom_toBottomOf="@id/rv_settle_list"
+            android:layout_marginHorizontal="20dp"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_settle_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:maxHeight="100dp"
+            android:minHeight="20dp"
+            android:background="@color/transparency"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_settle_total_price"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="30dp"
+            tools:listitem="@layout/item_settle_list"
+            android:orientation="vertical"
+            android:visibility="gone"/>
+        
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toBottomOf="@id/view_box"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
