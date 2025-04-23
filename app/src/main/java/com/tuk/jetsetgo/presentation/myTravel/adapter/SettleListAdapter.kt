@@ -3,7 +3,6 @@ package com.tuk.jetsetgo.presentation.myTravel.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tuk.jetsetgo.databinding.ItemAddSpendCategoryBinding
 import com.tuk.jetsetgo.databinding.ItemSettleListBinding
 
 class SettleListAdapter(

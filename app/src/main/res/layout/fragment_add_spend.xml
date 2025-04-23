@@ -118,7 +118,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="30dp"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/item_add_spend_category"/>
+                    tools:listitem="@layout/item_category"/>
 
                 <TextView
                     android:id="@+id/tv_addSpend_participants"
@@ -141,7 +141,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="30dp"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/item_add_spend_category"/>
+                    tools:listitem="@layout/item_category"/>
 
                 <TextView
                     android:id="@+id/tv_addSpend_paymentMethod"
@@ -250,7 +250,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginTop="14dp"
                         android:orientation="vertical"
-                        tools:listitem="@layout/item_add_spend_price"/>
+                        tools:listitem="@layout/item_input_price"/>
 
                     <TextView
                         android:id="@+id/tv_addSpend_individual_total"
