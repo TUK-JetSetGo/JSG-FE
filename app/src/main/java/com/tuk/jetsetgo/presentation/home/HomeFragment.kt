@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.presentation.home
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentHomeBinding
@@ -9,6 +10,7 @@ import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.home.adapter.HomePictureAdapter
 import com.tuk.jetsetgo.presentation.home.adapter.HomePictureItem
 import com.tuk.jetsetgo.presentation.home.adapter.PictureAdapter
+import com.tuk.jetsetgo.util.extension.CircleIndicatorDecoration
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private lateinit var pictureAdapter: PictureAdapter
@@ -52,6 +54,11 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.rvHomePicture.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = homePictureAdapter
+
+            // Snap Helper 추가
+            LinearSnapHelper().attachToRecyclerView(this)
+            // Circle Indicator 추가
+            addItemDecoration(CircleIndicatorDecoration())
         }
     }
 
