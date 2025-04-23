@@ -22,17 +22,17 @@ class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.l
     }
 
     override fun initView() {
-        bottomNavigationRemove()
+        //bottomNavigationRemove()
         setupClickListeners()
         restorePreviousSelection()  // 이전 선택 상태 복원
     }
 
-    private fun bottomNavigationRemove() {
+    /*private fun bottomNavigationRemove() {
         // BottomNavigationView 숨기기
         val bottomNavigationView =
             requireActivity().findViewById<BottomNavigationView>(R.id.main_bnv)
         bottomNavigationView?.visibility = View.GONE
-    }
+    }*/
 
     private fun setupClickListeners() {
         val btnAlone = binding.tvTravelPersonnelBtnAlone
