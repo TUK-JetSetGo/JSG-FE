@@ -9,7 +9,9 @@ import com.tuk.jetsetgo.databinding.FragmentAddSpendBinding
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.AddSpendAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.AddSpendIndividualAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddSpendFragment : BaseFragment<FragmentAddSpendBinding>(R.layout.fragment_add_spend) {
 
     private lateinit var addSpendAdapter: AddSpendAdapter

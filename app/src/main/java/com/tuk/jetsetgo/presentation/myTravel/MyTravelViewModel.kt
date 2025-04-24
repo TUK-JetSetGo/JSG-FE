@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tuk.jetsetgo.domain.model.request.myTravel.ExpenseRequestModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.MyPlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.PlanInfoResponseModel
 import com.tuk.jetsetgo.domain.repository.myTravel.MyTravelRepository
@@ -33,6 +34,9 @@ class MyTravelViewModel @Inject constructor(
 
     private val _currentDayIndex = MutableLiveData<Int>(1)
     val currentDayIndex: LiveData<Int> = _currentDayIndex
+
+    private val _saveExpenseResult = MutableLiveData<Result<String>>()
+    val saveExpenseResult: LiveData<Result<String>> = _saveExpenseResult
 
     fun fetchMyTravelList() {
         viewModelScope.launch {
@@ -90,5 +94,19 @@ class MyTravelViewModel @Inject constructor(
 
     fun setCurrentDayIndex(index: Int) {
         _currentDayIndex.value = index
+    }
+
+    fun saveExpense(request: ExpenseRequestModel) {
+        viewModelScope.launch {
+            repository.fetchSaveExpense(request)
+                .onSuccess { result ->
+                    Log.d("MyTravelViewModel", "지출 저장 성공: $result")
+                    _saveExpenseResult.value = Result.success(result)
+                }
+                .onFailure { exception ->
+                    Log.e("MyTravelViewModel", "지출 저장 실패", exception)
+                    _saveExpenseResult.value = Result.failure(exception)
+                }
+        }
     }
 }
