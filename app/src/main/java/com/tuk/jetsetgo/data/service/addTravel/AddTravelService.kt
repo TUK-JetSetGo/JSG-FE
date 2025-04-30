@@ -50,7 +50,7 @@ interface AddTravelService {
     ): BaseResponse<SpotInfoResponseDto>
 
     // 여행 일정 수정 API
-    @PUT("travel-plans{itineraryId}")
+    @PUT("travel-plans/{itineraryId}")
     suspend fun fetchEditPlan(
         @Path("itineraryId") itineraryId: Int,
         @Body request: EditPlanRequestDto
