@@ -106,7 +106,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         setClickListener()
         initRecyclerView()
         setBackPressedCallback()
-//        setupTabs()
         setupNaverMap()
         setupMenu()
     }

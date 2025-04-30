@@ -3,6 +3,7 @@ package com.tuk.jetsetgo.data.datasourceImpl.addTravel
 import com.tuk.jetsetgo.data.datasource.addTravel.AddTravelDataSource
 import com.tuk.jetsetgo.data.dto.BaseResponse
 import com.tuk.jetsetgo.data.dto.request.addTravel.CreatePlanRequestDto
+import com.tuk.jetsetgo.data.dto.request.addTravel.EditPlanRequestDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.CreatePlanResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.PurposeResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.SelectCityResponseDto
@@ -36,4 +37,7 @@ class AddTravelDataSourceImpl @Inject constructor(
         pageable: String?
     ): BaseResponse<SpotInfoResponseDto> =
         addTravelService.fetchSearchSpots(keyword, category, pageable)
+
+    override suspend fun fetchEditPlan(itineraryId: Int, request: EditPlanRequestDto): BaseResponse<String> =
+        addTravelService.fetchEditPlan(itineraryId, request)
 }
