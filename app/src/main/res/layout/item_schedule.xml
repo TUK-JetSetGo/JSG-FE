@@ -59,7 +59,7 @@
                 android:id="@+id/tv_schedule_total_time"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:text="320분"
+                android:text="60분"
                 style="@style/TextAppearance.JSG.Body1"
                 android:gravity="center"
                 android:background="@drawable/shape_rect_20_white_fill"

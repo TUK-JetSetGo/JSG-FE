@@ -1,17 +1,24 @@
 package com.tuk.jetsetgo.presentation.myTravel.adapter
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.ItemScheduleBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class ScheduleAdapter(
-    private val onScheduleClick: () -> Unit
+    private val onScheduleClick: () -> Unit,
+    private val onAddClick: (ScheduleData) -> Unit,
+    private val onEditClick: (ScheduleData) -> Unit,
+    private val onDeleteClick: (ScheduleData) -> Unit
 ) : ListAdapter<ScheduleData, ScheduleAdapter.ScheduleViewHolder>(DiffCallback()) {
 
     inner class ScheduleViewHolder(private val binding: ItemScheduleBinding) :
@@ -24,6 +31,31 @@ class ScheduleAdapter(
 
             binding.root.setOnClickListener {
                 onScheduleClick()
+            }
+
+            binding.viewDotSeeMore.setOnClickListener { anchor  ->
+                val popup = PopupMenu(anchor.context, anchor, Gravity.START, 0, R.style.WhitePopupMenu)
+                popup.menuInflater.inflate(R.menu.menu_edit_schedule, popup.menu)
+
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.menu_add -> {
+                            onAddClick(scheduleData)
+                            true
+                        }
+                        R.id.menu_edit -> {
+                            onEditClick(scheduleData)
+                            true
+                        }
+                        R.id.menu_delete -> {
+                            onDeleteClick(scheduleData)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+
+                popup.show()
             }
         }
 

@@ -23,7 +23,10 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.PathOverlay
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentDetailScheduleBinding
+import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
+import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
+import com.tuk.jetsetgo.presentation.myTravel.adapter.RouteInfoModel
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +40,8 @@ import java.util.Locale
 @AndroidEntryPoint
 class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.layout.fragment_detail_schedule), OnMapReadyCallback {
     private val viewModel: MyTravelViewModel by activityViewModels()
+    private val myTravelViewModel: MyTravelViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var scheduleAdapter: ScheduleAdapter
     private var currentPath: PathOverlay? = null
     private var naverMap: NaverMap? = null
@@ -52,6 +57,24 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             viewModel.fetchTravelPlan(travelPlanId = id, dayIndex = 1)
         }
         viewModel.travelPlan.observe(viewLifecycleOwner) { response ->
+            val routeInfoList = response.itineraryInfo?.routeInfoList?.map { route ->
+                val spot = route.touristSpotInfo
+                ScheduleData(
+                    routeId = route.routeId,
+                    touristSpotId = spot.touristSpotId,
+                    title = spot.name,
+                    totalTime = viewModel.getDurationText(route.visitStartTime, route.visitEndTime),
+                    startTime = route.visitStartTime,
+                    endTime = route.visitEndTime,
+                    orderIndex = route.orderIndex,
+                    latitude = spot.latitude,
+                    longitude = spot.longitude
+                )
+            } ?: emptyList()
+
+            sharedViewModel.setItineraryId(response.itineraryInfo?.itineraryId)
+            sharedViewModel.setRouteInfoList(routeInfoList)
+
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             val startDate = LocalDate.parse(response.travelStartDate, formatter)
             val endDate = LocalDate.parse(response.travelEndDate, formatter)
@@ -98,7 +121,17 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             val scheduleList = viewModel.convertToScheduleData(response)
             scheduleAdapter.submitList(scheduleList)
             initialScheduleList = scheduleList
-            drawMapMarkers(scheduleList)
+
+            sharedViewModel.setItineraryId(response.itineraryInfo?.itineraryId)
+            sharedViewModel.setRouteInfoList(scheduleList)
+
+            // 카메라 다시 이동하게 함
+            isInitialCameraMoved = false
+
+            // 네이버 맵 준비되었으면 지도 업데이트
+            if (naverMap != null) {
+                drawMapMarkers(scheduleList)
+            }
         }
     }
 
@@ -149,14 +182,52 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     }
     private fun initRecyclerView() {
         binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
+        scheduleAdapter = ScheduleAdapter(
+            onScheduleClick = {
+                // 일정 아이템 전체 클릭 이벤트
+            },
+            onAddClick = { clickedItem ->
+                sharedViewModel.setEditMode(false) // 추가 모드
+                sharedViewModel.setClickedSchedule(clickedItem) // 필요 시 추가 저장
+                findNavController().navigate(R.id.goToAddSchedule)
+            },
+            onEditClick = { clickedItem ->
+                sharedViewModel.setEditMode(true) // 수정 모드
+                sharedViewModel.setClickedSchedule(clickedItem) // 나중에 edit 작업 시 필요
+                findNavController().navigate(R.id.goToAddSchedule)
+            },
+            onDeleteClick = { clickedItem ->
+                val itineraryId = sharedViewModel.itineraryId.value ?: return@ScheduleAdapter
+                val originalRoutes = sharedViewModel.routeInfoList.value
 
-        // 초기값은 Day 1 (position = 0)
-//        val initialSchedule = scheduleByDay[0] ?: emptyList()
+                // 삭제 대상 제외하고 남은 일정만 추출
+                val updatedRoutes = originalRoutes
+                    .filter { it.routeId != clickedItem.routeId }
+                    .mapIndexed { index, route ->
+                        EditPlanRequestModel.RouteModel(
+                            routeId = route.routeId,
+                            newTouristSpotId = null,
+                            visitStartTime = route.startTime,
+                            visitEndTime = route.endTime,
+                            orderIndex = index + 1 // orderIndex 재정렬
+                        )
+                    }
 
-        scheduleAdapter = ScheduleAdapter {
-            // 클릭 이벤트 정의
-        }
+                val requestModel = EditPlanRequestModel(routes = updatedRoutes)
 
+                // 요청 확인 로그
+                Log.d("ScheduleDelete", "Deleting routeId=${clickedItem.routeId}, request=$requestModel")
+
+                // 삭제 후 여행일정 다시 불러오기
+                myTravelViewModel.fetchEditPlan(itineraryId, requestModel, onSuccess = {
+                    val travelPlanId = myTravelViewModel.travelPlanId.value
+                    val dayIndex = myTravelViewModel.currentDayIndex.value ?: 1
+                    if (travelPlanId != null) {
+                        myTravelViewModel.fetchTravelPlan(travelPlanId, dayIndex)
+                    }
+                })
+            }
+        )
         binding.rvSchedule.adapter = scheduleAdapter
     }
 

@@ -241,6 +241,9 @@
             <action
                 android:id="@+id/goToChecklist"
                 app:destination="@id/checklistFragment"/>
+            <action
+                android:id="@+id/goToAddSchedule"
+                app:destination="@id/addScheduleFragment"/>
         </fragment>
         <fragment
             android:id="@+id/spendFragment"
@@ -270,6 +273,20 @@
             android:name="com.tuk.jetsetgo.presentation.myTravel.ChecklistFragment"
             android:label="ChecklistFragment"
             tools:layout="@layout/fragment_checklist"/>
+        <fragment
+            android:id="@+id/addScheduleFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.AddScheduleFragment"
+            android:label="AddScheduleFragment"
+            tools:layout="@layout/fragment_travel_map">
+            <action
+                android:id="@+id/goToSearch"
+                app:destination="@id/searchFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/searchFragment"
+            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelSearchFragment"
+            android:label="SearchFragment"
+            tools:layout="@layout/fragment_travel_search"/>
 
     </navigation>
 
