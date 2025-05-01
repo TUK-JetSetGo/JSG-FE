@@ -129,32 +129,39 @@
             android:label="DateFragment"
             tools:layout="@layout/fragment_travel_date">
             <action
-                android:id="@+id/goToStartPoint"
-                app:destination="@id/startPointFragment" >
+                android:id="@+id/goToLocation"
+                app:destination="@id/locationFragment" >
                 <argument
                     android:name="days"
                     app:argType="integer" />
             </action>
+<!--            <action-->
+<!--                android:id="@+id/goToStartPoint"-->
+<!--                app:destination="@id/startPointFragment" >-->
+<!--                <argument-->
+<!--                    android:name="days"-->
+<!--                    app:argType="integer" />-->
+<!--            </action>-->
         </fragment>
-        <fragment
-            android:id="@+id/startPointFragment"
-            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelStartPointFragment"
-            android:label="StartPointFragment"
-            tools:layout="@layout/fragment_travel_start_point">
-            <action
-                android:id="@+id/goToMap"
-                app:destination="@id/mapFragment">
-                <argument
-                    android:name="lastFragmentId"
-                    app:argType="integer" />
-                <argument
-                    android:name="selectedPosition"
-                    app:argType="integer" />
-            </action>
-            <action
-                android:id="@+id/goToLocation"
-                app:destination="@id/locationFragment" />
-        </fragment>
+<!--        <fragment-->
+<!--            android:id="@+id/startPointFragment"-->
+<!--            android:name="com.tuk.jetsetgo.presentation.addTravel.TravelStartPointFragment"-->
+<!--            android:label="StartPointFragment"-->
+<!--            tools:layout="@layout/fragment_travel_start_point">-->
+<!--            <action-->
+<!--                android:id="@+id/goToMap"-->
+<!--                app:destination="@id/mapFragment">-->
+<!--                <argument-->
+<!--                    android:name="lastFragmentId"-->
+<!--                    app:argType="integer" />-->
+<!--                <argument-->
+<!--                    android:name="selectedPosition"-->
+<!--                    app:argType="integer" />-->
+<!--            </action>-->
+<!--            <action-->
+<!--                android:id="@+id/goToLocation"-->
+<!--                app:destination="@id/locationFragment" />-->
+<!--        </fragment>-->
         <fragment
             android:id="@+id/locationFragment"
             android:name="com.tuk.jetsetgo.presentation.addTravel.TravelLocationFragment"
