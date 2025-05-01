@@ -124,4 +124,6 @@ dependencies {
     // naver map
     implementation("com.naver.maps:map-sdk:3.20.0")
 
+    // circle image
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }

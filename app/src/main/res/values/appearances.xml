@@ -90,4 +90,12 @@
     </style>
 
 
+    <style name="TextAppearance.JSG.Bnv">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray_700</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
+
+
+
 </resources>
