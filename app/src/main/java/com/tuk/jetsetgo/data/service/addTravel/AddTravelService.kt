@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.data.service.addTravel
 
 import com.tuk.jetsetgo.data.dto.BaseResponse
 import com.tuk.jetsetgo.data.dto.request.addTravel.CreatePlanRequestDto
+import com.tuk.jetsetgo.data.dto.request.addTravel.EditPlanRequestDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.CreatePlanResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.PurposeResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.SelectCityResponseDto
@@ -11,6 +12,7 @@ import com.tuk.jetsetgo.data.dto.response.addTravel.ThemesResponseDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -46,4 +48,11 @@ interface AddTravelService {
         @Query("category") category: String?,
         @Query("pageable") pageable: String?
     ): BaseResponse<SpotInfoResponseDto>
+
+    // 여행 일정 수정 API
+    @PUT("travel-plans/{itineraryId}")
+    suspend fun fetchEditPlan(
+        @Path("itineraryId") itineraryId: Int,
+        @Body request: EditPlanRequestDto
+    ): BaseResponse<String>
 }

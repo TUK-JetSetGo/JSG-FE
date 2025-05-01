@@ -1,6 +1,7 @@
 package com.tuk.jetsetgo.presentation.addTravel.adapter
 
 import androidx.lifecycle.ViewModel
+import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -54,6 +55,18 @@ class SharedViewModel : ViewModel() {
     private val _preferredTransport = MutableStateFlow("")
     val preferredTransport: StateFlow<String> = _preferredTransport
 
+    private val _itineraryId = MutableStateFlow<Int?>(null)
+    val itineraryId: StateFlow<Int?> = _itineraryId
+
+    private val _routeInfoList = MutableStateFlow<List<ScheduleData>>(emptyList())
+    val routeInfoList: StateFlow<List<ScheduleData>> = _routeInfoList
+
+    private val _clickedSchedule = MutableStateFlow<ScheduleData?>(null)
+    val clickedSchedule: StateFlow<ScheduleData?> = _clickedSchedule
+
+    private val _isEditMode = MutableStateFlow(false)
+    val isEditMode: StateFlow<Boolean> = _isEditMode
+
     // 각 입력값을 업데이트하는 setter 함수들
     fun setIsGroup(value: Boolean) { _isGroup.value = value }
     fun setGroupSize(value: Int) { _groupSize.value = value }
@@ -71,4 +84,8 @@ class SharedViewModel : ViewModel() {
     fun setDailyStartPointName(value: List<String>) { _dailyStartPointName.value = value }
     fun setDailyStartPointList(value: List<Int>) { _dailyStartPointList.value = value }
     fun setPreferredTransport(value: String) { _preferredTransport.value = value }
+    fun setItineraryId(value: Int?) { _itineraryId.value = value }
+    fun setRouteInfoList(value: List<ScheduleData>) { _routeInfoList.value = value }
+    fun setClickedSchedule(value: ScheduleData) { _clickedSchedule.value = value }
+    fun setEditMode(value: Boolean) { _isEditMode.value = value }
 }

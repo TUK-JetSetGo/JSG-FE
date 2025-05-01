@@ -7,12 +7,13 @@ data class MyPlanResponseDto(
 ){
     data class MyTravelPlanInfoListDto(
         val travelPlanId: Int,
+        val travelName: String,
         val travelStartDate: String,
         val travelEndDate: String,
         val travelDuration: String
     ) {
         fun toMyTravelPlanInfoListModel() =
-            MyPlanResponseModel.MyTravelPlanInfoListModel(travelPlanId, travelStartDate, travelEndDate, travelDuration)
+            MyPlanResponseModel.MyTravelPlanInfoListModel(travelPlanId, travelName,travelStartDate, travelEndDate, travelDuration)
     }
     fun toMyPlanResponseModel() =
         MyPlanResponseModel(myTravelPlanInfoList.map { it.toMyTravelPlanInfoListModel() })

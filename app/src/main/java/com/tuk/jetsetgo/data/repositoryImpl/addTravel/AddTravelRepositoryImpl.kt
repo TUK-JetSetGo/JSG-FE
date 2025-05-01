@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.data.repositoryImpl.addTravel
 
 import com.tuk.jetsetgo.data.datasource.addTravel.AddTravelDataSource
 import com.tuk.jetsetgo.domain.model.request.addTravel.CreatePlanRequestModel
+import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.CreatePlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.PurposeResponseModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCityResponseModel
@@ -43,5 +44,9 @@ class AddTravelRepositoryImpl @Inject constructor(
     ): Result<SpotInfoResponseModel> = runCatching {
         val pageableJson = """{"page": $page, "size": $size, "sort": ["$sort"]}"""
         addTravelDataSource.fetchSearchSpots(keyword, category, pageableJson).data.toSpotInfoResponseModel()
+    }
+
+    override suspend fun fetchEditPlan(itineraryId: Int, request: EditPlanRequestModel): Result<String> = runCatching {
+        addTravelDataSource.fetchEditPlan(itineraryId, request.toEditPlanRequestDto()).data
     }
 }

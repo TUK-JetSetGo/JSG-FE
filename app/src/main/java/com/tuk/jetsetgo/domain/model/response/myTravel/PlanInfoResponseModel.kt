@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.domain.model.response.myTravel
 
 data class PlanInfoResponseModel(
     val travelPlanId: Int,
+    val travelName: String,
     val travelStartDate: String,
     val travelEndDate: String,
     val itineraryInfo: ItineraryInfoModel?

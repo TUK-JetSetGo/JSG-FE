@@ -18,7 +18,7 @@ class TravelAdapter(
     inner class TravelViewHolder(private val binding: ItemMyTravelBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(travelData: MyPlanResponseModel.MyTravelPlanInfoListModel) {
-            binding.tvMyTravelPlace.text = ""
+            binding.tvMyTravelPlace.text = travelData.travelName
             binding.tvMyTravelDuration.text = travelData.travelDuration
             binding.tvMyTravelDate.text = "${travelData.travelStartDate} ~ ${travelData.travelEndDate}"
             try {
