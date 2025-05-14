@@ -13,7 +13,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentModifyScheduleBinding
-import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
 import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleAdapter
@@ -32,7 +31,6 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var scheduleAdapter: ScheduleAdapter
     private var isTabSetup = false
-    private var initialScheduleList: List<ScheduleData>? = null
 
     override fun initObserver() {
         myTravelViewModel.travelPlanId.observe(viewLifecycleOwner) { id ->
@@ -166,10 +164,6 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
             tabLayout.addTab(tab)
         }
 
-//        // 기본 첫 탭 선택 시 리스트 + 스타일 모두 초기화
-//        val firstSchedule = scheduleByDay[0] ?: emptyList()
-//        scheduleAdapter.updateList(firstSchedule)
-
         // 첫 탭을 선택된 스타일로 적용
         updateTabSelectedState(tabLayout.getTabAt(0)!!, true)
 
@@ -183,10 +177,6 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
                     myTravelViewModel.fetchTravelPlan(travelPlanId, dayIndex)
                 }
 
-
-//                val selectedList = scheduleByDay[position] ?: emptyList()
-//                scheduleAdapter.updateList(selectedList)
-                
                 updateTabSelectedState(tab, true)
 
             }
