@@ -297,7 +297,11 @@
             android:id="@+id/modifyScheduleFragment"
             android:name="com.tuk.jetsetgo.presentation.myTravel.ModifyScheduleFragment"
             android:label="ModifyScheduleFragment"
-            tools:layout="@layout/fragment_modify_schedule"/>
+            tools:layout="@layout/fragment_modify_schedule">
+            <action
+                android:id="@+id/modifyToLoading"
+                app:destination="@id/loadingFragment"/>
+        </fragment>
         <fragment
             android:id="@+id/addScheduleFragment"
             android:name="com.tuk.jetsetgo.presentation.myTravel.AddScheduleFragment"

@@ -3,6 +3,7 @@ package com.tuk.jetsetgo.presentation.myTravel
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
@@ -124,59 +125,27 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
     }
 
     private fun setClickListener() {
-
+        binding.tvModifyClearSelections.setOnClickListener { scheduleAdapter.clearSelections() }
+        binding.tvScheduleComplete.setOnClickListener {
+            Toast.makeText(requireContext(), "추후 구현", Toast.LENGTH_SHORT).show()
+            // findNavController().navigate(R.id.modifyToLoading)
+        }
     }
 
     private fun initRecyclerView() {
         binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
+
         scheduleAdapter = ScheduleAdapter(
-            onScheduleClick = {
-                // 일정 아이템 전체 클릭 이벤트
-            },
-            onAddClick = { clickedItem ->
-                sharedViewModel.setEditMode(false) // 추가 모드
-                sharedViewModel.setClickedSchedule(clickedItem) // 필요 시 추가 저장
-                findNavController().navigate(R.id.goToAddSchedule)
-            },
-            onEditClick = { clickedItem ->
-                sharedViewModel.setEditMode(true) // 수정 모드
-                sharedViewModel.setClickedSchedule(clickedItem) // 나중에 edit 작업 시 필요
-                findNavController().navigate(R.id.goToAddSchedule)
-            },
-            onDeleteClick = { clickedItem ->
-                val itineraryId = sharedViewModel.itineraryId.value ?: return@ScheduleAdapter
-                val originalRoutes = sharedViewModel.routeInfoList.value
-
-                // 삭제 대상 제외하고 남은 일정만 추출
-                val updatedRoutes = originalRoutes
-                    .filter { it.routeId != clickedItem.routeId }
-                    .mapIndexed { index, route ->
-                        EditPlanRequestModel.RouteModel(
-                            routeId = route.routeId,
-                            newTouristSpotId = null,
-                            visitStartTime = route.startTime,
-                            visitEndTime = route.endTime,
-                            orderIndex = index + 1 // orderIndex 재정렬
-                        )
-                    }
-
-                val requestModel = EditPlanRequestModel(routes = updatedRoutes)
-
-                // 요청 확인 로그
-                Log.d("ScheduleDelete", "Deleting routeId=${clickedItem.routeId}, request=$requestModel")
-
-                // 삭제 후 여행일정 다시 불러오기
-                myTravelViewModel.fetchEditPlan(itineraryId, requestModel, onSuccess = {
-                    val travelPlanId = myTravelViewModel.travelPlanId.value
-                    val dayIndex = myTravelViewModel.currentDayIndex.value ?: 1
-                    if (travelPlanId != null) {
-                        myTravelViewModel.fetchTravelPlan(travelPlanId, dayIndex)
-                    }
-                })
+            mode = ScheduleAdapter.ScheduleMode.SELECTABLE,
+            onScheduleClick = { clickedItem ->
+                sharedViewModel.setClickedSchedule(clickedItem)
+                // 필요한 경우 추가 처리
             }
         )
+
         binding.rvSchedule.adapter = scheduleAdapter
     }
+
 
     private fun setBackPressedCallback() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
