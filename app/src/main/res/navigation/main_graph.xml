@@ -249,6 +249,9 @@
                 android:id="@+id/goToChecklist"
                 app:destination="@id/checklistFragment"/>
             <action
+                android:id="@+id/goToModify"
+                app:destination="@id/modifyReasonFragment"/>
+            <action
                 android:id="@+id/goToAddSchedule"
                 app:destination="@id/addScheduleFragment"/>
         </fragment>
@@ -280,6 +283,21 @@
             android:name="com.tuk.jetsetgo.presentation.myTravel.ChecklistFragment"
             android:label="ChecklistFragment"
             tools:layout="@layout/fragment_checklist"/>
+
+        <fragment
+            android:id="@+id/modifyReasonFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.ModifyReasonFragment"
+            android:label="ModifyReasonFragment"
+            tools:layout="@layout/fragment_modify_reason">
+            <action
+                android:id="@+id/reasonToModifySchedule"
+                app:destination="@id/modifyScheduleFragment"/>
+        </fragment>
+        <fragment
+            android:id="@+id/modifyScheduleFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.ModifyScheduleFragment"
+            android:label="ModifyScheduleFragment"
+            tools:layout="@layout/fragment_modify_schedule"/>
         <fragment
             android:id="@+id/addScheduleFragment"
             android:name="com.tuk.jetsetgo.presentation.myTravel.AddScheduleFragment"
