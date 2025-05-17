@@ -13,7 +13,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 // @Module: 모듈은 Hilt에게 특정 객체를 만드는 방법을 알려주는 클래스이다.
@@ -70,4 +72,35 @@ object NetworkModule {
     @Singleton
     fun provideAuthInterceptor(sharedPreferences: SharedPreferences): AuthInterceptor =
         AuthInterceptor(sharedPreferences)
+
+    @Provides
+    @Singleton
+    @Named("OsrmClient")
+    fun provideOsrmOKHttpClient(): OkHttpClient {
+        val interceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        return OkHttpClient.Builder()
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .retryOnConnectionFailure(false)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("osrm")
+    fun provideOsrmRetrofit(
+        @Named("OsrmClient") client: OkHttpClient,
+    ): Retrofit {
+        return Retrofit.Builder()
+            .client(client)
+            .baseUrl(JetSetGoApplication.getString(R.string.osrm_url))
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 }
