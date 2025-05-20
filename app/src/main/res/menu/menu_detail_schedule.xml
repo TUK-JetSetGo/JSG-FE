@@ -9,4 +9,7 @@
     <item
         android:id="@+id/action_checklist"
         android:title="준비물 체크리스트" />
+    <item
+        android:id="@+id/action_modify"
+        android:title="계획 수정" />
 </menu>

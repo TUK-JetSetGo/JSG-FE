@@ -173,6 +173,10 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                         findNavController().navigate(R.id.goToChecklist)
                         true
                     }
+                    R.id.action_modify -> {
+                        findNavController().navigate(R.id.goToModify)
+                        true
+                    }
                     else -> false
                 }
             }
@@ -183,6 +187,7 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     private fun initRecyclerView() {
         binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
         scheduleAdapter = ScheduleAdapter(
+            mode = ScheduleAdapter.ScheduleMode.EDITABLE,
             onScheduleClick = {
                 // 일정 아이템 전체 클릭 이벤트
             },
