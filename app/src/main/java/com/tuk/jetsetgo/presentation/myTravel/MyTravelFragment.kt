@@ -16,6 +16,8 @@ import com.tuk.jetsetgo.presentation.myTravel.adapter.TravelAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class MyTravelFragment : BaseFragment<FragmentMyTravelBinding>(R.layout.fragment_my_travel) {
@@ -26,12 +28,24 @@ class MyTravelFragment : BaseFragment<FragmentMyTravelBinding>(R.layout.fragment
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.myTravelList.collectLatest { travelList ->
-                    travelAdapter.submitList(travelList)
-                    updateTravelVisibility(travelList)
+                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+                    val sortedList = travelList.sortedWith(
+                        compareByDescending<MyPlanResponseModel.MyTravelPlanInfoListModel> {
+                            LocalDate.parse(it.travelStartDate, formatter)
+                        }.thenByDescending {
+                            LocalDate.parse(it.travelEndDate, formatter)
+                        }
+                    )
+
+                    travelAdapter.submitList(sortedList)
+                    updateTravelVisibility(sortedList)
                 }
+
             }
         }
     }
+
 
     override fun initView() {
         setClickListener()

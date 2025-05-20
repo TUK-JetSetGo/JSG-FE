@@ -83,6 +83,11 @@ class TravelCountryFragment: BaseFragment<FragmentTravelCountryBinding>(R.layout
     override fun initView() {
         viewModel.fetchCountries()
         setupConfirmButton()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        binding.ivAddTravelBack.setOnClickListener { findNavController().popBackStack() }
     }
 
     private fun setupConfirmButton() {

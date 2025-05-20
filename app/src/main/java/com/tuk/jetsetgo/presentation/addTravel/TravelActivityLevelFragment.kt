@@ -78,6 +78,7 @@ class TravelActivityLevelFragment: BaseFragment<FragmentTravelActivityLevelBindi
 
 
     private fun setClickListener() {
+        binding.ivAddTravelBack.setOnClickListener { findNavController().popBackStack() }
         binding.tvActivityLevelTimeStart.setOnSingleClickListener { toggleBottomSheetState(startBottomSheetBehavior) }
         binding.tvActivityLevelTimeEnd.setOnSingleClickListener { toggleBottomSheetState(endBottomSheetBehavior) }
         binding.tvActivityLevelDropDownTransportation.setOnSingleClickListener { toggleBottomSheetState(transportationBottomSheetBehavior) }

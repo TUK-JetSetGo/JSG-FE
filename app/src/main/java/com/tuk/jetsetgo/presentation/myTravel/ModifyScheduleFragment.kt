@@ -124,6 +124,7 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
     }
 
     private fun setClickListener() {
+        binding.ivModifyScheduleBack.setOnClickListener { findNavController().popBackStack() }
         binding.tvModifyClearSelections.setOnClickListener { scheduleAdapter.clearSelections() }
         binding.tvScheduleComplete.setOnClickListener {
             Toast.makeText(requireContext(), "추후 구현", Toast.LENGTH_SHORT).show()
