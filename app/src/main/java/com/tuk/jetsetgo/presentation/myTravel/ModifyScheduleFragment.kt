@@ -31,6 +31,7 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var scheduleAdapter: ScheduleAdapter
     private var isTabSetup = false
+    private var initialScheduleList: List<ScheduleData>? = null
 
     override fun initObserver() {
         myTravelViewModel.travelPlanId.observe(viewLifecycleOwner) { id ->

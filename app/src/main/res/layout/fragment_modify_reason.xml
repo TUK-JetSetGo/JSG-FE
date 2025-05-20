@@ -11,6 +11,44 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <!-- top bar -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_modifyReason_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_modifyReason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="계획 수정"
+                android:textSize="20sp"
+                style="@style/TextAppearance.JSG.Topbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <ImageView
+                android:id="@+id/iv_modifyReason_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_modifyReason"
+                app:layout_constraintBottom_toBottomOf="@id/tv_modifyReason"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray_300"
+            app:layout_constraintTop_toBottomOf="@id/layout_modifyReason_topbar"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- 본문 -->
         <TextView
             android:id="@+id/tv_modifyReason_title"
             android:layout_width="wrap_content"
@@ -19,9 +57,9 @@
             style="@style/TextAppearance.JSG.Head1"
             android:lineSpacingExtra="5dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="100dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/layout_modifyReason_topbar"/>
 
         <RadioGroup
             android:id="@+id/rg_modifyReason"
