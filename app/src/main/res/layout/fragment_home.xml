@@ -59,7 +59,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/shape_rect_20_white_fill_blue_line_2"
+                android:background="@drawable/shape_rect_20_white_fill"
                 app:layout_constraintTop_toBottomOf="@id/rv_home_picture"
                 app:layout_constraintBottom_toBottomOf="@id/view_1"
                 android:layout_marginTop="30dp"/>
@@ -78,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:text="어디로 떠날까요?"
                 style="@style/TextAppearance.JSG.Head1"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textColor="@color/blue_deep"
                 android:gravity="center_vertical"
                 android:background="@drawable/shape_rect_20_white_fill_blue_line_2"
                 app:layout_constraintTop_toBottomOf="@id/rv_home_picture"
@@ -91,7 +92,7 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:background="@drawable/ic_search"
-                android:backgroundTint="@color/blue_main"
+                android:backgroundTint="@color/blue_deep"
                 app:layout_constraintEnd_toEndOf="@id/tv_home_whereToGO"
                 app:layout_constraintTop_toTopOf="@id/tv_home_whereToGO"
                 app:layout_constraintBottom_toBottomOf="@id/tv_home_whereToGO"
@@ -114,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:text="진행중인 여행"
                     style="@style/TextAppearance.JSG.Head1"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -133,11 +134,12 @@
                     android:id="@+id/tv_home_ongoingTrip_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="제주  5일 중 2일 째"
+                    android:text="제주 5일 중 2일 째"
                     style="@style/TextAppearance.JSG.Body1"
+                    android:textSize="14sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_home_ongoingTrip_head"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="16dp"/>
 
                 <TextView
                     android:id="@+id/tv_home_ongoingTrip_date"
@@ -170,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:text="지난 여행 돌아보기"
                     style="@style/TextAppearance.JSG.Head1"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
