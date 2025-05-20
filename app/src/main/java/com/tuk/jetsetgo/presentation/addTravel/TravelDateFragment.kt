@@ -67,6 +67,7 @@ class TravelDateFragment: BaseFragment<FragmentTravelDateBinding>(R.layout.fragm
 
 
     private fun setClickListener() {
+        binding.ivAddTravelBack.setOnClickListener { findNavController().popBackStack() }
         binding.tvTravelDateSetStartDate.setOnClickListener { toggleBottomSheetState(startBottomSheetBehavior) }
         binding.tvTravelDateSetEndDate.setOnClickListener { toggleBottomSheetState(endBottomSheetBehavior) }
     }

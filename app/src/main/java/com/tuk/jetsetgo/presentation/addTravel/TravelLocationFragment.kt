@@ -38,6 +38,11 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
         initRecyclerView()
         setupConfirmButton()
         setupAddButton()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        binding.ivAddTravelBack.setOnClickListener { findNavController().popBackStack() }
     }
 
     private fun initRecyclerView() {

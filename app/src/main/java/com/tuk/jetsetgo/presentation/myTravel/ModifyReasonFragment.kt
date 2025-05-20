@@ -20,6 +20,7 @@ class ModifyReasonFragment : BaseFragment<FragmentModifyReasonBinding>(R.layout.
     }
 
     private fun setClickListener() {
+        binding.ivModifyReasonBack.setOnClickListener { findNavController().popBackStack() }
         binding.viewModifyReasonNextBtn.setOnClickListener { findNavController().navigate(R.id.reasonToModifySchedule) }
     }
 

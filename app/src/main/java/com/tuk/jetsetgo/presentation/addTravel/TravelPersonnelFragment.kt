@@ -23,7 +23,7 @@ class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.l
 
     override fun initView() {
         //bottomNavigationRemove()
-        setupClickListeners()
+        setClickListeners()
         restorePreviousSelection()  // 이전 선택 상태 복원
     }
 
@@ -34,7 +34,7 @@ class TravelPersonnelFragment : BaseFragment<FragmentTravelPersonnelBinding>(R.l
         bottomNavigationView?.visibility = View.GONE
     }*/
 
-    private fun setupClickListeners() {
+    private fun setClickListeners() {
         val btnAlone = binding.tvTravelPersonnelBtnAlone
         val btnGroup = binding.tvTravelPersonnelBtnGroup
         val confirmBtn = binding.viewTravelPersonnelConfirmBtn
