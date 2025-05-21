@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -40,6 +42,7 @@ import java.util.Locale
 @AndroidEntryPoint
 class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.layout.fragment_detail_schedule), OnMapReadyCallback {
     private val viewModel: MyTravelViewModel by activityViewModels()
+    private val osrmViewModel: OsrmViewModel by viewModels()
     private val myTravelViewModel: MyTravelViewModel by activityViewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var scheduleAdapter: ScheduleAdapter
@@ -131,6 +134,28 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             // 네이버 맵 준비되었으면 지도 업데이트
             if (naverMap != null) {
                 drawMapMarkers(scheduleList)
+            }
+
+            if (scheduleList.size >= 2) {
+                val coords = scheduleList
+                    .map { "${it.longitude},${it.latitude}" }
+                    .joinToString(";")
+                osrmViewModel.loadRoute(coords)
+            }
+
+            osrmViewModel.routeResult.observe(viewLifecycleOwner) { result ->
+                result
+                    .onSuccess { dto ->
+                        // OSRM API 에서 받은 인코딩 문자열 꺼내기
+                        val encoded = dto.routes.firstOrNull()?.geometry.orEmpty()
+                        if (encoded.isNotEmpty()) {
+                            val decoded = decodePolyline(encoded)
+                            drawOsrmPath(decoded)
+                        }
+                    }
+                    .onFailure { t ->
+                        Toast.makeText(requireContext(), "경로 불러오기 실패: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
     }
@@ -241,7 +266,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     private fun setupTabs(dayCount: Int) {
         val tabLayout = binding.tabLayoutScheduleDate
-//        val numberOfDays = scheduleByDay.size
         tabLayout.removeAllTabs()
 
         for (i in 0 until dayCount) {
@@ -249,10 +273,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             tab.customView = createTabView(i)
             tabLayout.addTab(tab)
         }
-
-//        // 기본 첫 탭 선택 시 리스트 + 스타일 모두 초기화
-//        val firstSchedule = scheduleByDay[0] ?: emptyList()
-//        scheduleAdapter.updateList(firstSchedule)
 
         // 첫 탭을 선택된 스타일로 적용
         updateTabSelectedState(tabLayout.getTabAt(0)!!, true)
@@ -266,12 +286,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                 viewModel.travelPlanId.value?.let { travelPlanId ->
                     viewModel.fetchTravelPlan(travelPlanId, dayIndex)
                 }
-
-
-//                val selectedList = scheduleByDay[position] ?: emptyList()
-//                scheduleAdapter.updateList(selectedList)
-//
-//                drawPathForDay(position)
 
                 updateTabSelectedState(tab, true)
 
@@ -340,51 +354,114 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     }
 
+//    private fun drawMapMarkers(scheduleList: List<ScheduleData>) {
+//        if (naverMap == null) return
+//
+//        markers.forEach { it.map = null }
+//        markers.clear()
+//
+//        val coordinates = scheduleList.mapNotNull {
+//            if (it.title != "이동" && it.latitude != null && it.longitude != null)
+//                LatLng(it.latitude, it.longitude)
+//            else null
+//        }
+//
+//        scheduleList.forEach { item ->
+//            if (item.title != "이동" && item.latitude != null && item.longitude != null) {
+//                val marker = Marker().apply {
+//                    position = LatLng(item.latitude, item.longitude)
+//                    captionText = item.title // 마커 이름
+//                    map = naverMap
+//                }
+//                markers.add(marker)
+//            }
+//        }
+//
+//        if (coordinates.size >= 2) {
+//            // 이전 경로 제거
+//            currentPath?.map = null
+//
+//            // 새로운 경로 생성
+//            currentPath = PathOverlay().apply {
+//                coords = coordinates
+//                color = Color.BLUE
+//                width = 10
+//                map = naverMap
+//            }
+//
+//            // 카메라 이동 (첫 지점 기준)
+//            val bounds = LatLngBounds.Builder().apply {
+//                coordinates.forEach { include(it) }
+//            }.build()
+//
+//            val cameraUpdate = CameraUpdate.fitBounds(bounds, 100) // 패딩 100px
+//                .animate(CameraAnimation.Easing) // 부드럽게 이동
+//
+//            naverMap?.moveCamera(cameraUpdate)
+//        }
+//    }
     private fun drawMapMarkers(scheduleList: List<ScheduleData>) {
-        if (naverMap == null) return
+        // 기존 마커·경로 제거
+        markers.forEach { it.map = null }; markers.clear()
+        currentPath?.map = null
 
-        markers.forEach { it.map = null }
-        markers.clear()
-
-        val coordinates = scheduleList.mapNotNull {
-            if (it.title != "이동" && it.latitude != null && it.longitude != null)
-                LatLng(it.latitude, it.longitude)
-            else null
-        }
-
+        // 마커 추가
         scheduleList.forEach { item ->
-            if (item.title != "이동" && item.latitude != null && item.longitude != null) {
-                val marker = Marker().apply {
-                    position = LatLng(item.latitude, item.longitude)
-                    captionText = item.title // 마커 이름
-                    map = naverMap
-                }
-                markers.add(marker)
-            }
-        }
-
-        if (coordinates.size >= 2) {
-            // 이전 경로 제거
-            currentPath?.map = null
-
-            // 새로운 경로 생성
-            currentPath = PathOverlay().apply {
-                coords = coordinates
-                color = Color.BLUE
-                width = 10
+            val lat = item.latitude ?: return@forEach
+            val lng = item.longitude ?: return@forEach
+            Marker().apply {
+                position = LatLng(lat, lng)
+                captionText = item.title
                 map = naverMap
+                markers += this
             }
-
-            // 카메라 이동 (첫 지점 기준)
-            val bounds = LatLngBounds.Builder().apply {
-                coordinates.forEach { include(it) }
-            }.build()
-
-            val cameraUpdate = CameraUpdate.fitBounds(bounds, 100) // 패딩 100px
-                .animate(CameraAnimation.Easing) // 부드럽게 이동
-
-            naverMap?.moveCamera(cameraUpdate)
         }
+    }
+
+    private fun decodePolyline(encoded: String): List<LatLng> {
+        val path = mutableListOf<LatLng>()
+        var index = 0; var lat = 0; var lng = 0
+        while (index < encoded.length) {
+            var result = 0; var shift = 0; var b: Int
+            do {
+                b = encoded[index++].code - 63
+                result = result or ((b and 0x1f) shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlat = if (result and 1 != 0) (result shr 1).inv() else (result shr 1)
+            lat += dlat
+
+            result = 0; shift = 0
+            do {
+                b = encoded[index++].code - 63
+                result = result or ((b and 0x1f) shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlng = if (result and 1 != 0) (result shr 1).inv() else (result shr 1)
+            lng += dlng
+
+            path += LatLng(lat / 1e5, lng / 1e5)
+        }
+        return path
+    }
+
+    private fun drawOsrmPath(decoded: List<LatLng>) {
+        naverMap ?: return
+        currentPath?.map = null
+        currentPath = PathOverlay().apply {
+            coords = decoded
+            width = 10
+            color = Color.BLUE
+            map = naverMap
+        }
+        // 카메라 바운딩 (선택)
+        val bounds = LatLngBounds.Builder().apply {
+            decoded.forEach { include(it) }
+        }.build()
+        naverMap?.moveCamera(
+            CameraUpdate.fitBounds(bounds, 100)
+                .animate(CameraAnimation.Easing)
+        )
     }
 
 }
