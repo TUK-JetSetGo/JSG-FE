@@ -1,5 +1,6 @@
 package com.tuk.jetsetgo.presentation.myTravel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,7 @@ class OsrmViewModel @Inject constructor(
         viewModelScope.launch {
             // Repository가 Result<OsrmResponseDto>를 반환한다고 가정
             val result = osrmRepository.getRoute(coords, overview, geometries)
+            Log.d("OsrmViewModel", "OSRM 경로 요청 성공: ${result}")
             _routeResult.value = result
         }
     }

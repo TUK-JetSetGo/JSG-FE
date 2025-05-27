@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,6 +33,7 @@ import com.tuk.jetsetgo.presentation.myTravel.adapter.RouteInfoModel
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -50,6 +52,10 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     private var naverMap: NaverMap? = null
     private val markers = mutableListOf<Marker>()
     private var isTabSetup = false
+
+    private val segmentOverlays = mutableListOf<PathOverlay>()
+    private val segmentColors = listOf(Color.RED, Color.GREEN, Color.BLUE, Color.MAGENTA, Color.CYAN, Color.YELLOW)
+    private var segmentIndex = 0
 
     private var initialScheduleList: List<ScheduleData>? = null
     private var isInitialCameraMoved = false
@@ -136,12 +142,25 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                 drawMapMarkers(scheduleList)
             }
 
-            if (scheduleList.size >= 2) {
-                val coords = scheduleList
-                    .map { "${it.longitude},${it.latitude}" }
-                    .joinToString(";")
-                osrmViewModel.loadRoute(coords)
+            // 이전 경로 제거
+            segmentOverlays.forEach { it.map = null }
+            segmentOverlays.clear()
+            segmentIndex = 0
+
+            // 각 구간별 OSRM 호출
+            scheduleList.zipWithNext().forEach { (from, to) ->
+                val coords = "${from.longitude},${from.latitude};${to.longitude},${to.latitude}"
+                lifecycleScope.launch {
+                    osrmViewModel.loadRoute(coords)
+                }
             }
+
+//            if (scheduleList.size >= 2) {
+//                val coords = scheduleList
+//                    .map { "${it.longitude},${it.latitude}" }
+//                    .joinToString(";")
+//                osrmViewModel.loadRoute(coords)
+//            }
 
             osrmViewModel.routeResult.observe(viewLifecycleOwner) { result ->
                 result
@@ -150,7 +169,8 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                         val encoded = dto.routes.firstOrNull()?.geometry.orEmpty()
                         if (encoded.isNotEmpty()) {
                             val decoded = decodePolyline(encoded)
-                            drawOsrmPath(decoded)
+                            drawOsrmSegment(decoded, segmentColors[segmentIndex % segmentColors.size])
+                            segmentIndex++
                         }
                     }
                     .onFailure { t ->
@@ -344,7 +364,15 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
-        naverMap.uiSettings.isZoomControlEnabled = false
+
+        // 터치 시 부모 스크롤 뷰가 가로채지 않도록
+        val mapContainer = childFragmentManager.findFragmentById(R.id.map_fragment)?.view
+        mapContainer?.setOnTouchListener { _, event ->
+            // 부모에게 터치 인터셉트 요청하지 말라고 알림
+            mapContainer.parent.requestDisallowInterceptTouchEvent(true)
+            // false를 반환해야, 맵 뷰 쪽으로 이벤트가 전달됩니다
+            false
+        }
 
         // 처음 들어왔을 때 마커가 먼저 세팅되었고, naverMap 준비 후 이동 안됐던 경우
         if (!isInitialCameraMoved && initialScheduleList != null) {
@@ -445,15 +473,15 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         return path
     }
 
-    private fun drawOsrmPath(decoded: List<LatLng>) {
+    private fun drawOsrmSegment(decoded: List<LatLng>, color: Int) {
         naverMap ?: return
-        currentPath?.map = null
-        currentPath = PathOverlay().apply {
+        val overlay = PathOverlay().apply {
             coords = decoded
             width = 10
-            color = Color.BLUE
+            this.color = color
             map = naverMap
         }
+        segmentOverlays += overlay
         // 카메라 바운딩 (선택)
         val bounds = LatLngBounds.Builder().apply {
             decoded.forEach { include(it) }
@@ -462,6 +490,7 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             CameraUpdate.fitBounds(bounds, 100)
                 .animate(CameraAnimation.Easing)
         )
+
     }
 
 }
