@@ -1,10 +1,13 @@
 package com.tuk.jetsetgo.presentation.myTravel.adapter
 
+import android.os.Build
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +35,7 @@ class ScheduleAdapter(
     inner class ScheduleViewHolder(private val binding: ItemScheduleBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(scheduleData: ScheduleData) {
             binding.tvScheduleTitle.text = scheduleData.title
             binding.tvScheduleTotalTime.text = scheduleData.totalTime
@@ -66,8 +70,19 @@ class ScheduleAdapter(
                         popup.show()
                     }
                     binding.root.setOnClickListener {
+                        if (selectedItems.contains(scheduleData)) {
+                            selectedItems.remove(scheduleData)
+                        } else {
+                            selectedItems.add(scheduleData)
+                        }
+
+                        // ✅ 선택된 항목 로그 출력
+                        Log.d("ScheduleAdapter", "선택된 일정 목록: ${selectedItems.map { it.title + " (${it.orderIndex})" }}")
+
+                        notifyItemChanged(bindingAdapterPosition)
                         onScheduleClick(scheduleData)
                     }
+
                 }
 
                 ScheduleMode.SELECTABLE -> {
@@ -93,6 +108,7 @@ class ScheduleAdapter(
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         private fun formatToAmPmTime(isoString: String): String {
             return try {
                 val formatter = DateTimeFormatter.ISO_DATE_TIME
@@ -128,5 +144,10 @@ class ScheduleAdapter(
         notifyDataSetChanged()
     }
 
+    fun getSelectedItems(): List<ScheduleData> {
+        return selectedItems.toList()
+    }
+
 }
+
 

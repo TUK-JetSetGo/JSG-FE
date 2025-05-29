@@ -1,10 +1,12 @@
 package com.tuk.jetsetgo.presentation.myTravel
 
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentModifyScheduleBinding
+import com.tuk.jetsetgo.domain.model.request.mypage.RecommendAltRequestModel
 import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleAdapter
@@ -33,6 +36,7 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
     private var isTabSetup = false
     private var initialScheduleList: List<ScheduleData>? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initObserver() {
         myTravelViewModel.travelPlanId.observe(viewLifecycleOwner) { id ->
             Log.d("DetailSchedule", "travelPlanId 수신: $id")
@@ -106,6 +110,15 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
 
             sharedViewModel.setItineraryId(response.itineraryInfo?.itineraryId)
             sharedViewModel.setRouteInfoList(scheduleList)
+
+            myTravelViewModel.recommendResult.observe(viewLifecycleOwner) { result ->
+                result?.let {
+                    Log.d("ModifySchedule", "추천 받은 여행지: $it")
+                    // 예시: 다음 화면으로 이동하거나 UI에 출력
+                    findNavController().navigate(R.id.modifyToLoading)
+                }
+            }
+
         }
     }
 
@@ -127,8 +140,25 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
         binding.ivModifyScheduleBack.setOnClickListener { findNavController().popBackStack() }
         binding.tvModifyClearSelections.setOnClickListener { scheduleAdapter.clearSelections() }
         binding.tvScheduleComplete.setOnClickListener {
-            Toast.makeText(requireContext(), "추후 구현", Toast.LENGTH_SHORT).show()
-            // findNavController().navigate(R.id.modifyToLoading)
+            val selectedSchedules = scheduleAdapter.getSelectedItems()
+            val modifyIdxList = selectedSchedules.map { it.orderIndex }
+
+            val itineraryList = sharedViewModel.routeInfoList.value?.map { it.touristSpotId }
+            val itineraryId = sharedViewModel.itineraryId.value
+
+            if (itineraryList != null && itineraryId != null) {
+                val request = RecommendAltRequestModel(
+                    itinerary = itineraryList,
+                    modifyIdx = modifyIdxList,
+                    radius = 99,
+                    recommendCount = 5
+                )
+
+                myTravelViewModel.postAlternativeRecommend(request)
+                // findNavController().navigate(R.id.modifyToLoading)
+            } else {
+                Toast.makeText(requireContext(), "여행 일정이 비어 있어요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -191,6 +221,7 @@ class ModifyScheduleFragment : BaseFragment<FragmentModifyScheduleBinding>(R.lay
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun createTabView(position: Int): View {
         val view = layoutInflater.inflate(R.layout.item_date, null)
         val tvDayOfWeek = view.findViewById<TextView>(R.id.tv_date_dayOfTheWeek)

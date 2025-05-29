@@ -1,13 +1,17 @@
 package com.tuk.jetsetgo.presentation.myTravel
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
+import com.tuk.jetsetgo.domain.model.request.mypage.RecommendAltRequestModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.MyPlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.PlanInfoResponseModel
+import com.tuk.jetsetgo.domain.model.response.myTravel.RecommendAltResponseModel
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
 import com.tuk.jetsetgo.domain.repository.myTravel.MyTravelRepository
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
@@ -40,6 +44,9 @@ class MyTravelViewModel @Inject constructor(
     private val _editResult = MutableLiveData<Result<String>>()
     val editResult: LiveData<Result<String>> get() = _editResult
 
+    private val _recommendResult = MutableLiveData<RecommendAltResponseModel>()
+    val recommendResult: LiveData<RecommendAltResponseModel> get() = _recommendResult
+
     fun fetchMyTravelList() {
         viewModelScope.launch {
             repository.fetchMyTravelList().onSuccess { result ->
@@ -68,6 +75,7 @@ class MyTravelViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun convertToScheduleData(response: PlanInfoResponseModel): List<ScheduleData> {
         return response.itineraryInfo?.routeInfoList?.map { route ->
             val spot = route.touristSpotInfo
@@ -85,6 +93,7 @@ class MyTravelViewModel @Inject constructor(
         } ?: emptyList()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getDurationText(start: String, end: String): String {
         return try {
             val formatter = DateTimeFormatter.ISO_DATE_TIME
@@ -112,6 +121,19 @@ class MyTravelViewModel @Inject constructor(
                 .onFailure { e ->
                     Log.e("MyTravelViewModel", "일정 수정 실패: ${e.message}")
                     _editResult.postValue(Result.failure(e))
+                }
+        }
+    }
+
+    fun postAlternativeRecommend(request: RecommendAltRequestModel) {
+        viewModelScope.launch {
+            repository.postAlternativesRecommend(request)
+                .onSuccess {
+                    Log.d("MyTravelViewModel", "대체 여행지 추천 성공: $it")
+                    _recommendResult.value = it
+                }
+                .onFailure { e ->
+                    Log.e("MyTravelViewModel", "대체 여행지 추천 실패: ${e.message}")
                 }
         }
     }
