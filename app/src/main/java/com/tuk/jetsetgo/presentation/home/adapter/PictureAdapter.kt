@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tuk.jetsetgo.databinding.ItemPictureBinding
 
-class PictureAdapter(
+/*class PictureAdapter(
     private val pictures: List<String> // URL 또는 로컬 이미지 경로 리스트
 ) : RecyclerView.Adapter<PictureAdapter.PictureViewHolder>() {
 
@@ -27,6 +27,27 @@ class PictureAdapter(
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
         holder.bind(pictures[position])
+    }
+
+    override fun getItemCount(): Int = pictures.size
+}*/
+class PictureAdapter(private val pictures: List<Int>) :
+    RecyclerView.Adapter<PictureAdapter.PictureViewHolder>() {
+
+    inner class PictureViewHolder(val binding: ItemPictureBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemPictureBinding.inflate(inflater, parent, false)
+        return PictureViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
+        val imageResId = pictures[position]
+        Glide.with(holder.itemView.context)
+            .load(imageResId) // 리소스 ID로 이미지 로드
+            .into(holder.binding.ivPicture)
     }
 
     override fun getItemCount(): Int = pictures.size

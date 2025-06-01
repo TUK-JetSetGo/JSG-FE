@@ -52,7 +52,7 @@ class TravelDateFragment: BaseFragment<FragmentTravelDateBinding>(R.layout.fragm
                 val endDate = java.time.LocalDate.parse(endDateStr, formatter)
                 if (endDate.isAfter(startDate)) {
                     val days = java.time.temporal.ChronoUnit.DAYS.between(startDate, endDate).toInt() + 1
-                    val action = TravelDateFragmentDirections.goToStartPoint(days = days)
+                    val action = TravelDateFragmentDirections.goToLocation(days = days)
                     findNavController().navigate(action)
                 } else {
                     Toast.makeText(requireContext(), "여행 종료 날짜는 시작 날짜보다 이후여야 합니다", Toast.LENGTH_SHORT).show()
@@ -67,6 +67,7 @@ class TravelDateFragment: BaseFragment<FragmentTravelDateBinding>(R.layout.fragm
 
 
     private fun setClickListener() {
+        binding.ivAddTravelBack.setOnClickListener { findNavController().popBackStack() }
         binding.tvTravelDateSetStartDate.setOnClickListener { toggleBottomSheetState(startBottomSheetBehavior) }
         binding.tvTravelDateSetEndDate.setOnClickListener { toggleBottomSheetState(endBottomSheetBehavior) }
     }

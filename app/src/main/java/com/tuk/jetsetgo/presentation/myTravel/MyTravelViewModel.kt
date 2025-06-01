@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
 import com.tuk.jetsetgo.domain.model.request.myTravel.ExpenseRequestModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.MyPlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.PlanInfoResponseModel
+import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
 import com.tuk.jetsetgo.domain.repository.myTravel.MyTravelRepository
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyTravelViewModel @Inject constructor(
-    private val repository: MyTravelRepository
+    private val repository: MyTravelRepository,
+    private val addTravelRepository: AddTravelRepository
 ): ViewModel() {
     private val _myTravelList = MutableStateFlow<List<MyPlanResponseModel.MyTravelPlanInfoListModel>>(emptyList())
     val myTravelList: StateFlow<List<MyPlanResponseModel.MyTravelPlanInfoListModel>> = _myTravelList
@@ -34,6 +37,9 @@ class MyTravelViewModel @Inject constructor(
 
     private val _currentDayIndex = MutableLiveData<Int>(1)
     val currentDayIndex: LiveData<Int> = _currentDayIndex
+
+    private val _editResult = MutableLiveData<Result<String>>()
+    val editResult: LiveData<Result<String>> get() = _editResult
 
     private val _saveExpenseResult = MutableLiveData<Result<String>>()
     val saveExpenseResult: LiveData<Result<String>> = _saveExpenseResult
@@ -70,10 +76,13 @@ class MyTravelViewModel @Inject constructor(
         return response.itineraryInfo?.routeInfoList?.map { route ->
             val spot = route.touristSpotInfo
             ScheduleData(
+                routeId = route.routeId,
+                touristSpotId = spot.touristSpotId,
                 title = spot.name,
                 totalTime = getDurationText(route.visitStartTime, route.visitEndTime),
                 startTime = route.visitStartTime,
                 endTime = route.visitEndTime,
+                orderIndex = route.orderIndex,
                 latitude = spot.latitude,
                 longitude = spot.longitude
             )
@@ -94,6 +103,21 @@ class MyTravelViewModel @Inject constructor(
 
     fun setCurrentDayIndex(index: Int) {
         _currentDayIndex.value = index
+    }
+
+    fun fetchEditPlan(itineraryId: Int, request: EditPlanRequestModel, onSuccess: () -> Unit = {}) {
+        viewModelScope.launch {
+            addTravelRepository.fetchEditPlan(itineraryId, request)
+                .onSuccess {
+                    Log.d("MyTravelViewModel", "일정 수정 성공: $it")
+                    _editResult.postValue(Result.success(it))
+                    onSuccess()
+                }
+                .onFailure { e ->
+                    Log.e("MyTravelViewModel", "일정 수정 실패: ${e.message}")
+                    _editResult.postValue(Result.failure(e))
+                }
+        }
     }
 
     fun saveExpense(request: ExpenseRequestModel) {

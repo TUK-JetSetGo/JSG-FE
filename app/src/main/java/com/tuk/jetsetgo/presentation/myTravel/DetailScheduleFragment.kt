@@ -3,10 +3,14 @@ package com.tuk.jetsetgo.presentation.myTravel
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,11 +26,16 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.PathOverlay
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentDetailScheduleBinding
+import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
+import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
+import com.tuk.jetsetgo.presentation.myTravel.adapter.RouteInfoModel
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.ScheduleData
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.time.temporal.ChronoUnit
 import java.util.Locale
@@ -35,11 +44,18 @@ import java.util.Locale
 @AndroidEntryPoint
 class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.layout.fragment_detail_schedule), OnMapReadyCallback {
     private val viewModel: MyTravelViewModel by activityViewModels()
+    private val osrmViewModel: OsrmViewModel by viewModels()
+    private val myTravelViewModel: MyTravelViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var scheduleAdapter: ScheduleAdapter
     private var currentPath: PathOverlay? = null
     private var naverMap: NaverMap? = null
     private val markers = mutableListOf<Marker>()
     private var isTabSetup = false
+
+    private val segmentOverlays = mutableListOf<PathOverlay>()
+    private val segmentColors = listOf(Color.RED, Color.GREEN, Color.BLUE, Color.MAGENTA, Color.CYAN, Color.YELLOW)
+    private var segmentIndex = 0
 
     private var initialScheduleList: List<ScheduleData>? = null
     private var isInitialCameraMoved = false
@@ -50,6 +66,55 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             viewModel.fetchTravelPlan(travelPlanId = id, dayIndex = 1)
         }
         viewModel.travelPlan.observe(viewLifecycleOwner) { response ->
+            val routeInfoList = response.itineraryInfo?.routeInfoList?.map { route ->
+                val spot = route.touristSpotInfo
+                ScheduleData(
+                    routeId = route.routeId,
+                    touristSpotId = spot.touristSpotId,
+                    title = spot.name,
+                    totalTime = viewModel.getDurationText(route.visitStartTime, route.visitEndTime),
+                    startTime = route.visitStartTime,
+                    endTime = route.visitEndTime,
+                    orderIndex = route.orderIndex,
+                    latitude = spot.latitude,
+                    longitude = spot.longitude
+                )
+            } ?: emptyList()
+
+            sharedViewModel.setItineraryId(response.itineraryInfo?.itineraryId)
+            sharedViewModel.setRouteInfoList(routeInfoList)
+
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val startDate = LocalDate.parse(response.travelStartDate, formatter)
+            val endDate = LocalDate.parse(response.travelEndDate, formatter)
+
+            // x박 x일 텍스트 구성
+            val daysBetween = ChronoUnit.DAYS.between(startDate, endDate).toInt()
+            val nights = daysBetween
+            val days = daysBetween + 1
+
+            val title = "${response.travelName} ${nights}박 ${days}일"
+            binding.tvScheduleTitle.text = title
+
+            // 20xx년 x월 ~ x월 생성
+            val startYear = startDate.year
+            val startMonth = startDate.monthValue
+            val endYear = endDate.year
+            val endMonth = endDate.monthValue
+
+            val dateText = when {
+                startYear == endYear && startMonth == endMonth -> {
+                    "${startYear}년 ${startMonth}월"
+                }
+                startYear == endYear -> {
+                    "${startYear}년 ${startMonth}월 ~ ${endMonth}월"
+                }
+                else -> {
+                    "${startYear}년 ${startMonth}월 ~ ${endYear}년 ${endMonth}월"
+                }
+            }
+            binding.tvScheduleDate.text = dateText
+
             val totalDays = ChronoUnit.DAYS.between(
                 LocalDate.parse(response.travelStartDate),
                 LocalDate.parse(response.travelEndDate)
@@ -65,7 +130,53 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             val scheduleList = viewModel.convertToScheduleData(response)
             scheduleAdapter.submitList(scheduleList)
             initialScheduleList = scheduleList
-            drawMapMarkers(scheduleList)
+
+            sharedViewModel.setItineraryId(response.itineraryInfo?.itineraryId)
+            sharedViewModel.setRouteInfoList(scheduleList)
+
+            // 카메라 다시 이동하게 함
+            isInitialCameraMoved = false
+
+            // 네이버 맵 준비되었으면 지도 업데이트
+            if (naverMap != null) {
+                drawMapMarkers(scheduleList)
+            }
+
+            // 이전 경로 제거
+            segmentOverlays.forEach { it.map = null }
+            segmentOverlays.clear()
+            segmentIndex = 0
+
+            // 각 구간별 OSRM 호출
+            scheduleList.zipWithNext().forEach { (from, to) ->
+                val coords = "${from.longitude},${from.latitude};${to.longitude},${to.latitude}"
+                lifecycleScope.launch {
+                    osrmViewModel.loadRoute(coords)
+                }
+            }
+
+//            if (scheduleList.size >= 2) {
+//                val coords = scheduleList
+//                    .map { "${it.longitude},${it.latitude}" }
+//                    .joinToString(";")
+//                osrmViewModel.loadRoute(coords)
+//            }
+
+            osrmViewModel.routeResult.observe(viewLifecycleOwner) { result ->
+                result
+                    .onSuccess { dto ->
+                        // OSRM API 에서 받은 인코딩 문자열 꺼내기
+                        val encoded = dto.routes.firstOrNull()?.geometry.orEmpty()
+                        if (encoded.isNotEmpty()) {
+                            val decoded = decodePolyline(encoded)
+                            drawOsrmSegment(decoded, segmentColors[segmentIndex % segmentColors.size])
+                            segmentIndex++
+                        }
+                    }
+                    .onFailure { t ->
+                        Toast.makeText(requireContext(), "경로 불러오기 실패: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
         }
     }
 
@@ -73,8 +184,8 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         setClickListener()
         initRecyclerView()
         setBackPressedCallback()
-//        setupTabs()
         setupNaverMap()
+        setupMenu()
     }
 
     override fun onDestroyView() {
@@ -86,19 +197,87 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     }
 
     private fun setClickListener() {
-        binding.viewHamburgerMenu.setOnClickListener { findNavController().navigate(R.id.goToSpend) }
+
     }
 
-    private fun initRecyclerView() {
-        binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
-
-        // 초기값은 Day 1 (position = 0)
-//        val initialSchedule = scheduleByDay[0] ?: emptyList()
-
-        scheduleAdapter = ScheduleAdapter {
-            // 클릭 이벤트 정의
+    private fun setupMenu(){
+        binding.viewHamburgerMenu.setOnClickListener { anchor ->
+            val popup = PopupMenu(requireContext(), anchor, 0, 0, R.style.WhitePopupMenu)
+            popup.menuInflater.inflate(R.menu.menu_detail_schedule, popup.menu)
+            popup.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_spend -> {
+                        findNavController().navigate(R.id.goToSpend)
+                        true
+                    }
+                    R.id.action_settle -> {
+                        findNavController().navigate(R.id.goToSettle)
+                        true
+                    }
+                    R.id.action_checklist -> {
+                        findNavController().navigate(R.id.goToChecklist)
+                        true
+                    }
+                    R.id.action_modify -> {
+                        findNavController().navigate(R.id.goToModify)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popup.show()
         }
 
+    }
+    private fun initRecyclerView() {
+        binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
+        scheduleAdapter = ScheduleAdapter(
+            mode = ScheduleAdapter.ScheduleMode.EDITABLE,
+            onScheduleClick = {
+                // 일정 아이템 전체 클릭 이벤트
+            },
+            onAddClick = { clickedItem ->
+                sharedViewModel.setEditMode(false) // 추가 모드
+                sharedViewModel.setClickedSchedule(clickedItem) // 필요 시 추가 저장
+                findNavController().navigate(R.id.goToAddSchedule)
+            },
+            onEditClick = { clickedItem ->
+                sharedViewModel.setEditMode(true) // 수정 모드
+                sharedViewModel.setClickedSchedule(clickedItem) // 나중에 edit 작업 시 필요
+                findNavController().navigate(R.id.goToAddSchedule)
+            },
+            onDeleteClick = { clickedItem ->
+                val itineraryId = sharedViewModel.itineraryId.value ?: return@ScheduleAdapter
+                val originalRoutes = sharedViewModel.routeInfoList.value
+
+                // 삭제 대상 제외하고 남은 일정만 추출
+                val updatedRoutes = originalRoutes
+                    .filter { it.routeId != clickedItem.routeId }
+                    .mapIndexed { index, route ->
+                        EditPlanRequestModel.RouteModel(
+                            routeId = route.routeId,
+                            newTouristSpotId = null,
+                            visitStartTime = route.startTime,
+                            visitEndTime = route.endTime,
+                            orderIndex = index + 1 // orderIndex 재정렬
+                        )
+                    }
+
+                val requestModel = EditPlanRequestModel(routes = updatedRoutes)
+
+                // 요청 확인 로그
+                Log.d("ScheduleDelete", "Deleting routeId=${clickedItem.routeId}, request=$requestModel")
+
+                // 삭제 후 여행일정 다시 불러오기
+                myTravelViewModel.fetchEditPlan(itineraryId, requestModel, onSuccess = {
+                    val travelPlanId = myTravelViewModel.travelPlanId.value
+                    val dayIndex = myTravelViewModel.currentDayIndex.value ?: 1
+                    if (travelPlanId != null) {
+                        myTravelViewModel.fetchTravelPlan(travelPlanId, dayIndex)
+                    }
+                })
+            }
+        )
         binding.rvSchedule.adapter = scheduleAdapter
     }
 
@@ -112,7 +291,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     private fun setupTabs(dayCount: Int) {
         val tabLayout = binding.tabLayoutScheduleDate
-//        val numberOfDays = scheduleByDay.size
         tabLayout.removeAllTabs()
 
         for (i in 0 until dayCount) {
@@ -120,10 +298,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
             tab.customView = createTabView(i)
             tabLayout.addTab(tab)
         }
-
-//        // 기본 첫 탭 선택 시 리스트 + 스타일 모두 초기화
-//        val firstSchedule = scheduleByDay[0] ?: emptyList()
-//        scheduleAdapter.updateList(firstSchedule)
 
         // 첫 탭을 선택된 스타일로 적용
         updateTabSelectedState(tabLayout.getTabAt(0)!!, true)
@@ -137,12 +311,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                 viewModel.travelPlanId.value?.let { travelPlanId ->
                     viewModel.fetchTravelPlan(travelPlanId, dayIndex)
                 }
-
-
-//                val selectedList = scheduleByDay[position] ?: emptyList()
-//                scheduleAdapter.updateList(selectedList)
-//
-//                drawPathForDay(position)
 
                 updateTabSelectedState(tab, true)
 
@@ -201,7 +369,15 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
-        naverMap.uiSettings.isZoomControlEnabled = false
+
+        // 터치 시 부모 스크롤 뷰가 가로채지 않도록
+        val mapContainer = childFragmentManager.findFragmentById(R.id.map_fragment)?.view
+        mapContainer?.setOnTouchListener { _, event ->
+            // 부모에게 터치 인터셉트 요청하지 말라고 알림
+            mapContainer.parent.requestDisallowInterceptTouchEvent(true)
+            // false를 반환해야, 맵 뷰 쪽으로 이벤트가 전달됩니다
+            false
+        }
 
         // 처음 들어왔을 때 마커가 먼저 세팅되었고, naverMap 준비 후 이동 안됐던 경우
         if (!isInitialCameraMoved && initialScheduleList != null) {
@@ -211,51 +387,115 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     }
 
+//    private fun drawMapMarkers(scheduleList: List<ScheduleData>) {
+//        if (naverMap == null) return
+//
+//        markers.forEach { it.map = null }
+//        markers.clear()
+//
+//        val coordinates = scheduleList.mapNotNull {
+//            if (it.title != "이동" && it.latitude != null && it.longitude != null)
+//                LatLng(it.latitude, it.longitude)
+//            else null
+//        }
+//
+//        scheduleList.forEach { item ->
+//            if (item.title != "이동" && item.latitude != null && item.longitude != null) {
+//                val marker = Marker().apply {
+//                    position = LatLng(item.latitude, item.longitude)
+//                    captionText = item.title // 마커 이름
+//                    map = naverMap
+//                }
+//                markers.add(marker)
+//            }
+//        }
+//
+//        if (coordinates.size >= 2) {
+//            // 이전 경로 제거
+//            currentPath?.map = null
+//
+//            // 새로운 경로 생성
+//            currentPath = PathOverlay().apply {
+//                coords = coordinates
+//                color = Color.BLUE
+//                width = 10
+//                map = naverMap
+//            }
+//
+//            // 카메라 이동 (첫 지점 기준)
+//            val bounds = LatLngBounds.Builder().apply {
+//                coordinates.forEach { include(it) }
+//            }.build()
+//
+//            val cameraUpdate = CameraUpdate.fitBounds(bounds, 100) // 패딩 100px
+//                .animate(CameraAnimation.Easing) // 부드럽게 이동
+//
+//            naverMap?.moveCamera(cameraUpdate)
+//        }
+//    }
     private fun drawMapMarkers(scheduleList: List<ScheduleData>) {
-        if (naverMap == null) return
+        // 기존 마커·경로 제거
+        markers.forEach { it.map = null }; markers.clear()
+        currentPath?.map = null
 
-        markers.forEach { it.map = null }
-        markers.clear()
-
-        val coordinates = scheduleList.mapNotNull {
-            if (it.title != "이동" && it.latitude != null && it.longitude != null)
-                LatLng(it.latitude, it.longitude)
-            else null
-        }
-
+        // 마커 추가
         scheduleList.forEach { item ->
-            if (item.title != "이동" && item.latitude != null && item.longitude != null) {
-                val marker = Marker().apply {
-                    position = LatLng(item.latitude, item.longitude)
-                    captionText = item.title // 마커 이름
-                    map = naverMap
-                }
-                markers.add(marker)
-            }
-        }
-
-        if (coordinates.size >= 2) {
-            // 이전 경로 제거
-            currentPath?.map = null
-
-            // 새로운 경로 생성
-            currentPath = PathOverlay().apply {
-                coords = coordinates
-                color = Color.BLUE
-                width = 10
+            val lat = item.latitude ?: return@forEach
+            val lng = item.longitude ?: return@forEach
+            Marker().apply {
+                position = LatLng(lat, lng)
+                captionText = item.title
                 map = naverMap
+                markers += this
             }
-
-            // 카메라 이동 (첫 지점 기준)
-            val bounds = LatLngBounds.Builder().apply {
-                coordinates.forEach { include(it) }
-            }.build()
-
-            val cameraUpdate = CameraUpdate.fitBounds(bounds, 100) // 패딩 100px
-                .animate(CameraAnimation.Easing) // 부드럽게 이동
-
-            naverMap?.moveCamera(cameraUpdate)
         }
+    }
+
+    private fun decodePolyline(encoded: String): List<LatLng> {
+        val path = mutableListOf<LatLng>()
+        var index = 0; var lat = 0; var lng = 0
+        while (index < encoded.length) {
+            var result = 0; var shift = 0; var b: Int
+            do {
+                b = encoded[index++].code - 63
+                result = result or ((b and 0x1f) shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlat = if (result and 1 != 0) (result shr 1).inv() else (result shr 1)
+            lat += dlat
+
+            result = 0; shift = 0
+            do {
+                b = encoded[index++].code - 63
+                result = result or ((b and 0x1f) shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlng = if (result and 1 != 0) (result shr 1).inv() else (result shr 1)
+            lng += dlng
+
+            path += LatLng(lat / 1e5, lng / 1e5)
+        }
+        return path
+    }
+
+    private fun drawOsrmSegment(decoded: List<LatLng>, color: Int) {
+        naverMap ?: return
+        val overlay = PathOverlay().apply {
+            coords = decoded
+            width = 10
+            this.color = color
+            map = naverMap
+        }
+        segmentOverlays += overlay
+        // 카메라 바운딩 (선택)
+        val bounds = LatLngBounds.Builder().apply {
+            decoded.forEach { include(it) }
+        }.build()
+        naverMap?.moveCamera(
+            CameraUpdate.fitBounds(bounds, 100)
+                .animate(CameraAnimation.Easing)
+        )
+
     }
 
 }

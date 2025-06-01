@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.ItemMyTravelBinding
 import com.tuk.jetsetgo.domain.model.response.myTravel.MyPlanResponseModel
 import java.time.LocalDate
@@ -18,7 +19,7 @@ class TravelAdapter(
     inner class TravelViewHolder(private val binding: ItemMyTravelBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(travelData: MyPlanResponseModel.MyTravelPlanInfoListModel) {
-            binding.tvMyTravelPlace.text = ""
+            binding.tvMyTravelPlace.text = travelData.travelName
             binding.tvMyTravelDuration.text = travelData.travelDuration
             binding.tvMyTravelDate.text = "${travelData.travelStartDate} ~ ${travelData.travelEndDate}"
             try {
@@ -35,6 +36,22 @@ class TravelAdapter(
                 }
 
                 binding.tvMyTravelState.text = status
+
+                when (status) {
+                    "진행 전" -> {
+                        binding.tvMyTravelState.setBackgroundResource(R.drawable.shape_rect_999_white_fill)
+                        binding.tvMyTravelState.setTextColor(binding.root.context.getColor(R.color.black))
+                    }
+                    "진행 중" -> {
+                        binding.tvMyTravelState.setBackgroundResource(R.drawable.shape_rect_999_blue_main_fill)
+                        binding.tvMyTravelState.setTextColor(binding.root.context.getColor(R.color.black))
+                    }
+                    "완료" -> {
+                        binding.tvMyTravelState.setBackgroundResource(R.drawable.shape_rect_999_black_fill)
+                        binding.tvMyTravelState.setTextColor(binding.root.context.getColor(R.color.white))
+                    }
+                }
+
             } catch (e: Exception) {
                 binding.tvMyTravelState.text = "날짜 오류"
                 Log.e("TravelViewHolder", "날짜 파싱 오류", e)

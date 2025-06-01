@@ -24,6 +24,11 @@ class TravelBudgetFragment: BaseFragment<FragmentTravelBudgetBinding>(R.layout.f
     override fun initView() {
         setupConfirmButton()
         setBudget()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        binding.ivAddTravelBack.setOnClickListener { findNavController().popBackStack() }
     }
 
     private fun setBudget() {

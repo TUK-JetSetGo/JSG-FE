@@ -85,4 +85,17 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="WhitePopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/shape_rect_20_white_fill</item>
+    </style>
+
+
+    <style name="TextAppearance.JSG.Bnv">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray_700</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
+
+
+
 </resources>

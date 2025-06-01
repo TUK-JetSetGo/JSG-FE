@@ -17,57 +17,57 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R.layout.fragment_travel_start_point) {
-    private lateinit var startPointAdapter: StartPointAdapter
-
-    private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val addTravelViewModel: AddTravelViewModel by viewModels()
-
-    private val days: Int? by lazy {
-        arguments?.getInt("days")
-    }
-
-    override fun initObserver() {
-    }
-
-    override fun initView() {
-        val days = days ?: return
-        Log.d("TravelStartPointFragment", "여행일수: ${days}일")
-
-        if (sharedViewModel.dailyStartPointName.value.isEmpty()) {
-            sharedViewModel.setDailyStartPointName(List(days) { "" })
-            sharedViewModel.setDailyStartPointList(List(days) { 0 })
-        }else {
-            Log.d("TravelStartPointFragment", "현재 출발지 리스트 = ${sharedViewModel.dailyStartPointName.value}")
-        }
-
-        initRecyclerView()
-        setupConfirmButton()
-    }
-
-    private fun initRecyclerView() {
-        val days = days ?: return
-
-        binding.rvTravelStartPoint.layoutManager = LinearLayoutManager(requireContext())
-        startPointAdapter = StartPointAdapter(itemCount = days) { position ->
-            val action = TravelStartPointFragmentDirections.goToMap(lastFragmentId = 1, selectedPosition = position)
-            findNavController().navigate(action)
-        }
-        binding.rvTravelStartPoint.adapter = startPointAdapter
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            sharedViewModel.dailyStartPointName.collectLatest { names ->
-                startPointAdapter.submitStartPointNames(names)
-            }
-        }
-    }
-
-
-
-    private fun setupConfirmButton() {
-        binding.clTravelStartPointConfirmBtn.setOnSingleClickListener {
-            findNavController().navigate(R.id.goToLocation)
-        }
-    }
-}
+//@AndroidEntryPoint
+//class TravelStartPointFragment : BaseFragment<FragmentTravelStartPointBinding>(R.layout.fragment_travel_start_point) {
+//    private lateinit var startPointAdapter: StartPointAdapter
+//
+//    private val sharedViewModel: SharedViewModel by activityViewModels()
+//    private val addTravelViewModel: AddTravelViewModel by viewModels()
+//
+//    private val days: Int? by lazy {
+//        arguments?.getInt("days")
+//    }
+//
+//    override fun initObserver() {
+//    }
+//
+//    override fun initView() {
+//        val days = days ?: return
+//        Log.d("TravelStartPointFragment", "여행일수: ${days}일")
+//
+//        if (sharedViewModel.dailyStartPointName.value.isEmpty()) {
+//            sharedViewModel.setDailyStartPointName(List(days) { "" })
+//            sharedViewModel.setDailyStartPointList(List(days) { 0 })
+//        }else {
+//            Log.d("TravelStartPointFragment", "현재 출발지 리스트 = ${sharedViewModel.dailyStartPointName.value}")
+//        }
+//
+//        initRecyclerView()
+//        setupConfirmButton()
+//    }
+//
+//    private fun initRecyclerView() {
+//        val days = days ?: return
+//
+//        binding.rvTravelStartPoint.layoutManager = LinearLayoutManager(requireContext())
+//        startPointAdapter = StartPointAdapter(itemCount = days) { position ->
+//            val action = TravelStartPointFragmentDirections.goToMap(lastFragmentId = 1, selectedPosition = position)
+//            findNavController().navigate(action)
+//        }
+//        binding.rvTravelStartPoint.adapter = startPointAdapter
+//
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            sharedViewModel.dailyStartPointName.collectLatest { names ->
+//                startPointAdapter.submitStartPointNames(names)
+//            }
+//        }
+//    }
+//
+//
+//
+//    private fun setupConfirmButton() {
+//        binding.clTravelStartPointConfirmBtn.setOnSingleClickListener {
+//            findNavController().navigate(R.id.goToLocation)
+//        }
+//    }
+//}

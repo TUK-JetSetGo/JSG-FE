@@ -28,15 +28,21 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
     private lateinit var locationAdapter: LocationAdapter
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val addTravelViewModel: AddTravelViewModel by viewModels()
+    private val addTravelViewModel: AddTravelViewModel by activityViewModels()
 
     override fun initObserver() {
+
     }
 
     override fun initView() {
         initRecyclerView()
         setupConfirmButton()
         setupAddButton()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        binding.ivAddTravelBack.setOnClickListener { findNavController().popBackStack() }
     }
 
     private fun initRecyclerView() {
@@ -96,22 +102,7 @@ class TravelLocationFragment : BaseFragment<FragmentTravelLocationBinding>(R.lay
 
         viewLifecycleOwner.lifecycleScope.launch {
             addTravelViewModel.createTravel(request)
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                addTravelViewModel.createTravelState.collectLatest { state ->
-                    when (state) {
-                        is UiState.Success -> {
-                            Log.d("TravelLocationFragment", "일정 생성 성공")
-                            Toast.makeText(requireContext(), "일정 생성 성공", Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.goToLoading) // 로딩 화면으로 이동
-                        }
-                        is UiState.Error -> {
-                            Toast.makeText(requireContext(), "일정 생성 실패: ${state.error?.message}", Toast.LENGTH_SHORT).show()
-                            Log.e("TravelLocationFragment", "일정 생성 실패")
-                        }
-                        else -> {} // 로딩 상태 처리 가능
-                    }
-                }
-            }
+            findNavController().navigate(R.id.goToLoading)
         }
     }
 }

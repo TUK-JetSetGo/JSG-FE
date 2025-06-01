@@ -239,7 +239,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/logout"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/gray_600"
             android:fontFamily="@font/pretendard_medium"
             app:layout_constraintStart_toStartOf="parent"

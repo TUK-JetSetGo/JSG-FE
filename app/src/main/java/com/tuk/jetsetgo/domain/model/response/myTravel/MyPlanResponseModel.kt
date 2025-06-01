@@ -5,6 +5,7 @@ data class MyPlanResponseModel(
 ) {
     data class MyTravelPlanInfoListModel(
         val travelPlanId: Int,
+        val travelName: String,
         val travelStartDate: String,
         val travelEndDate: String,
         val travelDuration: String

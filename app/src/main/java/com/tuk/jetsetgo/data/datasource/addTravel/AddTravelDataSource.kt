@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.data.datasource.addTravel
 
 import com.tuk.jetsetgo.data.dto.BaseResponse
 import com.tuk.jetsetgo.data.dto.request.addTravel.CreatePlanRequestDto
+import com.tuk.jetsetgo.data.dto.request.addTravel.EditPlanRequestDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.CreatePlanResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.PurposeResponseDto
 import com.tuk.jetsetgo.data.dto.response.addTravel.SelectCityResponseDto
@@ -16,4 +17,5 @@ interface AddTravelDataSource {
     suspend fun fetchThemes(): BaseResponse<ThemesResponseDto>
     suspend fun fetchCreatePlan(request: CreatePlanRequestDto): BaseResponse<CreatePlanResponseDto?>
     suspend fun fetchSearchSpots(keyword: String?, category: String?, pageable: String?): BaseResponse<SpotInfoResponseDto>
+    suspend fun fetchEditPlan(itineraryId: Int, request: EditPlanRequestDto): BaseResponse<String>
 }

@@ -1,6 +1,7 @@
 package com.tuk.jetsetgo.domain.repository.addTravel
 
 import com.tuk.jetsetgo.domain.model.request.addTravel.CreatePlanRequestModel
+import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.CreatePlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.PurposeResponseModel
 import com.tuk.jetsetgo.domain.model.response.addTravel.SelectCityResponseModel
@@ -21,4 +22,5 @@ interface AddTravelRepository {
         size: Int?,
         sort: String?
     ): Result<SpotInfoResponseModel>
+    suspend fun fetchEditPlan(itineraryId: Int, request: EditPlanRequestModel): Result<String>
 }

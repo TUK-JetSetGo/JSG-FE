@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.domain.model.response.myTravel
 
 data class PlanInfoResponseModel(
     val travelPlanId: Int,
+    val travelName: String,
     val travelStartDate: String,
     val travelEndDate: String,
     val itineraryInfo: ItineraryInfoModel?
@@ -23,15 +24,15 @@ data class PlanInfoResponseModel(
                 val name: String,
                 val tel: String,
                 val category: String,
-                val businessStatus: String,
-                val address: String,
-                val thumbnailUrl: String,
-                val thumbnailUrls: String,
+                val businessStatus: String?,
+                val address: String?,
+                val thumbnailUrl: String?,
+                val thumbnailUrls: String?,
                 val latitude: Double,
                 val longitude: Double,
-                val activityLevel: String,
-                val homePage: String,
-                val naverBookingUrl: String,
+                val activityLevel: String?,
+                val homePage: String?,
+                val naverBookingUrl: String?,
                 val travelCityId: Int
             )
         }

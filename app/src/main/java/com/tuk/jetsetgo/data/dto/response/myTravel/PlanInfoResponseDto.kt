@@ -4,6 +4,7 @@ import com.tuk.jetsetgo.domain.model.response.myTravel.PlanInfoResponseModel
 
 data class PlanInfoResponseDto(
     val travelPlanId: Int,
+    val travelName: String,
     val travelStartDate: String,
     val travelEndDate: String,
     val itineraryInfo: ItineraryInfoDto?
@@ -25,15 +26,15 @@ data class PlanInfoResponseDto(
                 val name: String,
                 val tel: String,
                 val category: String,
-                val businessStatus: String,
-                val address: String,
-                val thumbnailUrl: String,
-                val thumbnailUrls: String,
+                val businessStatus: String?,
+                val address: String?,
+                val thumbnailUrl: String?,
+                val thumbnailUrls: String?,
                 val latitude: Double,
                 val longitude: Double,
-                val activityLevel: String,
-                val homePage: String,
-                val naverBookingUrl: String,
+                val activityLevel: String?,
+                val homePage: String?,
+                val naverBookingUrl: String?,
                 val travelCityId: Int
             ) {
                 fun toTouristSpotInfoModel() =
@@ -46,5 +47,5 @@ data class PlanInfoResponseDto(
             PlanInfoResponseModel.ItineraryInfoModel(itineraryId, dayIndex, routeInfoList.map { it.toRouteInfoListModel() })
     }
     fun toPlanInfoResponseModel() =
-        PlanInfoResponseModel(travelPlanId, travelStartDate, travelEndDate, itineraryInfo?.toItineraryInfoModel())
+        PlanInfoResponseModel(travelPlanId, travelName,travelStartDate, travelEndDate, itineraryInfo?.toItineraryInfoModel())
 }

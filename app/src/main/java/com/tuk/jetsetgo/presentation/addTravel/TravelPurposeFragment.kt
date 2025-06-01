@@ -92,6 +92,8 @@ class TravelPurposeFragment: BaseFragment<FragmentTravelPurposeBinding>(R.layout
     }
 
     private fun setupClickListener() {
+        binding.ivAddTravelBack.setOnClickListener { findNavController().popBackStack() }
+
         // TextView 클릭 시 바텀시트 열기
         binding.tvTravelPurposeDropDownPurpose.setOnSingleClickListener {
             toggleBottomSheetState()
