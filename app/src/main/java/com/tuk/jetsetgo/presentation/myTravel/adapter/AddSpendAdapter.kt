@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.R
-import com.tuk.jetsetgo.databinding.ItemCategoryBinding
-import com.tuk.jetsetgo.databinding.ItemSpendBinding
+import com.tuk.jetsetgo.databinding.ItemAddSpendCategoryBinding
 
 class AddSpendAdapter(
     private val items: List<String>,
@@ -16,7 +15,7 @@ class AddSpendAdapter(
     private val selectedPositions = mutableSetOf<Int>() // 다중선택용
 
     inner class AddSpendViewHolder(
-        private val binding: ItemCategoryBinding
+        private val binding: ItemAddSpendCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(name: String, position: Int) {
             binding.tvAddSpendCategory.text = name
@@ -53,7 +52,7 @@ class AddSpendAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddSpendViewHolder {
-        val binding = ItemCategoryBinding.inflate(
+        val binding = ItemAddSpendCategoryBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

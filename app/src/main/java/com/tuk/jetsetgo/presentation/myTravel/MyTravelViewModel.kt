@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
+import com.tuk.jetsetgo.domain.model.request.myTravel.ExpenseRequestModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.MyPlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.PlanInfoResponseModel
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
@@ -39,6 +40,9 @@ class MyTravelViewModel @Inject constructor(
 
     private val _editResult = MutableLiveData<Result<String>>()
     val editResult: LiveData<Result<String>> get() = _editResult
+
+    private val _saveExpenseResult = MutableLiveData<Result<String>>()
+    val saveExpenseResult: LiveData<Result<String>> = _saveExpenseResult
 
     fun fetchMyTravelList() {
         viewModelScope.launch {
@@ -112,6 +116,20 @@ class MyTravelViewModel @Inject constructor(
                 .onFailure { e ->
                     Log.e("MyTravelViewModel", "일정 수정 실패: ${e.message}")
                     _editResult.postValue(Result.failure(e))
+                }
+        }
+    }
+
+    fun saveExpense(request: ExpenseRequestModel) {
+        viewModelScope.launch {
+            repository.fetchSaveExpense(request)
+                .onSuccess { result ->
+                    Log.d("MyTravelViewModel", "지출 저장 성공: $result")
+                    _saveExpenseResult.value = Result.success(result)
+                }
+                .onFailure { exception ->
+                    Log.e("MyTravelViewModel", "지출 저장 실패", exception)
+                    _saveExpenseResult.value = Result.failure(exception)
                 }
         }
     }

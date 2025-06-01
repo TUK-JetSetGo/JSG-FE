@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -12,9 +13,15 @@ import com.tuk.jetsetgo.databinding.FragmentSpendBinding
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.SpendAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.SpendData
+import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.format.TextStyle
+import java.time.temporal.ChronoUnit
+import java.util.Locale
 
+@AndroidEntryPoint
 class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend) {
-
+    private val viewModel: MyTravelViewModel by activityViewModels()
     private lateinit var spendAdapter: SpendAdapter
 
     private val spendByDay = mapOf(
@@ -47,14 +54,20 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
 
 
     override fun initObserver() {
+        viewModel.travelPlan.observe(viewLifecycleOwner) { response ->
+            val totalDays = ChronoUnit.DAYS.between(
+                LocalDate.parse(response.travelStartDate),
+                LocalDate.parse(response.travelEndDate)
+            ).toInt() + 1
 
+            setupTabs(response.travelStartDate, totalDays)
+        }
     }
 
     override fun initView() {
         setClickListener()
         initRecyclerView()
         setBackPressedCallback()
-        setupTabs()
     }
 
     private fun setClickListener() {
@@ -82,13 +95,14 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
         binding.rvSpend.adapter = spendAdapter
     }
 
-    private fun setupTabs() {
+    private fun setupTabs(startDate: String, totalDays: Int) {
         val tabLayout = binding.tabLayoutSpendDate
-        val numberOfDays = spendByDay.size
+        tabLayout.removeAllTabs()
 
-        for (i in 0 until numberOfDays) {
+
+        for (i in 0 until totalDays) {
             val tab = tabLayout.newTab()
-            tab.customView = createTabView(i)
+            tab.customView = createTabView(startDate, i)
             tabLayout.addTab(tab)
         }
 
@@ -116,16 +130,19 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
         })
     }
 
-    private fun createTabView(position: Int): View {
+    private fun createTabView(startDate: String, position: Int): View {
         val view = layoutInflater.inflate(R.layout.item_date, null)
         val tvDayOfWeek = view.findViewById<TextView>(R.id.tv_date_dayOfTheWeek)
         val tvDay = view.findViewById<TextView>(R.id.tv_date_day)
 
-        // 예시: Day 1 → "월 / 1"
-        val dayOfWeekList = listOf("화", "수", "목", "금", "토", "일", "월")
-        val dayIndex = position % 7
-        tvDayOfWeek.text = dayOfWeekList[dayIndex]
-        tvDay.text = "${position + 1}"
+        val baseDate = LocalDate.parse(startDate)
+        val targetDate = baseDate.plusDays(position.toLong())
+
+        val dayOfWeek = targetDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+        val day = targetDate.dayOfMonth
+
+        tvDayOfWeek.text = dayOfWeek
+        tvDay.text = "$day"
 
         return view
     }
