@@ -15,6 +15,7 @@ import com.tuk.jetsetgo.presentation.myTravel.adapter.SpendAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.SpendData
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.time.temporal.ChronoUnit
 import java.util.Locale
@@ -55,6 +56,37 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
 
     override fun initObserver() {
         viewModel.travelPlan.observe(viewLifecycleOwner) { response ->
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val startDate = LocalDate.parse(response.travelStartDate, formatter)
+            val endDate = LocalDate.parse(response.travelEndDate, formatter)
+
+            // x박 x일 텍스트 구성
+            val daysBetween = ChronoUnit.DAYS.between(startDate, endDate).toInt()
+            val nights = daysBetween
+            val days = daysBetween + 1
+
+            val title = "${response.travelName} ${nights}박 ${days}일"
+            binding.tvSpendTitle.text = title
+
+            // 20xx년 x월 ~ x월 생성
+            val startYear = startDate.year
+            val startMonth = startDate.monthValue
+            val endYear = endDate.year
+            val endMonth = endDate.monthValue
+
+            val dateText = when {
+                startYear == endYear && startMonth == endMonth -> {
+                    "${startYear}년 ${startMonth}월"
+                }
+                startYear == endYear -> {
+                    "${startYear}년 ${startMonth}월 ~ ${endMonth}월"
+                }
+                else -> {
+                    "${startYear}년 ${startMonth}월 ~ ${endYear}년 ${endMonth}월"
+                }
+            }
+            binding.tvSpendDate.text = dateText
+
             val totalDays = ChronoUnit.DAYS.between(
                 LocalDate.parse(response.travelStartDate),
                 LocalDate.parse(response.travelEndDate)
