@@ -47,7 +47,7 @@ class MyTravelDataSourceImpl @Inject constructor(
 
     override suspend fun getCheckList(
         travelPlanId: Int
-    ): BaseResponse<GetCheckListResponseDto> =
+    ): BaseResponse<List<GetCheckListResponseDto>> =
         myTravelService.getCheckList(travelPlanId)
 
     override suspend fun postCheckList(

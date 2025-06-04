@@ -18,7 +18,7 @@ interface MyTravelDataSource {
     suspend fun fetchEditExpense(request: ExpenseRequestDto): BaseResponse<String>
     suspend fun fetchExpenseDate(itineraryId: Int, page: Int, size: Int, sort: String?): BaseResponse<ExpenseDateResponseDto>
 
-    suspend fun getCheckList(travelPlanId: Int): BaseResponse<GetCheckListResponseDto>
+    suspend fun getCheckList(travelPlanId: Int): BaseResponse<List<GetCheckListResponseDto>>
     suspend fun postCheckList(travelPlanId: Int, request: PostCheckListRequestDto): BaseResponse<String>
     suspend fun patchCheckList(checklistId: Int, isChecked: Boolean): BaseResponse<String>
     suspend fun deleteCheckList(checklistId: Int): BaseResponse<String>

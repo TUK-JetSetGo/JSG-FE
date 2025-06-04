@@ -1,6 +1,7 @@
 package com.tuk.jetsetgo.data.repositoryImpl.myTravel
 
 import com.tuk.jetsetgo.data.datasource.myTravel.MyTravelDataSource
+import com.tuk.jetsetgo.data.dto.response.myTravel.toModel
 import com.tuk.jetsetgo.domain.model.request.myTravel.ExpenseRequestModel
 import com.tuk.jetsetgo.domain.model.request.myTravel.PostCheckListRequestModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.ExpenseDateResponseModel
@@ -53,9 +54,10 @@ class MyTravelRepositoryImpl @Inject constructor(
 
     override suspend fun getCheckList(
         travelPlanId: Int
-    ): Result<GetCheckListResponseModel> = runCatching {
-        myTravelDataSource.getCheckList(travelPlanId).data.toGetCheckListResponseModel()
+    ): Result<List<GetCheckListResponseModel>> = runCatching {
+        myTravelDataSource.getCheckList(travelPlanId).data.map { it.toModel() }
     }
+
 
     override suspend fun postCheckList(
         travelPlanId: Int,

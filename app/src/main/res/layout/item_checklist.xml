@@ -28,8 +28,7 @@
             android:id="@+id/cl_location_delete"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintTop_toTopOf="cb_check_item"
-            app:layout_constraintBottom_toBottomOf="cb_check_item"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView

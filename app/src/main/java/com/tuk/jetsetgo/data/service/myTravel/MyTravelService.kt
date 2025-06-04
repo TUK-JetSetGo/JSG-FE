@@ -65,7 +65,7 @@ interface MyTravelService {
     @GET("check-list/{travelPlanId}")
     suspend fun getCheckList(
         @Path("travelPlanId") travelPlanId: Int
-    ): BaseResponse<GetCheckListResponseDto>
+    ): BaseResponse<List<GetCheckListResponseDto>>
 
     // 준비물 체크 리스트 추가 API
     @POST("check-list/{travelPlanId}")
@@ -75,14 +75,14 @@ interface MyTravelService {
     ): BaseResponse<String>
 
     // 준비물 체크 리스트 수정 API
-    @PATCH("check-list/{travelPlanId}/check")
+    @PATCH("check-list/{checklistId}/check")
     suspend fun patchCheckList(
         @Path("checklistId") checklistId: Int,
         @Query("isChecked") isChecked: Boolean
     ): BaseResponse<String>
 
     // 준비물 체크 리스트 삭제 API
-    @DELETE("check-list/{travelPlanId}")
+    @DELETE("check-list/{checklistId}")
     suspend fun deleteCheckList(
         @Path("checklistId") checklistId: Int
     ): BaseResponse<String>

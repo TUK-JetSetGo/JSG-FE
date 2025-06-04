@@ -6,7 +6,9 @@ data class GetCheckListResponseDto(
     val checklistId: Int,
     val isChecked: Boolean,
     val itemName: String
-){
-    fun toGetCheckListResponseModel() =
-        GetCheckListResponseModel(checklistId, isChecked, itemName)
-}
+)
+fun GetCheckListResponseDto.toModel() = GetCheckListResponseModel(
+    checklistId = this.checklistId,
+    isChecked = this.isChecked,
+    itemName = this.itemName
+)
