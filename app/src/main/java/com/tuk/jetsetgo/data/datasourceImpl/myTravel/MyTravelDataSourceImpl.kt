@@ -36,8 +36,8 @@ class MyTravelDataSourceImpl @Inject constructor(
 
     override suspend fun fetchExpenseDate(
         itineraryId: Int,
-        page: Int,
-        size: Int,
+        page: Int?,
+        size: Int?,
         sort: String?,
     ): BaseResponse<ExpenseDateResponseDto> =
         myTravelService.fetchExpenseDate(itineraryId, page, size, sort)

@@ -2,21 +2,28 @@ package com.tuk.jetsetgo.presentation.myTravel.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemSpendBinding
+import com.tuk.jetsetgo.domain.model.response.myTravel.ExpenseDateResponseModel
 
 class SpendAdapter(
-    private var spends: List<SpendData>,
-    private val onSpendClick: () -> Unit
-) : RecyclerView.Adapter<SpendAdapter.SpendViewHolder>() {
+    private val onSpendClick: (ExpenseDateResponseModel.ExpenseInfoModel) -> Unit
+) : ListAdapter<ExpenseDateResponseModel.ExpenseInfoModel, SpendAdapter.SpendViewHolder>(SpendDiffCallback()) {
 
     inner class SpendViewHolder(private val binding: ItemSpendBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(spendData: SpendData) {
-            binding.tvSpendTitle.text = spendData.title
-            binding.tvSpendPrice.text = spendData.price
-            binding.tvSpendPerson.text = spendData.spendPerson
-            binding.tvSpendParticipants.text = spendData.participants
+        fun bind(item: ExpenseDateResponseModel.ExpenseInfoModel) = with(binding) {
+            tvSpendTitle.text = item.title
+            tvSpendPrice.text = "${item.amount}원"
+            tvSpendPerson.text = item.payer.name
+            tvSpendParticipants.text =
+                item.expenseParticipantInfoList.joinToString(", ") { it.name }
+
+            root.setOnClickListener {
+                onSpendClick(item)
+            }
         }
     }
 
@@ -26,15 +33,18 @@ class SpendAdapter(
     }
 
     override fun onBindViewHolder(holder: SpendViewHolder, position: Int) {
-        holder.bind(spends[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = spends.size
 
-    // 리스트 갱신용 함수
-    fun updateList(newSpends: List<SpendData>) {
-        this.spends = newSpends
-        notifyDataSetChanged()
+    class SpendDiffCallback : DiffUtil.ItemCallback<ExpenseDateResponseModel.ExpenseInfoModel>() {
+        override fun areItemsTheSame(oldItem: ExpenseDateResponseModel.ExpenseInfoModel, newItem: ExpenseDateResponseModel.ExpenseInfoModel): Boolean {
+            return oldItem.expenseId == newItem.expenseId
+        }
+
+        override fun areContentsTheSame(oldItem: ExpenseDateResponseModel.ExpenseInfoModel, newItem: ExpenseDateResponseModel.ExpenseInfoModel): Boolean {
+            return oldItem == newItem
+        }
     }
 }
 

@@ -17,5 +17,5 @@ interface MyTravelDataSource {
     suspend fun fetchExpenseDetail(expenseId: Int): BaseResponse<ExpenseDetailResponseDto>
     suspend fun fetchDeleteExpense(expenseId: Int): BaseResponse<String>
     suspend fun fetchEditExpense(request: ExpenseRequestDto): BaseResponse<String>
-    suspend fun fetchExpenseDate(itineraryId: Int, page: Int, size: Int, sort: String?): BaseResponse<ExpenseDateResponseDto>
+    suspend fun fetchExpenseDate(itineraryId: Int, page: Int?, size: Int?, sort: String?): BaseResponse<ExpenseDateResponseDto>
 }

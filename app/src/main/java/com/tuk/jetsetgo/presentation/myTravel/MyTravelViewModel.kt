@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tuk.jetsetgo.domain.model.request.addTravel.EditPlanRequestModel
 import com.tuk.jetsetgo.domain.model.request.myTravel.ExpenseRequestModel
+import com.tuk.jetsetgo.domain.model.response.myTravel.ExpenseDateResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.MyPlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.PlanInfoResponseModel
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
@@ -43,6 +44,9 @@ class MyTravelViewModel @Inject constructor(
 
     private val _saveExpenseResult = MutableLiveData<Result<String>>()
     val saveExpenseResult: LiveData<Result<String>> = _saveExpenseResult
+
+    private val _expenseDateResult = MutableLiveData<Result<ExpenseDateResponseModel>>()
+    val expenseDateResult: LiveData<Result<ExpenseDateResponseModel>> = _expenseDateResult
 
     fun fetchMyTravelList() {
         viewModelScope.launch {
@@ -116,6 +120,19 @@ class MyTravelViewModel @Inject constructor(
                 .onFailure { e ->
                     Log.e("MyTravelViewModel", "일정 수정 실패: ${e.message}")
                     _editResult.postValue(Result.failure(e))
+                }
+        }
+    }
+
+    fun fetchExpenseDate(itineraryId: Int, page: Int?, size: Int?, sort: String? = null) {
+        viewModelScope.launch {
+            repository.fetchExpenseDate(itineraryId, page, size, sort)
+                .onSuccess {
+                    _expenseDateResult.value = Result.success(it)
+                }
+                .onFailure { e ->
+                    Log.e("MyTravelViewModel", "지출 목록 불러오기 실패: ${e.message}")
+                    _expenseDateResult.value = Result.failure(e)
                 }
         }
     }

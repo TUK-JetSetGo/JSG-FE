@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentSpendBinding
+import com.tuk.jetsetgo.presentation.addTravel.adapter.SharedViewModel
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.myTravel.adapter.SpendAdapter
 import com.tuk.jetsetgo.presentation.myTravel.adapter.SpendData
@@ -23,35 +24,9 @@ import java.util.Locale
 @AndroidEntryPoint
 class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend) {
     private val viewModel: MyTravelViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var spendAdapter: SpendAdapter
-
-    private val spendByDay = mapOf(
-        0 to listOf(
-            SpendData("식당", "100,000", "다희","기찬, 다희, 준하, 동훈"),
-            SpendData("카페", "70,000", "기찬","준하, 동훈"),
-            SpendData("쇼핑", "200,000", "준하","기찬, 다희"),
-            SpendData("편의점", "40,000", "동훈","기찬, 다희, 준하, 동훈"),
-        ),
-        1 to listOf(
-            SpendData("식당", "100,000", "다희","기찬, 다희, 준하, 동훈"),
-            SpendData("카페", "70,000", "기찬","준하, 동훈"),
-        ),
-        2 to listOf(
-            SpendData("쇼핑", "200,000", "준하","기찬, 다희"),
-            SpendData("편의점", "40,000", "동훈","기찬, 다희, 준하, 동훈"),
-        ),
-        3 to listOf(
-            SpendData("식당", "100,000", "다희","기찬, 다희, 준하, 동훈"),
-            SpendData("카페", "70,000", "기찬","준하, 동훈"),
-            SpendData("쇼핑", "200,000", "준하","기찬, 다희"),
-            SpendData("편의점", "40,000", "동훈","기찬, 다희, 준하, 동훈"),
-        ),
-        4 to listOf(
-            SpendData("식당", "100,000", "다희","기찬, 다희, 준하, 동훈"),
-            SpendData("쇼핑", "200,000", "준하","기찬, 다희"),
-            SpendData("편의점", "40,000", "동훈","기찬, 다희, 준하, 동훈"),
-        )
-    )
+    private var isTabSetup = false
 
 
     override fun initObserver() {
@@ -92,7 +67,13 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
                 LocalDate.parse(response.travelEndDate)
             ).toInt() + 1
 
-            setupTabs(response.travelStartDate, totalDays)
+            if (!isTabSetup) {
+                setupTabs(totalDays)
+                isTabSetup = true
+            }
+            sharedViewModel.itineraryId.value?.let { itineraryId ->
+                viewModel.fetchExpenseDate(itineraryId, page = null, size = null, sort = null)
+            }
         }
     }
 
@@ -117,41 +98,37 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
     private fun initRecyclerView() {
         binding.rvSpend.layoutManager = LinearLayoutManager(requireContext())
 
-        // 초기값은 Day 1 (position = 0)
-        val initialSpend = spendByDay[0] ?: emptyList()
-
-        spendAdapter = SpendAdapter(initialSpend) {
+        spendAdapter = SpendAdapter() {
             // 클릭 이벤트 정의
         }
 
         binding.rvSpend.adapter = spendAdapter
     }
 
-    private fun setupTabs(startDate: String, totalDays: Int) {
+    private fun setupTabs(dayCount: Int) {
         val tabLayout = binding.tabLayoutSpendDate
         tabLayout.removeAllTabs()
 
-
-        for (i in 0 until totalDays) {
+        for (i in 0 until dayCount) {
             val tab = tabLayout.newTab()
-            tab.customView = createTabView(startDate, i)
+            tab.customView = createTabView(i)
             tabLayout.addTab(tab)
         }
-
-        // 기본 첫 탭 선택 시 리스트 + 스타일 모두 초기화
-        val firstDay = spendByDay[0] ?: emptyList()
-        spendAdapter.updateList(firstDay)
 
         // 첫 탭을 선택된 스타일로 적용
         updateTabSelectedState(tabLayout.getTabAt(0)!!, true)
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                val position = tab.position
-                val selectedList = spendByDay[position] ?: emptyList()
-                spendAdapter.updateList(selectedList)
+                val dayIndex = tab.position + 1
+                viewModel.setCurrentDayIndex(dayIndex)
+
+                viewModel.travelPlanId.value?.let { travelPlanId ->
+                    viewModel.fetchTravelPlan(travelPlanId, dayIndex)
+                }
 
                 updateTabSelectedState(tab, true)
+
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -162,13 +139,13 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
         })
     }
 
-    private fun createTabView(startDate: String, position: Int): View {
+    private fun createTabView(position: Int): View {
         val view = layoutInflater.inflate(R.layout.item_date, null)
         val tvDayOfWeek = view.findViewById<TextView>(R.id.tv_date_dayOfTheWeek)
         val tvDay = view.findViewById<TextView>(R.id.tv_date_day)
 
-        val baseDate = LocalDate.parse(startDate)
-        val targetDate = baseDate.plusDays(position.toLong())
+        val startDate = LocalDate.parse(viewModel.travelPlan.value?.travelStartDate ?: LocalDate.now().toString())
+        val targetDate = startDate.plusDays(position.toLong())
 
         val dayOfWeek = targetDate.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
         val day = targetDate.dayOfMonth

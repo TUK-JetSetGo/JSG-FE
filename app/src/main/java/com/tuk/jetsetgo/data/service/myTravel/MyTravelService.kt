@@ -54,8 +54,8 @@ interface MyTravelService {
     @GET("expenses/itinerary/{itineraryId}")
     suspend fun fetchExpenseDate(
         @Path("itineraryId") itineraryId: Int,
-        @Query("page") page: Int,
-        @Query("size") size: Int,
+        @Query("page") page: Int?,
+        @Query("size") size: Int?,
         @Query("sort") sort: String?
     ): BaseResponse<ExpenseDateResponseDto>
 }
