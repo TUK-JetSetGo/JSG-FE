@@ -385,16 +385,30 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         markers.forEach { it.map = null }; markers.clear()
         currentPath?.map = null
 
+        val boundsBuilder = LatLngBounds.Builder()
+
         // 마커 추가
         scheduleList.forEach { item ->
             val lat = item.latitude ?: return@forEach
             val lng = item.longitude ?: return@forEach
+            val latLng = LatLng(lat, lng)
+
             Marker().apply {
                 position = LatLng(lat, lng)
                 captionText = item.title
                 map = naverMap
                 markers += this
             }
+            boundsBuilder.include(latLng)
+        }
+
+        // 첫 장소로 카메라 이동
+        if (scheduleList.isNotEmpty()) {
+            val bounds = boundsBuilder.build()
+            naverMap?.moveCamera(
+                CameraUpdate.fitBounds(bounds, 100)
+                    .animate(CameraAnimation.Easing)
+            )
         }
     }
 
@@ -435,13 +449,13 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
         }
         segmentOverlays += overlay
         // 카메라 바운딩 (선택)
-        val bounds = LatLngBounds.Builder().apply {
-            decoded.forEach { include(it) }
-        }.build()
-        naverMap?.moveCamera(
-            CameraUpdate.fitBounds(bounds, 100)
-                .animate(CameraAnimation.Easing)
-        )
+//        val bounds = LatLngBounds.Builder().apply {
+//            decoded.forEach { include(it) }
+//        }.build()
+//        naverMap?.moveCamera(
+//            CameraUpdate.fitBounds(bounds, 100)
+//                .animate(CameraAnimation.Easing)
+//        )
 
     }
 
