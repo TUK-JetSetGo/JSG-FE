@@ -71,9 +71,10 @@ class SpendFragment : BaseFragment<FragmentSpendBinding>(R.layout.fragment_spend
                 setupTabs(totalDays)
                 isTabSetup = true
             }
-            sharedViewModel.itineraryId.value?.let { itineraryId ->
-                viewModel.fetchExpenseDate(itineraryId, page = null, size = null, sort = null)
-            }
+
+            val itineraryId = response.itineraryInfo?.itineraryId
+            viewModel.fetchExpenseDate(itineraryId, page = null, size = null, sort = null)
+            sharedViewModel.setItineraryId(itineraryId)
         }
     }
 

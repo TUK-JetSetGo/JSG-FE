@@ -35,7 +35,7 @@ class MyTravelDataSourceImpl @Inject constructor(
         myTravelService.fetchEditExpense(request)
 
     override suspend fun fetchExpenseDate(
-        itineraryId: Int,
+        itineraryId: Int?,
         page: Int?,
         size: Int?,
         sort: String?,

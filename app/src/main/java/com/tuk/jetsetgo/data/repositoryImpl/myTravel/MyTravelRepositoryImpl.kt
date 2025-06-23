@@ -40,7 +40,7 @@ class MyTravelRepositoryImpl @Inject constructor(
     }
 
     override suspend fun fetchExpenseDate(
-        itineraryId: Int,
+        itineraryId: Int?,
         page: Int?,
         size: Int?,
         sort: String?,

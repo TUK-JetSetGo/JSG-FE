@@ -155,13 +155,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                 }
             }
 
-//            if (scheduleList.size >= 2) {
-//                val coords = scheduleList
-//                    .map { "${it.longitude},${it.latitude}" }
-//                    .joinToString(";")
-//                osrmViewModel.loadRoute(coords)
-//            }
-
             osrmViewModel.routeResult.observe(viewLifecycleOwner) { result ->
                 result
                     .onSuccess { dto ->
@@ -387,52 +380,6 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
 
     }
 
-//    private fun drawMapMarkers(scheduleList: List<ScheduleData>) {
-//        if (naverMap == null) return
-//
-//        markers.forEach { it.map = null }
-//        markers.clear()
-//
-//        val coordinates = scheduleList.mapNotNull {
-//            if (it.title != "이동" && it.latitude != null && it.longitude != null)
-//                LatLng(it.latitude, it.longitude)
-//            else null
-//        }
-//
-//        scheduleList.forEach { item ->
-//            if (item.title != "이동" && item.latitude != null && item.longitude != null) {
-//                val marker = Marker().apply {
-//                    position = LatLng(item.latitude, item.longitude)
-//                    captionText = item.title // 마커 이름
-//                    map = naverMap
-//                }
-//                markers.add(marker)
-//            }
-//        }
-//
-//        if (coordinates.size >= 2) {
-//            // 이전 경로 제거
-//            currentPath?.map = null
-//
-//            // 새로운 경로 생성
-//            currentPath = PathOverlay().apply {
-//                coords = coordinates
-//                color = Color.BLUE
-//                width = 10
-//                map = naverMap
-//            }
-//
-//            // 카메라 이동 (첫 지점 기준)
-//            val bounds = LatLngBounds.Builder().apply {
-//                coordinates.forEach { include(it) }
-//            }.build()
-//
-//            val cameraUpdate = CameraUpdate.fitBounds(bounds, 100) // 패딩 100px
-//                .animate(CameraAnimation.Easing) // 부드럽게 이동
-//
-//            naverMap?.moveCamera(cameraUpdate)
-//        }
-//    }
     private fun drawMapMarkers(scheduleList: List<ScheduleData>) {
         // 기존 마커·경로 제거
         markers.forEach { it.map = null }; markers.clear()

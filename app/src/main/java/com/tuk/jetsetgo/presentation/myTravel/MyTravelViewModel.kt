@@ -124,7 +124,7 @@ class MyTravelViewModel @Inject constructor(
         }
     }
 
-    fun fetchExpenseDate(itineraryId: Int, page: Int?, size: Int?, sort: String? = null) {
+    fun fetchExpenseDate(itineraryId: Int?, page: Int?, size: Int?, sort: String? = null) {
         viewModelScope.launch {
             repository.fetchExpenseDate(itineraryId, page, size, sort)
                 .onSuccess {
