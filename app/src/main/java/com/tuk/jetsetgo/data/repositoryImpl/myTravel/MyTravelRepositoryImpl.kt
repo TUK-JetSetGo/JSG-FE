@@ -43,9 +43,9 @@ class MyTravelRepositoryImpl @Inject constructor(
     }
 
     override suspend fun fetchExpenseDate(
-        itineraryId: Int,
-        page: Int,
-        size: Int,
+        itineraryId: Int?,
+        page: Int?,
+        size: Int?,
         sort: String?,
     ): Result<ExpenseDateResponseModel> = runCatching {
         myTravelDataSource.fetchExpenseDate(itineraryId, page, size, sort).data.toExpenseListResponseModel()

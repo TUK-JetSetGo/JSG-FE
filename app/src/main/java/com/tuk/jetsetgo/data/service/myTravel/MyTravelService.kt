@@ -55,9 +55,9 @@ interface MyTravelService {
     // 날짜 별 지출 조회 API
     @GET("expenses/itinerary/{itineraryId}")
     suspend fun fetchExpenseDate(
-        @Path("itineraryId") itineraryId: Int,
-        @Query("page") page: Int,
-        @Query("size") size: Int,
+        @Path("itineraryId") itineraryId: Int?,
+        @Query("page") page: Int?,
+        @Query("size") size: Int?,
         @Query("sort") sort: String?
     ): BaseResponse<ExpenseDateResponseDto>
 

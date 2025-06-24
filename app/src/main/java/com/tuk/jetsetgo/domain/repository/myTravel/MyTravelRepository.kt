@@ -15,7 +15,7 @@ interface MyTravelRepository {
     suspend fun fetchExpenseDetail(expenseId: Int): Result<ExpenseDetailResponseModel>
     suspend fun fetchDeleteExpense(expenseId: Int): Result<String>
     suspend fun fetchEditExpense(request: ExpenseRequestModel): Result<String>
-    suspend fun fetchExpenseDate(itineraryId: Int, page: Int, size: Int, sort: String?): Result<ExpenseDateResponseModel>
+    suspend fun fetchExpenseDate(itineraryId: Int?, page: Int?, size: Int?, sort: String?): Result<ExpenseDateResponseModel>
 
     suspend fun getCheckList(travelPlanId: Int): Result<List<GetCheckListResponseModel>>
     suspend fun postCheckList(travelPlanId: Int, request: PostCheckListRequestModel): Result<String>
