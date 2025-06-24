@@ -5,11 +5,13 @@ import com.tuk.jetsetgo.data.datasource.login.LoginDataSource
 import com.tuk.jetsetgo.data.datasource.myTravel.MyTravelDataSource
 import com.tuk.jetsetgo.data.datasource.myTravel.OsrmDataSource
 import com.tuk.jetsetgo.data.datasource.mypage.MypageDataSource
+import com.tuk.jetsetgo.data.datasource.review.ReviewDataSource
 import com.tuk.jetsetgo.data.datasourceImpl.addTravel.AddTravelDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.login.LoginDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.myTravel.MyTravelDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.myTravel.OsrmDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.mypage.MypageDataSourceImpl
+import com.tuk.jetsetgo.data.datasourceImpl.review.ReviewDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +40,11 @@ object DataSourceModule {
     @Singleton
     fun provideMypageDataSource(mypageDataSourceImpl: MypageDataSourceImpl): MypageDataSource =
         mypageDataSourceImpl
+
+    @Provides
+    @Singleton
+    fun provideReviewDataSource(reviewDataSourceImpl: ReviewDataSourceImpl): ReviewDataSource =
+        reviewDataSourceImpl
 
     @Provides
     @Singleton

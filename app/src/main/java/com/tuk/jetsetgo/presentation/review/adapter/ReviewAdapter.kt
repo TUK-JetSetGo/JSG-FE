@@ -9,7 +9,7 @@ import com.tuk.jetsetgo.presentation.addTravel.adapter.MapPictureAdapter
 
 class ReviewAdapter(
     private val reviews: List<ReviewData>,
-    private val onAddButtonClick: () -> Unit
+    private val onItemClick: (ReviewData) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     inner class ReviewViewHolder(private val binding: ItemReviewBinding) :
@@ -27,8 +27,14 @@ class ReviewAdapter(
             binding.rvReviewPicture.adapter = mapPictureAdapter
             binding.rvReviewPicture.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+
+            // 클릭 리스너 추가
+            binding.root.setOnClickListener {
+                onItemClick(reviewData)
+            }
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
         val binding = ItemReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)

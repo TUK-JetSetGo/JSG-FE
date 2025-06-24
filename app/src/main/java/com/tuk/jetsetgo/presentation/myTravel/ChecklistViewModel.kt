@@ -4,44 +4,76 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.tuk.jetsetgo.domain.model.request.myTravel.PostCheckListRequestModel
+import com.tuk.jetsetgo.domain.model.response.myTravel.GetCheckListResponseModel
+import com.tuk.jetsetgo.domain.repository.myTravel.MyTravelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ChecklistViewModel @Inject constructor(
-    //private val repository: MyTravelRepository
+    private val repository: MyTravelRepository
 ):ViewModel() {
 
-    private val _presetList = MutableLiveData<List<String>>()
-    val presetList: LiveData<List<String>> get() = _presetList
+    private val _checklistItems = MutableLiveData<List<GetCheckListResponseModel>>()
+    val checklistItems: LiveData<List<GetCheckListResponseModel>> get() = _checklistItems
 
-    private val _checklistItems = MutableLiveData<List<String>>()
-    val checklistItems: LiveData<List<String>> get() = _checklistItems
-
-    private val dummyChecklistMap = mapOf(
-        "바다" to listOf("수영복", "썬크림", "선글라스", "비치타월", "슬리퍼"),
-        "산행" to listOf("등산화", "모자", "물병", "간식", "우비", "지도"),
-        "캠핑" to listOf("텐트", "침낭", "버너", "랜턴", "모기약", "접이식 의자"),
-        "해외" to listOf("여권", "환전", "멀티 어댑터", "세면도구", "복대", "비상약")
-    )
-
-    init {
-        _presetList.value = dummyChecklistMap.keys.toList()
-        onPresetSelected("바다 여행") // ✅ 기본 프리셋
-        Log.d("ChecklistViewModel", "초기 프리셋 설정 완료")
+    fun loadChecklist(travelPlanId: Int) {
+        viewModelScope.launch {
+            repository.getCheckList(travelPlanId)
+                .onSuccess {
+                    Log.d("ChecklistViewModel", "체크리스트 로딩 성공, 항목 수: ${it.size}")
+                    _checklistItems.value = it
+                }
+                .onFailure {
+                    Log.e("ChecklistViewModel", "체크리스트 로딩 실패: ${it.message}")
+                }
+        }
     }
 
-
-    fun onPresetSelected(preset: String) {
-        Log.d("ChecklistViewModel", "onPresetSelected 호출됨: $preset") // ✅ 프리셋에 따른 로딩 확인
-        val data = dummyChecklistMap[preset].orEmpty()
-        Log.d("ChecklistViewModel", "불러온 준비물 목록: $data") // ✅ 데이터 비어있는지 확인
-        _checklistItems.value = data
+    fun postChecklistItem(travelPlanId: Int, itemName: String) {
+        Log.d("ChecklistViewModel", "📡 POST checklist 호출: [$itemName]")
+        val request = PostCheckListRequestModel(itemName)
+        viewModelScope.launch {
+            repository.postCheckList(travelPlanId, request)
+                .onSuccess {
+                    Log.d("ChecklistViewModel", "체크리스트 항목 추가 성공: $itemName → $it")
+                    // 항목 새로고침
+                    loadChecklist(travelPlanId)
+                }
+                .onFailure {
+                    Log.e("ChecklistViewModel", "체크리스트 항목 추가 실패: $itemName", it)
+                }
+        }
     }
 
-
-    fun addItem(item: String) {
-        val updatedList = _checklistItems.value.orEmpty().toMutableList().apply { add(item) }
-        _checklistItems.value = updatedList
+    fun patchCheckItem(checklistId: Int, isChecked: Boolean) {
+        Log.d("ChecklistViewModel", "📡 PATCH 체크 상태 변경 요청: id=$checklistId, isChecked=$isChecked")
+        viewModelScope.launch {
+            repository.patchCheckList(checklistId, isChecked)
+                .onSuccess {
+                    Log.d("ChecklistViewModel", "체크리스트 상태 변경 성공: id=$checklistId → $isChecked")
+                }
+                .onFailure {
+                    Log.e("ChecklistViewModel", "체크리스트 상태 변경 실패: id=$checklistId", it)
+                }
+        }
     }
+
+    fun deleteCheckItem(checklistId: Int, travelPlanId: Int) {
+        Log.d("ChecklistViewModel", "🗑️ 삭제 요청: checklistId=$checklistId")
+        viewModelScope.launch {
+            repository.deleteCheckList(checklistId)
+                .onSuccess {
+                    Log.d("ChecklistViewModel", "체크리스트 아이템 삭제 성공: id=$checklistId → $it")
+                    loadChecklist(travelPlanId) // 삭제 후 리스트 재로딩
+                }
+                .onFailure {
+                    Log.e("ChecklistViewModel", "체크리스트 아이템 삭제 실패: id=$checklistId", it)
+                }
+        }
+    }
+
 }

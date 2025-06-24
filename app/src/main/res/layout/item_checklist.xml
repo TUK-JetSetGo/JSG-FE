@@ -13,13 +13,34 @@
         <CheckBox
             android:id="@+id/cb_check_item"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:text="준비물 항목"
-            android:textSize="14sp"
+            android:textSize="16sp"
             style="@style/TextAppearance.JSG.Body2"
             android:buttonTint="@color/blue_main"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:paddingHorizontal="4dp"/>
+            android:paddingHorizontal="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="60dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_location_delete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/ic_close"
+                android:backgroundTint="@color/gray_700"
+                android:layout_marginEnd="20dp"
+                android:paddingVertical="20dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

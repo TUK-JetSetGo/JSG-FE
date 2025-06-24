@@ -1,9 +1,12 @@
 package com.tuk.jetsetgo.data.repositoryImpl.myTravel
 
 import com.tuk.jetsetgo.data.datasource.myTravel.MyTravelDataSource
+import com.tuk.jetsetgo.data.dto.response.myTravel.toModel
 import com.tuk.jetsetgo.domain.model.request.myTravel.ExpenseRequestModel
+import com.tuk.jetsetgo.domain.model.request.myTravel.PostCheckListRequestModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.ExpenseDateResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.ExpenseDetailResponseModel
+import com.tuk.jetsetgo.domain.model.response.myTravel.GetCheckListResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.MyPlanResponseModel
 import com.tuk.jetsetgo.domain.model.response.myTravel.PlanInfoResponseModel
 import com.tuk.jetsetgo.domain.repository.myTravel.MyTravelRepository
@@ -46,5 +49,33 @@ class MyTravelRepositoryImpl @Inject constructor(
         sort: String?,
     ): Result<ExpenseDateResponseModel> = runCatching {
         myTravelDataSource.fetchExpenseDate(itineraryId, page, size, sort).data.toExpenseListResponseModel()
+    }
+
+
+    override suspend fun getCheckList(
+        travelPlanId: Int
+    ): Result<List<GetCheckListResponseModel>> = runCatching {
+        myTravelDataSource.getCheckList(travelPlanId).data.map { it.toModel() }
+    }
+
+
+    override suspend fun postCheckList(
+        travelPlanId: Int,
+        request: PostCheckListRequestModel
+    ): Result<String> = runCatching {
+        myTravelDataSource.postCheckList(travelPlanId, request.toPostCheckListRequestDto()).data
+    }
+
+    override suspend fun patchCheckList(
+        checklistId: Int,
+        isChecked: Boolean
+    ): Result<String> = runCatching {
+        myTravelDataSource.patchCheckList(checklistId, isChecked).data
+    }
+
+    override suspend fun deleteCheckList(
+        checklistId: Int
+    ): Result<String> = runCatching {
+        myTravelDataSource.deleteCheckList(checklistId).data
     }
 }

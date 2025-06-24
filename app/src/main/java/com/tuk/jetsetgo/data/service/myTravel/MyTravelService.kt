@@ -2,8 +2,10 @@ package com.tuk.jetsetgo.data.service.myTravel
 
 import com.tuk.jetsetgo.data.dto.BaseResponse
 import com.tuk.jetsetgo.data.dto.request.myTravel.ExpenseRequestDto
+import com.tuk.jetsetgo.data.dto.request.myTravel.PostCheckListRequestDto
 import com.tuk.jetsetgo.data.dto.response.myTravel.ExpenseDateResponseDto
 import com.tuk.jetsetgo.data.dto.response.myTravel.ExpenseDetailResponseDto
+import com.tuk.jetsetgo.data.dto.response.myTravel.GetCheckListResponseDto
 import com.tuk.jetsetgo.data.dto.response.myTravel.MyPlanResponseDto
 import com.tuk.jetsetgo.data.dto.response.myTravel.PlanInfoResponseDto
 import retrofit2.http.Body
@@ -58,4 +60,30 @@ interface MyTravelService {
         @Query("size") size: Int?,
         @Query("sort") sort: String?
     ): BaseResponse<ExpenseDateResponseDto>
+
+    // 준비물 체크 리스트 조회 API
+    @GET("check-list/{travelPlanId}")
+    suspend fun getCheckList(
+        @Path("travelPlanId") travelPlanId: Int
+    ): BaseResponse<List<GetCheckListResponseDto>>
+
+    // 준비물 체크 리스트 추가 API
+    @POST("check-list/{travelPlanId}")
+    suspend fun postCheckList(
+        @Path("travelPlanId") travelPlanId: Int,
+        @Body request: PostCheckListRequestDto
+    ): BaseResponse<String>
+
+    // 준비물 체크 리스트 수정 API
+    @PATCH("check-list/{checklistId}/check")
+    suspend fun patchCheckList(
+        @Path("checklistId") checklistId: Int,
+        @Query("isChecked") isChecked: Boolean
+    ): BaseResponse<String>
+
+    // 준비물 체크 리스트 삭제 API
+    @DELETE("check-list/{checklistId}")
+    suspend fun deleteCheckList(
+        @Path("checklistId") checklistId: Int
+    ): BaseResponse<String>
 }
