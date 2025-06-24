@@ -15,9 +15,9 @@ class ReviewDetailFragment: BaseFragment<FragmentReviewDetailBinding>(R.layout.f
     private lateinit var commentAdapter: CommentAdapter
 
     private val reviewDetailList = listOf(
-        ReviewDetailData("1일차 후기", listOf("https://image1.jpg", "https://image2.jpg"), "강문해변 산책하고 커피거리 카페 들렀어요."),
-        ReviewDetailData("2일차 후기", listOf("https://image3.jpg", "https://image4.jpg"), "안목해변 가서 해수욕도 하고 맛집도 들렀어요."),
-        ReviewDetailData("3일차 후기", listOf("https://image5.jpg"), "경포대에서 일몰 보고 감동했습니다.")
+        ReviewDetailData("1일차 후기", listOf("https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/%EA%B0%95%EB%AC%B8%ED%95%B4%EB%B3%80.jpg/640px-%EA%B0%95%EB%AC%B8%ED%95%B4%EB%B3%80.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbxNQQLawIrXZfs53TNqf20yXymmjbG_F-nQ&s"), "강문해변 산책하고 커피거리 카페 들렀어요."),
+        ReviewDetailData("2일차 후기", listOf("https://a.travel-assets.com/findyours-php/viewfinder/images/res70/247000/247840-Anmok-Beach.jpg", "https://a.travel-assets.com/findyours-php/viewfinder/images/res70/247000/247578-Gangwon.jpg"), "안목해변 가서 해수욕도 하고 맛집도 들렀어요."),
+        ReviewDetailData("3일차 후기", listOf("https://blog.kakaocdn.net/dn/VvKX6/btsKTUg4Irg/V1ye2kyK0bu1QuyoD97Wqk/img.png"), "경포대에서 일몰 보고 감동했습니다.")
     )
 
     private val commentList = listOf(
