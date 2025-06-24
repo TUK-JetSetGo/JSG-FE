@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- top bar -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_reviewDetail_topbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="20dp"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_reviewDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="리뷰"
+                        android:textSize="20sp"
+                        style="@style/TextAppearance.JSG.Topbar"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                    <ImageView
+                        android:id="@+id/iv_reviewDetail_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_left"
+                        android:layout_marginStart="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_reviewDetail"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_reviewDetail"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/gray_300"
+                    app:layout_constraintTop_toBottomOf="@id/layout_reviewDetail_topbar"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <!-- 본문 -->
+                <ImageView
+                    android:id="@+id/iv_reviewDetail_profile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_profile_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_reviewDetail_topbar"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"/>
+
+                <TextView
+                    android:id="@+id/tv_reviewDetail_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="김다희"
+                    style="@style/TextAppearance.JSG.Body1"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@id/iv_reviewDetail_profile"
+                    app:layout_constraintTop_toTopOf="@id/iv_reviewDetail_profile"
+                    app:layout_constraintBottom_toTopOf="@id/tv_reviewDetail_date"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dp"/>
+
+                <TextView
+                    android:id="@+id/tv_reviewDetail_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2025.06.19"
+                    style="@style/TextAppearance.JSG.Body2"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray_600"
+                    app:layout_constraintStart_toEndOf="@id/iv_reviewDetail_profile"
+                    app:layout_constraintTop_toBottomOf="@id/tv_reviewDetail_name"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_reviewDetail_profile"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_reviewDetail_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="강릉 2박3일 여행 후기"
+                    style="@style/TextAppearance.JSG.Head1"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_reviewDetail_profile"
+                    android:layout_margin="20dp" />
+
+                <ImageView
+                    android:id="@+id/iv_reviewDetail_star"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/ic_star"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_reviewDetail_title"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_reviewDetail_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.5"
+                    style="@style/TextAppearance.JSG.Body1"
+                    android:textSize="16sp"
+                    android:textColor="#ee4444"
+                    android:layout_marginStart="3dp"
+                    app:layout_constraintStart_toEndOf="@id/iv_reviewDetail_star"
+                    app:layout_constraintTop_toTopOf="@id/iv_reviewDetail_star"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_reviewDetail_star"
+                    />
+                
+                <TextView
+                    android:id="@+id/tv_reviewDetail_totalReview_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="바다가 예쁘고 날씨도 좋았어요\n너무 재밌었어요~"
+                    style="@style/TextAppearance.JSG.Body2"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_reviewDetail_star"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"/>
+                
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/rv_reviewDetail"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@id/tv_reviewDetail_totalReview_content"
+                     android:layout_marginTop="30dp"
+                     android:orientation="vertical"
+                     tools:listitem="@layout/item_review_detail"/>
+
+                <!-- 좋아요 -->
+                <View
+                    android:id="@+id/view_reviewDetail_like"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/ic_like"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_reviewDetail"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"/>
+
+                <TextView
+                    android:id="@+id/tv_reviewDetail_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    style="@style/TextAppearance.JSG.Body1"
+                    android:textSize="16dp"
+                    android:textColor="@color/black_700"
+                    app:layout_constraintStart_toEndOf="@id/view_reviewDetail_like"
+                    app:layout_constraintTop_toTopOf="@id/view_reviewDetail_like"
+                    app:layout_constraintBottom_toBottomOf="@id/view_reviewDetail_like"
+                    />
+
+                <!-- 댓글 -->
+                <View
+                    android:id="@+id/view_reviewDetail_comment"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/ic_comment"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toEndOf="@id/tv_reviewDetail_like"
+                    app:layout_constraintTop_toTopOf="@id/view_reviewDetail_like"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_reviewDetail_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    style="@style/TextAppearance.JSG.Body1"
+                    android:textSize="16dp"
+                    android:textColor="@color/black_700"
+                    app:layout_constraintStart_toEndOf="@id/view_reviewDetail_comment"
+                    app:layout_constraintTop_toTopOf="@id/view_reviewDetail_like"
+                    app:layout_constraintBottom_toBottomOf="@id/view_reviewDetail_like"
+                    android:layout_marginStart="2dp"
+                    />
+
+                <!-- 북마크 -->
+                <View
+                    android:id="@+id/view_reviewDetail_bookmark"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/ic_bookmark"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toEndOf="@id/tv_reviewDetail_comment"
+                    app:layout_constraintTop_toTopOf="@id/view_reviewDetail_like"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_reviewDetail_bookmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    style="@style/TextAppearance.JSG.Body1"
+                    android:textSize="16dp"
+                    android:textColor="@color/black_700"
+                    app:layout_constraintStart_toEndOf="@id/view_reviewDetail_bookmark"
+                    app:layout_constraintTop_toTopOf="@id/view_reviewDetail_like"
+                    app:layout_constraintBottom_toBottomOf="@id/view_reviewDetail_like"
+                    />
+
+                <!-- 계획 복사 -->
+                <TextView
+                    android:id="@+id/tv_reviewDetail_copyPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="여행 계획 복사하기"
+                    style="@style/TextAppearance.JSG.Body1"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:background="@drawable/shape_rect_10_gray300_fill"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/view_reviewDetail_like"
+                    app:layout_constraintBottom_toBottomOf="@id/view_reviewDetail_like"
+                    android:layout_marginEnd="20dp"
+                    android:padding="6dp"/>
+
+                <View
+                    android:id="@+id/view_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_reviewDetail_like"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:background="@color/gray_500"
+                    android:layout_marginTop="16dp"/>
+
+                <!-- 댓글 -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_reviewDetail_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_1"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/item_comment"/>
+
+                <!-- 댓글 입력창 -->
+                <EditText
+                    android:id="@+id/et_reviewDetail_add_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:hint="댓글을 입력하세요"
+                    style="@style/TextAppearance.JSG.Body2"
+                    android:textSize="16sp"
+                    android:background="@drawable/shape_rect_999_gray300_fill"
+                    android:padding="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/rv_reviewDetail_comment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_reviewDetail_add_comment_btn"/>
+
+                <TextView
+                    android:id="@+id/tv_reviewDetail_add_comment_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:text="등록"
+                    style="@style/TextAppearance.JSG.Body1"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:background="@drawable/shape_rect_999_blue_main_fill"
+                    app:layout_constraintTop_toTopOf="@id/et_reviewDetail_add_comment"
+                    app:layout_constraintBottom_toBottomOf="@id/et_reviewDetail_add_comment"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="20dp"
+                    android:paddingHorizontal="16dp"/>
+
+                <View
+                    android:id="@+id/view_2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/et_reviewDetail_add_comment"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

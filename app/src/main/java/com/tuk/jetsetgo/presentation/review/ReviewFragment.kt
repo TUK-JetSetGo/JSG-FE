@@ -1,5 +1,6 @@
 package com.tuk.jetsetgo.presentation.review
 
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentReviewBinding
@@ -27,9 +28,10 @@ class ReviewFragment: BaseFragment<FragmentReviewBinding>(R.layout.fragment_revi
 
     private fun initRecyclerView() {
         binding.rvTravelLocation.layoutManager = LinearLayoutManager(requireContext())
-        reviewAdapter = ReviewAdapter(reviewList) {
-            // findNavController().navigate(R.id.goToLocation)
+        reviewAdapter = ReviewAdapter(reviewList) { selectedReview ->
+            findNavController().navigate(R.id.goToReviewDetail)
         }
         binding.rvTravelLocation.adapter = reviewAdapter
     }
+
 }
