@@ -122,7 +122,7 @@ dependencies {
     implementation ("com.jakewharton.timber:timber:5.0.1")
 
     // naver map
-    implementation("com.naver.maps:map-sdk:3.20.0")
+    implementation("com.naver.maps:map-sdk:3.22.1")
 
     // circle image
     implementation ("de.hdodenhof:circleimageview:3.1.0")
