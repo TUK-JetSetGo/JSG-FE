@@ -67,6 +67,18 @@ class SharedViewModel : ViewModel() {
     private val _isEditMode = MutableStateFlow(false)
     val isEditMode: StateFlow<Boolean> = _isEditMode
 
+    private val _startLat = MutableStateFlow<Double?>(null)
+    val startLat: StateFlow<Double?> = _startLat
+
+    private val _startLon = MutableStateFlow<Double?>(null)
+    val startLon: StateFlow<Double?> = _startLon
+
+    private val _endLat = MutableStateFlow<Double?>(null)
+    val endLat: StateFlow<Double?> = _endLat
+
+    private val _endLon = MutableStateFlow<Double?>(null)
+    val endLon: StateFlow<Double?> = _endLon
+
     // 각 입력값을 업데이트하는 setter 함수들
     fun setIsGroup(value: Boolean) { _isGroup.value = value }
     fun setGroupSize(value: Int) { _groupSize.value = value }
@@ -88,4 +100,13 @@ class SharedViewModel : ViewModel() {
     fun setRouteInfoList(value: List<ScheduleData>) { _routeInfoList.value = value }
     fun setClickedSchedule(value: ScheduleData) { _clickedSchedule.value = value }
     fun setEditMode(value: Boolean) { _isEditMode.value = value }
+    fun setStartPoint(lat: Double?, lon: Double?) {
+        _startLat.value = lat
+        _startLon.value = lon
+    }
+
+    fun setEndPoint(lat: Double?, lon: Double?) {
+        _endLat.value = lat
+        _endLon.value = lon
+    }
 }

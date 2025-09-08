@@ -263,6 +263,9 @@
             <action
                 android:id="@+id/goToAddSchedule"
                 app:destination="@id/addScheduleFragment"/>
+            <action
+                android:id="@+id/goToDirections"
+                app:destination="@id/directionsFragment"/>
         </fragment>
         <fragment
             android:id="@+id/spendFragment"
@@ -325,6 +328,11 @@
             android:name="com.tuk.jetsetgo.presentation.addTravel.TravelSearchFragment"
             android:label="SearchFragment"
             tools:layout="@layout/fragment_travel_search"/>
+        <fragment
+            android:id="@+id/directionsFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.DirectionsFragment"
+            android:label="DirectionsFragment"
+            tools:layout="@layout/fragment_directions"/>
 
     </navigation>
 
