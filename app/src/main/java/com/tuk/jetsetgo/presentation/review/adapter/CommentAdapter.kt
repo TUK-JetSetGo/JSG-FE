@@ -6,12 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tuk.jetsetgo.databinding.ItemCommentBinding
 
 class CommentAdapter(
-    private val commentList: List<CommentData>
+    private val commentList: MutableList<CommentData>   // ← MutableList로
 ) : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
 
     inner class CommentViewHolder(private val binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(comment: CommentData) {
             binding.tvCommentName.text = comment.username
             binding.tvCommentContent.text = comment.content
@@ -28,4 +27,12 @@ class CommentAdapter(
     }
 
     override fun getItemCount(): Int = commentList.size
+
+
+    fun addComment(comment: CommentData) {
+        commentList.add(comment)
+        notifyItemInserted(commentList.size - 1)
+    }
 }
+
+

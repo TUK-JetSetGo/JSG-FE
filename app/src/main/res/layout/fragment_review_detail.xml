@@ -132,7 +132,7 @@
                     app:layout_constraintTop_toTopOf="@id/iv_reviewDetail_star"
                     app:layout_constraintBottom_toBottomOf="@id/iv_reviewDetail_star"
                     />
-                
+
                 <TextView
                     android:id="@+id/tv_reviewDetail_totalReview_content"
                     android:layout_width="0dp"
@@ -145,16 +145,16 @@
                     app:layout_constraintTop_toBottomOf="@id/iv_reviewDetail_star"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="12dp"/>
-                
-                 <androidx.recyclerview.widget.RecyclerView
-                     android:id="@+id/rv_reviewDetail"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     app:layout_constraintStart_toStartOf="parent"
-                     app:layout_constraintTop_toBottomOf="@id/tv_reviewDetail_totalReview_content"
-                     android:layout_marginTop="30dp"
-                     android:orientation="vertical"
-                     tools:listitem="@layout/item_review_detail"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_reviewDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_reviewDetail_totalReview_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/item_review_detail"/>
 
                 <!-- 좋아요 -->
                 <View
@@ -231,6 +231,7 @@
                     />
 
                 <!-- 계획 복사 -->
+                <!--
                 <TextView
                     android:id="@+id/tv_reviewDetail_copyPlan"
                     android:layout_width="wrap_content"
@@ -245,6 +246,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/view_reviewDetail_like"
                     android:layout_marginEnd="20dp"
                     android:padding="6dp"/>
+                    -->
 
                 <View
                     android:id="@+id/view_1"
@@ -254,6 +256,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:background="@color/gray_500"
                     android:layout_marginTop="16dp"/>
+
 
                 <!-- 댓글 -->
                 <androidx.recyclerview.widget.RecyclerView
@@ -304,7 +307,7 @@
                     app:layout_constraintStart_toStartOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            
+
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
