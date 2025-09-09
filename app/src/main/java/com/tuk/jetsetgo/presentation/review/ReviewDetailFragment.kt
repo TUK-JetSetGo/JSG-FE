@@ -54,7 +54,7 @@ class ReviewDetailFragment :
                 ) to listOf(
                     CommentData("김기찬", "사진 감성 좋네요"),
                     CommentData("박준하", "코스 공유 부탁드려요!"),
-                    CommentData("박준하", "렌트 추천하나요?")
+                    CommentData("정동훈", "렌트 추천하나요?")
                 )
                 ),
         "서울 핫플 정복기" to (
@@ -146,7 +146,7 @@ class ReviewDetailFragment :
             }
             "서울 핫플 정복기" -> {
                 binding.tvReviewDetailName.text = "김기찬"
-                binding.tvReviewDetailTitle.text = "서울 핫플 정복기 정복기"
+                binding.tvReviewDetailTitle.text = "서울 핫플 정복기"
                 binding.tvReviewDetailStar.text = "4.2"
                 binding.tvReviewDetailLike.text = "3"
                 binding.tvReviewDetailComment.text = "6"
@@ -155,7 +155,7 @@ class ReviewDetailFragment :
             }
             "부산 해운대 맛집 투어" -> {
                 binding.tvReviewDetailName.text = "박준하"
-                binding.tvReviewDetailTitle.text = "부산 부산 해운대 맛집 투어 투어"
+                binding.tvReviewDetailTitle.text = "부산 해운대 맛집 투어"
                 binding.tvReviewDetailStar.text = "4.7"
                 binding.tvReviewDetailLike.text = "5"
                 binding.tvReviewDetailComment.text = "2"
