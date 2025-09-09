@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- 원 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#1E88E5"
+        android:strokeWidth="5"
+        android:pathData="M50,5
+                          A45,45 0 1,1 49.999,5" />
+
+    <!-- 네비게이션 화살표 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#1E88E5"
+        android:strokeWidth="5"
+        android:strokeLineJoin="round"
+        android:pathData="M40,60 L50,30 L60,60 L50,55 Z" />
+</vector>

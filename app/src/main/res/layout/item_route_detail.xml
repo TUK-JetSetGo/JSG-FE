@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_route_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/shape_rect_10_blue2_fill">
+
+            <ImageView
+                android:id="@+id/iv_route_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_walk"
+                android:layout_marginTop="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_route_detail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="도보"
+                android:textColor="@color/black_700"
+                style="@style/TextAppearance.JSG.Head1"
+                android:textSize="15sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toEndOf="@+id/iv_route_icon"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_route_place"
+                style="@style/TextAppearance.JSG.Body1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:maxWidth="300dp"
+                android:text="A 장소 -> B 장소"
+                android:textSize="20sp"
+                android:ellipsize="end"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="20sp"
+                app:autoSizeMinTextSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_route_detail_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_route_detail_title" />
+
+            <TextView
+                android:id="@+id/tv_route_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20정거장 약 20분"
+                android:textSize="15sp"
+                style="@style/TextAppearance.JSG.Body1"
+                android:textColor="@color/black_700"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_route_place"
+                app:layout_constraintStart_toStartOf="@id/tv_route_place"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

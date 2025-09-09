@@ -12,4 +12,7 @@
     <item
         android:id="@+id/action_modify"
         android:title="계획 수정" />
+    <item
+        android:id="@+id/action_directions"
+        android:title="길 찾기" />
 </menu>
