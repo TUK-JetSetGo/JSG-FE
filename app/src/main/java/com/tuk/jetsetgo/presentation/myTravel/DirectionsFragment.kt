@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
@@ -262,5 +263,13 @@ class DirectionsFragment: BaseFragment<FragmentDirectionsBinding>(R.layout.fragm
                     .animate(CameraAnimation.Easing)
             )
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        isTabSetup = false
+
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.main_bnv)
+        bottomNavigationView.visibility = View.VISIBLE
     }
 }
