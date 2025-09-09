@@ -332,7 +332,16 @@
             android:id="@+id/directionsFragment"
             android:name="com.tuk.jetsetgo.presentation.myTravel.DirectionsFragment"
             android:label="DirectionsFragment"
-            tools:layout="@layout/fragment_directions"/>
+            tools:layout="@layout/fragment_directions">
+            <action
+                android:id="@+id/goToRoute"
+                app:destination="@id/routeFragment"/>
+        </fragment>
+        <fragment
+            android:id="@+id/routeFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.RouteFragment"
+            android:label="RouteFragment"
+            tools:layout="@layout/fragment_route"/>
 
     </navigation>
 

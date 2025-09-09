@@ -105,6 +105,9 @@ class DirectionsFragment: BaseFragment<FragmentDirectionsBinding>(R.layout.fragm
         initRecyclerView()
         setBackPressedCallback()
         setupNaverMap()
+        binding.tvFindDirection.setOnClickListener {
+            findNavController().navigate(R.id.goToRoute)
+        }
     }
 
     private fun initRecyclerView() {

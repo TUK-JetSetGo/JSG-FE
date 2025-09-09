@@ -103,4 +103,36 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+    @Provides
+    @Singleton
+    @Named("OdsayClient")
+    fun provideOdsayOKHttpClient(): OkHttpClient {
+        val interceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        return OkHttpClient.Builder()
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .retryOnConnectionFailure(false)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("odsay")
+    fun provideOdsayRetrofit(
+        @Named("OdsayClient") client: OkHttpClient,
+    ): Retrofit {
+        return Retrofit.Builder()
+            .client(client)
+            .baseUrl(JetSetGoApplication.getString(R.string.odsay_url))
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
 }

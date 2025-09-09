@@ -6,6 +6,7 @@ import com.tuk.jetsetgo.data.repositoryImpl.TestRepositoryImpl
 import com.tuk.jetsetgo.data.repositoryImpl.addTravel.AddTravelRepositoryImpl
 import com.tuk.jetsetgo.data.repositoryImpl.login.LoginRepositoryImpl
 import com.tuk.jetsetgo.data.repositoryImpl.myTravel.MyTravelRepositoryImpl
+import com.tuk.jetsetgo.data.repositoryImpl.myTravel.OdsayRepositoryImpl
 import com.tuk.jetsetgo.data.repositoryImpl.myTravel.OsrmRepositoryImpl
 import com.tuk.jetsetgo.data.repositoryImpl.mypage.MypageRepositoryImpl
 import com.tuk.jetsetgo.data.repositoryImpl.review.ReviewRepositoryImpl
@@ -15,6 +16,7 @@ import com.tuk.jetsetgo.domain.repository.TestRepository
 import com.tuk.jetsetgo.domain.repository.addTravel.AddTravelRepository
 import com.tuk.jetsetgo.domain.repository.login.LoginRepository
 import com.tuk.jetsetgo.domain.repository.myTravel.MyTravelRepository
+import com.tuk.jetsetgo.domain.repository.myTravel.OdsayRepository
 import com.tuk.jetsetgo.domain.repository.myTravel.OsrmRepository
 import com.tuk.jetsetgo.domain.repository.mypage.MypageRepository
 import com.tuk.jetsetgo.domain.repository.review.ReviewRepository
@@ -79,4 +81,10 @@ object RepositoryModule {
     fun providesOsrmRepository(
         osrmRepositoryImpl: OsrmRepositoryImpl
     ): OsrmRepository = osrmRepositoryImpl
+
+    @Singleton
+    @Provides
+    fun provideOdsayRepository(
+        odsayRepositoryImpl: OdsayRepositoryImpl
+    ): OdsayRepository = odsayRepositoryImpl
 }
