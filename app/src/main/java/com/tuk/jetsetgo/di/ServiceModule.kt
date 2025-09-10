@@ -4,6 +4,7 @@ import com.tuk.jetsetgo.data.service.TestService
 import com.tuk.jetsetgo.data.service.addTravel.AddTravelService
 import com.tuk.jetsetgo.data.service.login.LoginService
 import com.tuk.jetsetgo.data.service.myTravel.MyTravelService
+import com.tuk.jetsetgo.data.service.myTravel.OdsayService
 import com.tuk.jetsetgo.data.service.myTravel.OsrmService
 import com.tuk.jetsetgo.data.service.mypage.MypageService
 import com.tuk.jetsetgo.data.service.review.ReviewService
@@ -64,5 +65,13 @@ object ServiceModule {
         @Named("osrm") retrofit: Retrofit): OsrmService {
         return retrofit.create(OsrmService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideOdsayService(
+        @Named("odsay") retrofit: Retrofit): OdsayService {
+        return retrofit.create(OdsayService::class.java)
+    }
+
 
 }

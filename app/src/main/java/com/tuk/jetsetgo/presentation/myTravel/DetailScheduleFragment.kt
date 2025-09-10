@@ -215,6 +215,10 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                         findNavController().navigate(R.id.goToModify)
                         true
                     }
+                    R.id.action_directions -> {
+                        findNavController().navigate(R.id.goToDirections)
+                        true
+                    }
                     else -> false
                 }
             }

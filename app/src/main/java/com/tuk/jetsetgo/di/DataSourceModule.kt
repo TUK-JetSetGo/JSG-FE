@@ -3,12 +3,14 @@ package com.tuk.jetsetgo.di
 import com.tuk.jetsetgo.data.datasource.addTravel.AddTravelDataSource
 import com.tuk.jetsetgo.data.datasource.login.LoginDataSource
 import com.tuk.jetsetgo.data.datasource.myTravel.MyTravelDataSource
+import com.tuk.jetsetgo.data.datasource.myTravel.OdsayDataSource
 import com.tuk.jetsetgo.data.datasource.myTravel.OsrmDataSource
 import com.tuk.jetsetgo.data.datasource.mypage.MypageDataSource
 import com.tuk.jetsetgo.data.datasource.review.ReviewDataSource
 import com.tuk.jetsetgo.data.datasourceImpl.addTravel.AddTravelDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.login.LoginDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.myTravel.MyTravelDataSourceImpl
+import com.tuk.jetsetgo.data.datasourceImpl.myTravel.OdsayDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.myTravel.OsrmDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.mypage.MypageDataSourceImpl
 import com.tuk.jetsetgo.data.datasourceImpl.review.ReviewDataSourceImpl
@@ -50,5 +52,10 @@ object DataSourceModule {
     @Singleton
     fun provideOsrmDataSource(osrmDataSourceImpl: OsrmDataSourceImpl): OsrmDataSource =
         osrmDataSourceImpl
+
+    @Provides
+    @Singleton
+    fun provideOdsayDataSource(odsayDataSourceImpl: OdsayDataSourceImpl): OdsayDataSource =
+        odsayDataSourceImpl
 
 }

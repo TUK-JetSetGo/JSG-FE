@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- 원 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#E53935"
+        android:strokeWidth="5"
+        android:pathData="M50,5
+                          A45,45 0 1,1 49.999,5" />
+
+    <!-- 플래그 막대 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#E53935"
+        android:strokeWidth="5"
+        android:pathData="M35,30 V70" />
+
+    <!-- 플래그 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#E53935"
+        android:strokeWidth="5"
+        android:strokeLineJoin="round"
+        android:pathData="M35,30 H65 L55,45 L65,60 H35" />
+</vector>
