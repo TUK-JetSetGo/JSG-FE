@@ -8,42 +8,41 @@ import com.tuk.jetsetgo.databinding.ItemReviewBinding
 import com.tuk.jetsetgo.presentation.addTravel.adapter.MapPictureAdapter
 
 class ReviewAdapter(
-    private val reviews: List<ReviewData>,
     private val onItemClick: (ReviewData) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
+    private val reviews = mutableListOf<ReviewData>()  // 내부 보관용
+
+    fun submit(list: List<ReviewData>) {
+        reviews.clear()
+        reviews.addAll(list)
+        notifyDataSetChanged()
+    }
+
     inner class ReviewViewHolder(private val binding: ItemReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        fun bind(reviewData: ReviewData) = with(binding) {
+            tvReviewTitle.text = reviewData.title
+            tvReviewNickname.text = reviewData.nickname
+            tvReviewLike.text = reviewData.like
+            tvReviewComment.text = reviewData.comment
+            tvReviewBookmark.text = reviewData.bookmark
 
-        fun bind(reviewData: ReviewData) {
-            binding.tvReviewTitle.text = reviewData.title
-            binding.tvReviewNickname.text = reviewData.nickname
-            binding.tvReviewLike.text = reviewData.like
-            binding.tvReviewComment.text = reviewData.comment
-            binding.tvReviewBookmark.text = reviewData.bookmark
-
-            // 사진 RecyclerView 설정
-            val mapPictureAdapter = MapPictureAdapter(reviewData.picture)
-            binding.rvReviewPicture.adapter = mapPictureAdapter
-            binding.rvReviewPicture.layoutManager =
-                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
-
-            // 클릭 리스너 추가
-            binding.root.setOnClickListener {
-                onItemClick(reviewData)
+            rvReviewPicture.apply {
+                adapter = MapPictureAdapter(reviewData.picture)
+                layoutManager = LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
             }
+
+            root.setOnClickListener { onItemClick(reviewData) }
         }
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ReviewViewHolder(ItemReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
-        val binding = ItemReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ReviewViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) =
         holder.bind(reviews[position])
-    }
 
     override fun getItemCount(): Int = reviews.size
 }
+

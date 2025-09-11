@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.tuk.jetsetgo.data.datasource.review.ReviewDataSource
 import com.tuk.jetsetgo.domain.model.request.review.PostReviewRequestModel
 import com.tuk.jetsetgo.domain.model.response.review.GetReviewResponseModel
+import com.tuk.jetsetgo.domain.model.response.review.ReviewListResponseModel
 import com.tuk.jetsetgo.domain.repository.review.ReviewRepository
 import javax.inject.Inject
 import okhttp3.MediaType.Companion.toMediaType
@@ -49,4 +50,10 @@ class ReviewRepositoryImpl @Inject constructor(
             Log.e("ReviewRepositoryImpl", "postReview failed: ${e.message}", e)
         }
     }
+
+
+    override suspend fun getReviewList(page: Int, size: Int): Result<ReviewListResponseModel> =
+        runCatching {
+            reviewDataSource.getReviewList(page, size).data.toModel()
+        }
 }

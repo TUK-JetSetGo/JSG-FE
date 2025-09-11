@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tuk.jetsetgo.domain.model.request.review.PostReviewRequestModel
 import com.tuk.jetsetgo.domain.model.response.review.GetReviewResponseModel
+import com.tuk.jetsetgo.domain.model.response.review.ReviewListResponseModel
 import com.tuk.jetsetgo.domain.repository.review.ReviewRepository
 import com.tuk.jetsetgo.util.network.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,11 @@ class ReviewViewModel @Inject constructor(
 
     private val _getReviewState = MutableStateFlow<UiState<GetReviewResponseModel>>(UiState.Empty)
     val getReviewState: StateFlow<UiState<GetReviewResponseModel>> = _getReviewState
+
+    private val _reviewListState =
+        MutableStateFlow<UiState<ReviewListResponseModel>>(UiState.Empty)
+    val reviewListState: StateFlow<UiState<ReviewListResponseModel>> = _reviewListState
+
 
     fun getReview(travelPlanId: Int) {
         viewModelScope.launch {
@@ -47,6 +53,15 @@ class ReviewViewModel @Inject constructor(
                     Log.e("ReviewViewModel", "postReview() 실패: ${exception.message}")
                     _postReviewState.value = UiState.Error(exception)
                 }
+        }
+    }
+
+    fun getReviewList(page: Int, size: Int) {
+        viewModelScope.launch {
+            _reviewListState.value = UiState.Loading
+            reviewRepository.getReviewList(page, size)
+                .onSuccess { _reviewListState.value = UiState.Success(it) }
+                .onFailure { _reviewListState.value = UiState.Error(it) }
         }
     }
 }

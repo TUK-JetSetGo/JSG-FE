@@ -3,6 +3,7 @@ package com.tuk.jetsetgo.data.service.review
 import com.tuk.jetsetgo.data.dto.BaseResponse
 import com.tuk.jetsetgo.data.dto.request.addTravel.EditPlanRequestDto
 import com.tuk.jetsetgo.data.dto.request.review.PostReviewRequestDto
+import com.tuk.jetsetgo.data.dto.response.review.GetReviewListResponseDto
 import com.tuk.jetsetgo.data.dto.response.review.GetReviewResponseDto
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -12,6 +13,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ReviewService {
     // 리뷰 가져오기
@@ -28,4 +30,10 @@ interface ReviewService {
         @Part request: MultipartBody.Part
     ): BaseResponse<String>
 
+    // 리뷰 목록 조회
+    @GET("reviews/list")
+    suspend fun getReviewList(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): BaseResponse<GetReviewListResponseDto>
 }

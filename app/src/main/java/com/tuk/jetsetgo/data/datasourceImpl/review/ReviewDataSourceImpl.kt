@@ -21,4 +21,7 @@ class ReviewDataSourceImpl @Inject constructor(
         requestPart: MultipartBody.Part
     ): BaseResponse<String> =
         reviewService.postReview(travelPlanId, requestPart)
+
+    override suspend fun getReviewList(page: Int, size: Int) =
+        reviewService.getReviewList(page, size)
 }

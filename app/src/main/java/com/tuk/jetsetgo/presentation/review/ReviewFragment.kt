@@ -1,42 +1,84 @@
 package com.tuk.jetsetgo.presentation.review
 
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
+import android.util.Log
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentReviewBinding
 import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.review.adapter.ReviewAdapter
 import com.tuk.jetsetgo.presentation.review.adapter.ReviewData
-import com.tuk.jetsetgo.presentation.review.adapter.ReviewDetailData
+import com.tuk.jetsetgo.util.network.UiState
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-class ReviewFragment: BaseFragment<FragmentReviewBinding>(R.layout.fragment_review) {
+@AndroidEntryPoint
+class ReviewFragment : BaseFragment<FragmentReviewBinding>(R.layout.fragment_review) {
+
+    private val viewModel: ReviewViewModel by viewModels()
     private lateinit var reviewAdapter: ReviewAdapter
 
-    private val reviewList = listOf(
-        ReviewData("강릉 2박3일 여행 후기", "김다희", listOf("https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/%EA%B0%95%EB%AC%B8%ED%95%B4%EB%B3%80.jpg/640px-%EA%B0%95%EB%AC%B8%ED%95%B4%EB%B3%80.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbxNQQLawIrXZfs53TNqf20yXymmjbG_F-nQ&s", "https://a.travel-assets.com/findyours-php/viewfinder/images/res70/247000/247840-Anmok-Beach.jpg"),"1","3","0",),
-        ReviewData("서울 핫플 정복기", "김기찬", listOf("https://cdn.womennews.co.kr/news/thumbnail/202105/211362_343480_619_v150.jpg", "https://offloadmedia.feverup.com/secretseoul.com/wp-content/uploads/2023/03/07211252/Untitled-design-35.png", "https://www.newspeak.kr/news/photo/201210/26212_12958_210.jpg"),"3","2","1",),
-        ReviewData("부산 해운대 맛집 투어", "박준하", listOf("https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153533649_wufrotr", "https://newsimg.hankookilbo.com/2018/07/27/201807271302064274_1.jpg","https://www.newsrep.co.kr/news/photo/201801/39225_36332_418.jpg"),"5","4","9",),
-        ReviewData("제주도 3박4일 힐링 코스", "정동훈", listOf("https://happist.com/wp-content/uploads/2022/12/%EC%A0%9C%EC%A3%BC-%EC%97%AC%ED%96%89-%EA%B4%91%EC%B9%98%EA%B8%B0%ED%95%B4%EB%B3%80%EC%97%90%EC%84%9C-%EB%B3%B8-%EC%84%B1%EC%82%B0%EC%9D%BC%EC%B6%9C%EB%B4%89-%EC%9D%BC%EC%B6%9C-%ED%92%8D%EA%B2%BD-Photo-from-gu_ni222-Instagram-1024x767.jpg", "https://api.cdn.visitjeju.net/photomng/imgpath/202111/12/dd57fe99-46ea-483b-bfcc-b6fa954baa7c.jpg","https://blog-static.kkday.com/ko/blog/wp-content/uploads/jeju_rapeseed_1.jpeg"),"4","3","7",),
-    )
-
     override fun initObserver() {
-        initRecyclerView()
-    }
+        setupRecycler()
 
-    override fun initView() {
-    }
-
-    private fun initRecyclerView() {
-        binding.rvTravelLocation.layoutManager = LinearLayoutManager(requireContext())
-        reviewAdapter = ReviewAdapter(reviewList) { selectedReview ->
-            val key = selectedReview.title
-            findNavController().navigate(
-                R.id.goToReviewDetail,
-                bundleOf("reviewKey" to key)
-            )
+        // 목록 구독
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.reviewListState.collect { state ->
+                    when (state) {
+                        is UiState.Loading -> {
+                            // 필요시 로딩 표시
+                        }
+                        is UiState.Success -> {
+                            // 서버 스펙: overallReviewId, rating, content 만 존재
+                            val uiList = state.data.items.map { item ->
+                                ReviewData(
+                                    title = item.content.take(30), // 미리보기 타이틀 대용
+                                    nickname = "익명",             // (스펙 확장 시 교체)
+                                    picture = emptyList(),          // 목록엔 이미지 스펙 없음
+                                    like = "0",
+                                    comment = "0",
+                                    bookmark = "0"
+                                )
+                            }
+                            reviewAdapter.submit(uiList)
+                        }
+                        is UiState.Error -> {
+                            Toast.makeText(requireContext(), "리뷰 목록 조회 실패", Toast.LENGTH_SHORT).show()
+                            Log.e("ReviewFragment", "getReviewList error", state.error)
+                        }
+                        UiState.Empty -> Unit
+                    }
+                }
+            }
         }
-        binding.rvTravelLocation.adapter = reviewAdapter
+
+        // 최초 호출
+        viewModel.getReviewList(page = 0, size = 20)
     }
 
+    override fun initView() { /* 필요 UI 초기화가 있으면 여기서 */ }
+
+    private fun setupRecycler() {
+        // ReviewAdapter는 내부 리스트 보유 + submit(list) 지원(앞서 수정한 버전)
+        reviewAdapter = ReviewAdapter { clicked ->
+            // ⚠ 목록 API에 travelPlanId가 없어서 상세로 바로 이동 불가
+            // 백엔드가 travelPlanId 내려주면 아래 주석 해제
+            Toast.makeText(requireContext(), "상세 보기 준비중입니다.", Toast.LENGTH_SHORT).show()
+
+            // 예) travelPlanId가 있다면
+            // val bundle = bundleOf("travelPlanId" to travelPlanId)
+            // findNavController().navigate(R.id.goToReviewDetail, bundle)
+        }
+
+        binding.rvTravelLocation.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = reviewAdapter
+            setHasFixedSize(true)
+        }
+    }
 }
