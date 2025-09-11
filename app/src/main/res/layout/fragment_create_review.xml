@@ -85,20 +85,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     />
 
-                <TextView
-                    android:id="@+id/tv_createReview_total_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="전체 일정에 대한 별점을 남겨주세요"
-                    style="@style/TextAppearance.JSG.Body1"
-                    android:textSize="16sp"
-                    android:textColor="@color/black_500"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_createReview_total"
-                    />
-
                 <RatingBar
                     android:id="@+id/createReview_ratingBar_total"
                     android:layout_width="wrap_content"
@@ -106,19 +92,36 @@
                     android:numStars="5"
                     android:stepSize="0.5"
                     android:rating="0"
-                    app:layout_constraintTop_toBottomOf="@id/tv_createReview_total_comment"
+                    android:progressTint="@color/blue_deep"
+                    app:layout_constraintTop_toBottomOf="@id/tv_createReview_total"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="6dp"
                     />
 
+                <EditText
+                    android:id="@+id/et_createReview_total_review"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:gravity="left"
+                    android:hint="전체 일정에 대한 후기를 남겨주세요"
+                    android:background="@drawable/shape_rect_5_white_fill_gray400_line_2"
+                    style="@style/TextAppearance.JSG.Body2"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:padding="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/createReview_ratingBar_total"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_createReview"
+                    android:id="@+id/rv_createReview_day_rating"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/createReview_ratingBar_total"
+                    app:layout_constraintTop_toBottomOf="@id/et_createReview_total_review"
                     android:layout_marginTop="30dp"
                     android:orientation="horizontal"
                     tools:listitem="@layout/item_create_review"/>

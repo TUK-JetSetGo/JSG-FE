@@ -207,6 +207,12 @@ class DetailScheduleFragment : BaseFragment<FragmentDetailScheduleBinding>(R.lay
                         findNavController().navigate(R.id.goToSettle)
                         true
                     }
+                    R.id.action_review -> {
+                        val travelPlanId = viewModel.travelPlanId.value ?: return@setOnMenuItemClickListener false
+                        val action = DetailScheduleFragmentDirections.goToReview(travelPlanId)
+                        findNavController().navigate(action)
+                        true
+                    }
                     R.id.action_checklist -> {
                         findNavController().navigate(R.id.goToChecklist)
                         true
