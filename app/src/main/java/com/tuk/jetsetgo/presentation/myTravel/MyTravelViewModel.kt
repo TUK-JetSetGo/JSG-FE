@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.time.Duration
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -48,11 +49,27 @@ class MyTravelViewModel @Inject constructor(
     private val _expenseDateResult = MutableLiveData<Result<ExpenseDateResponseModel>>()
     val expenseDateResult: LiveData<Result<ExpenseDateResponseModel>> = _expenseDateResult
 
+    private val _todayTravel = MutableStateFlow<MyPlanResponseModel.MyTravelPlanInfoListModel?>(null)
+    val todayTravel: StateFlow<MyPlanResponseModel.MyTravelPlanInfoListModel?> = _todayTravel
+
+
     fun fetchMyTravelList() {
         viewModelScope.launch {
             repository.fetchMyTravelList().onSuccess { result ->
                 Log.d("MyTravelViewModel", "여행 목록 불러오기 성공: ${result.myTravelPlanInfoList}")
                 _myTravelList.value = result.myTravelPlanInfoList
+
+
+                val today = LocalDate.now()
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+                val todayPlan = result.myTravelPlanInfoList.find { plan ->
+                    val start = LocalDate.parse(plan.travelStartDate, formatter)
+                    val end = LocalDate.parse(plan.travelEndDate, formatter)
+                    !today.isBefore(start) && !today.isAfter(end)
+                }
+                _todayTravel.value = todayPlan
+
             }.onFailure { exception ->
                 Log.e("MyTravelViewModel", "여행 목록 불러오기 실패", exception)
             }

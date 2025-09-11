@@ -1,6 +1,12 @@
 package com.tuk.jetsetgo.presentation.home
 
 import android.view.View
+import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -10,9 +16,17 @@ import com.tuk.jetsetgo.presentation.base.BaseFragment
 import com.tuk.jetsetgo.presentation.home.adapter.HomePictureAdapter
 import com.tuk.jetsetgo.presentation.home.adapter.HomePictureItem
 import com.tuk.jetsetgo.presentation.home.adapter.PictureAdapter
+import com.tuk.jetsetgo.presentation.myTravel.MyTravelViewModel
 import com.tuk.jetsetgo.util.extension.CircleIndicatorDecoration
+import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
+    private val viewModel: MyTravelViewModel by activityViewModels()
+
     private lateinit var pictureAdapter: PictureAdapter
     private lateinit var homePictureAdapter: HomePictureAdapter
 
@@ -20,12 +34,46 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val pictureList = mutableListOf(R.drawable.jeju1, R.drawable.jeju2, R.drawable.busan1,R.drawable.bulguksa, R.drawable.mountain1)
 
     override fun initObserver() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.todayTravel.collect { plan ->
+                    if (plan != null) {
+                        // 입력/출력 포맷터
+                        val inFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                        val outFmt = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+
+                        val start = LocalDate.parse(plan.travelStartDate, inFmt)
+                        val end = LocalDate.parse(plan.travelEndDate, inFmt)
+                        val today = LocalDate.now(ZoneId.of("Asia/Seoul"))
+
+                        // 포함구간 기준(+1) 계산
+                        val totalDays = ChronoUnit.DAYS.between(start, end).toInt() + 1
+                        val currentDay = ChronoUnit.DAYS.between(start, today).toInt() + 1
+
+                        binding.tvHomeOngoingTripBody.text =
+                            "${plan.travelName} ${totalDays}일중 ${currentDay}일 째"
+                        binding.tvHomeOngoingTripDate.text =
+                            "${start.format(outFmt)} ~ ${end.format(outFmt)}"
+
+                        binding.tvHomeOngoingTripBody.isVisible = true
+                        binding.tvHomeOngoingTripDate.isVisible = true
+                        // binding.groupHomeOngoingTrip?.isVisible = true
+                    } else {
+                        // 오늘 진행 중인 여행 없음
+                        binding.tvHomeOngoingTripBody.text = "오늘 진행 중인 여행이 없어요"
+                        binding.tvHomeOngoingTripBody.isVisible = true   // ✅ 보이게!
+                        binding.tvHomeOngoingTripDate.isVisible = false  // 날짜는 숨김
+                    }
+                }
+            }
+        }
     }
 
     override fun initView() {
         bottomNavigationVisible()
         initRecyclerView()
         initHomePictureRecyclerView()
+        goToPlan()
     }
 
     private fun bottomNavigationVisible() {
@@ -62,4 +110,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
     }
 
+    private fun goToPlan() {
+        binding.tvHomeWhereToGO.setOnClickListener {
+            findNavController().navigate(R.id.addTravelTab)
+        }
+    }
 }
