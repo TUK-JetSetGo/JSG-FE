@@ -118,21 +118,30 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(R.layout.
     }
 
     private fun render(data: GetReviewResponseModel) = with(binding) {
-        // 헤더
         tvReviewDetailStar.text = format1(data.overallReviewInfo.rating)
         tvReviewDetailTotalReviewContent.text = data.overallReviewInfo.content
 
-        // 상세 리스트
         val uiList = data.dailyReviewInfoList.map { day ->
+            val pictures =
+                if (!day.reviewImageUrlList.isNullOrEmpty()) {
+                    day.reviewImageUrlList
+                } else {
+                    day.itineraryInfo.routeInfoList
+                        .mapNotNull { it.touristSpotInfo.thumbnailUrl.takeIf { url -> url.isNotBlank() } }
+                        .distinct() // 중복 제거
+                }
+
             ReviewDetailData(
                 dayTitle = "${day.dayIndex}일차",
                 rating = format1(day.rating),
-                pictureList = day.reviewImageUrlList,  // 서버 리스트 그대로
+                pictureList = pictures,
                 content = day.content
             )
         }
+
         reviewDetailAdapter.submit(uiList)
     }
+
 
     private fun format1(d: Double): String = String.format("%.1f", d)
 }
