@@ -25,7 +25,6 @@ class ReviewFragment: BaseFragment<FragmentReviewBinding>(R.layout.fragment_revi
     }
 
     override fun initView() {
-        binding.clTravelLocationAddBtn.setOnClickListener { findNavController().navigate(R.id.gotoCreateReview) }
     }
 
     private fun initRecyclerView() {

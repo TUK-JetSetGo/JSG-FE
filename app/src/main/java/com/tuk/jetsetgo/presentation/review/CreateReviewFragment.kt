@@ -2,6 +2,7 @@ package com.tuk.jetsetgo.presentation.review
 
 import android.util.Log
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -48,9 +49,12 @@ class CreateReviewFragment :
                         }
 
                         is UiState.Success -> {
-                            Log.d("CreateReviewFragment", "리뷰 저장 성공")
                             Toast.makeText(requireContext(), "리뷰가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                            findNavController().popBackStack()
+
+                            val id = args.travelPlanId
+                            val bundle = bundleOf("travelPlanId" to id)
+
+                            findNavController().navigate(R.id.goToReviewDetail, bundle)
                         }
 
                         is UiState.Error -> {

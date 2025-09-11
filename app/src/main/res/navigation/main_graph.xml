@@ -67,20 +67,12 @@
             <action
                 android:id="@+id/goToReviewDetail"
                 app:destination="@id/reviewDetailFragment" />
-            <action
-                android:id="@+id/gotoCreateReview"
-                app:destination="@id/createReviewFragment" />
         </fragment>
         <fragment
             android:id="@+id/reviewDetailFragment"
             android:name="com.tuk.jetsetgo.presentation.review.ReviewDetailFragment"
             android:label="ReviewDetailFragment"
             tools:layout="@layout/fragment_review_detail"/>
-        <fragment
-            android:id="@+id/createReviewFragment"
-            android:name="com.tuk.jetsetgo.presentation.review.CreateReviewFragment"
-            android:label="CreateReviewFragment"
-            tools:layout="@layout/fragment_create_review"/>
     </navigation>
 
     <!-- add travel tab -->
@@ -301,6 +293,18 @@
             android:name="com.tuk.jetsetgo.presentation.review.CreateReviewFragment"
             android:label="CreateReviewFragment"
             tools:layout="@layout/fragment_create_review">
+            <argument
+                android:name="travelPlanId"
+                app:argType="integer" />
+            <action
+                android:id="@+id/goToReviewDetail"
+                app:destination="@id/reviewDetailFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/reviewDetailFragment"
+            android:name="com.tuk.jetsetgo.presentation.review.ReviewDetailFragment"
+            android:label="ReviewDetailFragment"
+            tools:layout="@layout/fragment_review_detail">
             <argument
                 android:name="travelPlanId"
                 app:argType="integer" />
