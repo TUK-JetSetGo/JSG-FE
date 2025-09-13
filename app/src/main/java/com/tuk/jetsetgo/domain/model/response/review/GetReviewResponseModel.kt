@@ -1,13 +1,15 @@
 package com.tuk.jetsetgo.domain.model.response.review
 
 data class GetReviewResponseModel(
-    val travelPlanId: Int?,  // nullable 로 변경
+    val travelPlanId: Int?,
     val overallReviewInfo: OverallReviewModel,
     val dailyReviewInfoList: List<DailyReviewModel>
 ) {
     data class OverallReviewModel(
+        val travelPlanId: Int,
+        val reviewName: String,
         val overallReviewId: Int,
-        val rating: Double,   // Double 로 변경
+        val rating: Double,
         val content: String
     )
 
@@ -15,7 +17,7 @@ data class GetReviewResponseModel(
         val itineraryInfo: ItineraryModel,
         val dayIndex: Int,
         val reviewImageUrlList: List<String>,
-        val rating: Double,   // Double 로 변경
+        val rating: Double,
         val content: String
     ) {
         data class ItineraryModel(

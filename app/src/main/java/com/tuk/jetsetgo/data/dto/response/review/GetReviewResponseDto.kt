@@ -8,11 +8,15 @@ data class GetReviewResponseDto(
     val dailyReviewInfoList: List<DailyReviewInfo>
 ) {
     data class OverallReviewInfo(
+        val travelPlanId: Int,
+        val reviewName: String,
         val overallReviewId: Int,
-        val rating: Double,   // Double 로 변경
+        val rating: Double,
         val content: String
     ) {
         fun toModel() = GetReviewResponseModel.OverallReviewModel(
+            travelPlanId = travelPlanId,
+            reviewName = reviewName,
             overallReviewId = overallReviewId,
             rating = rating,
             content = content
@@ -23,7 +27,7 @@ data class GetReviewResponseDto(
         val itineraryInfo: ItineraryInfo,
         val dayIndex: Int,
         val reviewImageUrlList: List<String>,
-        val rating: Double,   // Double 로 변경
+        val rating: Double,
         val content: String
     ) {
         data class ItineraryInfo(

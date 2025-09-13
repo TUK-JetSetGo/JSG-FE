@@ -118,6 +118,7 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(R.layout.
     }
 
     private fun render(data: GetReviewResponseModel) = with(binding) {
+        tvReviewDetailTitle.text = data.overallReviewInfo.reviewName
         tvReviewDetailStar.text = format1(data.overallReviewInfo.rating)
         tvReviewDetailTotalReviewContent.text = data.overallReviewInfo.content
 
