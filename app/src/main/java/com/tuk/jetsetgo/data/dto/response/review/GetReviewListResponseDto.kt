@@ -1,7 +1,6 @@
 package com.tuk.jetsetgo.data.dto.response.review
 
 import com.tuk.jetsetgo.domain.model.response.review.ReviewListResponseModel
-import com.tuk.jetsetgo.domain.model.response.review.ReviewListResponseModel.ReviewListItemModel
 
 data class GetReviewListResponseDto(
     val overallReviewInfoList: List<OverallReviewInfoDto>,
@@ -11,16 +10,12 @@ data class GetReviewListResponseDto(
     val isLast: Boolean
 ) {
     data class OverallReviewInfoDto(
+        val travelPlanId: Int,
+        val reviewName: String,
         val overallReviewId: Int,
-        val rating: Double,     // 서버가 int여도 Double로 받으면 포맷하기 쉬워요
+        val rating: Double,
         val content: String
-    ) {
-        fun toModel() = ReviewListItemModel(
-            overallReviewId = overallReviewId,
-            rating = rating,
-            content = content
-        )
-    }
+    )
 
     fun toModel() = ReviewListResponseModel(
         items = overallReviewInfoList.map { it.toModel() },
@@ -29,4 +24,9 @@ data class GetReviewListResponseDto(
         isFirst = isFirst,
         isLast = isLast
     )
+
+    private fun OverallReviewInfoDto.toModel() =
+        ReviewListResponseModel.Item(
+            travelPlanId, reviewName, overallReviewId, rating, content
+        )
 }

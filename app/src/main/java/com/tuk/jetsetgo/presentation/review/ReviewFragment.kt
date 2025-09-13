@@ -2,10 +2,12 @@ package com.tuk.jetsetgo.presentation.review
 
 import android.util.Log
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuk.jetsetgo.R
 import com.tuk.jetsetgo.databinding.FragmentReviewBinding
@@ -22,26 +24,27 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>(R.layout.fragment_rev
     private val viewModel: ReviewViewModel by viewModels()
     private lateinit var reviewAdapter: ReviewAdapter
 
+    private var travelPlanIdsByPosition: List<Int> = emptyList()
+
     override fun initObserver() {
         setupRecycler()
 
-        // 목록 구독
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.reviewListState.collect { state ->
                     when (state) {
-                        is UiState.Loading -> {
-                            // 필요시 로딩 표시
-                        }
+                        is UiState.Loading -> Unit
                         is UiState.Success -> {
-                            // 서버 스펙: overallReviewId, rating, content 만 존재
-                            val uiList = state.data.items.map { item ->
+                            val items = state.data.items                       // ✅ 도메인은 items 사용
+                            travelPlanIdsByPosition = items.map { i -> i.travelPlanId }  // ✅ i로 명시
+
+                            val uiList = items.map { i ->
                                 ReviewData(
-                                    title = item.content.take(30), // 미리보기 타이틀 대용
-                                    nickname = "익명",             // (스펙 확장 시 교체)
-                                    picture = emptyList(),          // 목록엔 이미지 스펙 없음
-                                    like = "0",
-                                    comment = "0",
+                                    title    = i.reviewName,   // 예: "제주도 3박 4일"
+                                    nickname = "익명",
+                                    picture  = emptyList(),    // 목록 API엔 이미지 없음
+                                    like     = "0",
+                                    comment  = "0",
                                     bookmark = "0"
                                 )
                             }
@@ -61,18 +64,20 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>(R.layout.fragment_rev
         viewModel.getReviewList(page = 0, size = 20)
     }
 
-    override fun initView() { /* 필요 UI 초기화가 있으면 여기서 */ }
+    override fun initView() = Unit
 
     private fun setupRecycler() {
-        // ReviewAdapter는 내부 리스트 보유 + submit(list) 지원(앞서 수정한 버전)
-        reviewAdapter = ReviewAdapter { clicked ->
-            // ⚠ 목록 API에 travelPlanId가 없어서 상세로 바로 이동 불가
-            // 백엔드가 travelPlanId 내려주면 아래 주석 해제
-            Toast.makeText(requireContext(), "상세 보기 준비중입니다.", Toast.LENGTH_SHORT).show()
-
-            // 예) travelPlanId가 있다면
-            // val bundle = bundleOf("travelPlanId" to travelPlanId)
-            // findNavController().navigate(R.id.goToReviewDetail, bundle)
+        reviewAdapter = ReviewAdapter { _, position ->
+            val travelPlanId = travelPlanIdsByPosition.getOrNull(position)
+            if (travelPlanId == null) {
+                Toast.makeText(requireContext(), "선택 항목이 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
+                return@ReviewAdapter
+            }
+            // ✅ bundle로 상세로 이동
+            findNavController().navigate(
+                R.id.goToReviewDetail,
+                bundleOf("travelPlanId" to travelPlanId)
+            )
         }
 
         binding.rvTravelLocation.apply {

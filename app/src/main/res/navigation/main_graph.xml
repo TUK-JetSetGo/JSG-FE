@@ -72,7 +72,11 @@
             android:id="@+id/reviewDetailFragment"
             android:name="com.tuk.jetsetgo.presentation.review.ReviewDetailFragment"
             android:label="ReviewDetailFragment"
-            tools:layout="@layout/fragment_review_detail"/>
+            tools:layout="@layout/fragment_review_detail">
+            <argument
+                android:name="travelPlanId"
+                app:argType="integer" />
+        </fragment>
     </navigation>
 
     <!-- add travel tab -->

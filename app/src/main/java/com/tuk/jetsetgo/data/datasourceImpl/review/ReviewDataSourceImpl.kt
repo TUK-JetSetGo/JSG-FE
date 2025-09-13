@@ -14,7 +14,7 @@ class ReviewDataSourceImpl @Inject constructor(
 ): ReviewDataSource {
 
     override suspend fun getReview(travelPlanId: Int): BaseResponse<GetReviewResponseDto> =
-        reviewService.getReview(travelPlanId)
+        reviewService.getReview(travelPlanId, null)
 
     override suspend fun postReview(
         travelPlanId: Int,

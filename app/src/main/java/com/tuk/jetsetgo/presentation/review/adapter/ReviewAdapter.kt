@@ -8,10 +8,10 @@ import com.tuk.jetsetgo.databinding.ItemReviewBinding
 import com.tuk.jetsetgo.presentation.addTravel.adapter.MapPictureAdapter
 
 class ReviewAdapter(
-    private val onItemClick: (ReviewData) -> Unit
+    private val onItemClick: (ReviewData, Int) -> Unit   // ✅ position 함께 전달
 ) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
-    private val reviews = mutableListOf<ReviewData>()  // 내부 보관용
+    private val reviews = mutableListOf<ReviewData>()
 
     fun submit(list: List<ReviewData>) {
         reviews.clear()
@@ -21,6 +21,7 @@ class ReviewAdapter(
 
     inner class ReviewViewHolder(private val binding: ItemReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(reviewData: ReviewData) = with(binding) {
             tvReviewTitle.text = reviewData.title
             tvReviewNickname.text = reviewData.nickname
@@ -33,7 +34,12 @@ class ReviewAdapter(
                 layoutManager = LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
             }
 
-            root.setOnClickListener { onItemClick(reviewData) }
+            root.setOnClickListener {
+                val pos = bindingAdapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    onItemClick(reviews[pos], pos)   // ✅ 아이템 + position
+                }
+            }
         }
     }
 
@@ -45,4 +51,3 @@ class ReviewAdapter(
 
     override fun getItemCount(): Int = reviews.size
 }
-

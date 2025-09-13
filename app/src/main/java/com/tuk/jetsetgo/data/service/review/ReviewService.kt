@@ -17,9 +17,10 @@ import retrofit2.http.Query
 
 interface ReviewService {
     // 리뷰 가져오기
-    @GET("reviews/{travelPlanId}")
+    @GET("reviews/{travelPlanId}/day")
     suspend fun getReview(
-        @Path("travelPlanId") travelPlanId: Int
+        @Path("travelPlanId") travelPlanId: Int,
+        @Query("dayIndex") dayIndex: Int? = null
     ): BaseResponse<GetReviewResponseDto>
 
     // 리뷰 작성하기
