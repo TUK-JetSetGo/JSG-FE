@@ -174,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:text="0"
                     style="@style/TextAppearance.JSG.Body1"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:textColor="@color/black_700"
                     app:layout_constraintStart_toEndOf="@id/view_reviewDetail_like"
                     app:layout_constraintTop_toTopOf="@id/view_reviewDetail_like"
