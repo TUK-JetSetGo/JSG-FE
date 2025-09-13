@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -74,11 +75,17 @@ class ReviewDetailFragment : BaseFragment<FragmentReviewDetailBinding>(R.layout.
     }
 
     override fun initView() = with(binding) {
-        // 제목(응답에 타이틀이 없다면 넘어온 값으로 표기)
-        // tvReviewDetailTitle.text = args.title ?: tvReviewDetailTitle.text
 
-        ivReviewDetailBack.setOnClickListener { findNavController().popBackStack() }
-
+        ivReviewDetailBack.setOnClickListener {
+            findNavController().navigate(
+                R.id.homeTab,
+                null,
+                NavOptions.Builder()
+                    .setPopUpTo(R.id.main_graph,true)
+                    .setLaunchSingleTop(true)
+                    .build()
+            )
+        }
         // 좋아요/북마크 UI는 기존 목업 로직 유지
         viewReviewDetailLike.setOnClickListener {
             val current = tvReviewDetailLike.text.toString().toIntOrNull() ?: 0

@@ -228,6 +228,11 @@
                 android:id="@+id/goToDetailSchedule"
                 app:destination="@id/detailScheduleFragment" />
         </fragment>
+        <fragment
+            android:id="@+id/detailScheduleFragment"
+            android:name="com.tuk.jetsetgo.presentation.myTravel.DetailScheduleFragment"
+            android:label="DetailScheduleFragment"
+            tools:layout="@layout/fragment_detail_schedule"/>
     </navigation>
 
     <!-- my Travel tab -->
