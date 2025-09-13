@@ -3,17 +3,23 @@ package com.tuk.jetsetgo.data.dto.response.review
 import com.tuk.jetsetgo.domain.model.response.review.GetReviewResponseModel
 
 data class GetReviewResponseDto(
-    val travelPlanId: Int,
+    val travelPlanId: Int?, // nullable 로 변경
     val overallReviewInfo: OverallReviewInfo,
     val dailyReviewInfoList: List<DailyReviewInfo>
 ) {
     data class OverallReviewInfo(
+        val travelPlanId: Int,
+        val reviewName: String,
         val overallReviewId: Int,
-        val rating: Int,
+        val rating: Double,
         val content: String
     ) {
         fun toModel() = GetReviewResponseModel.OverallReviewModel(
-            overallReviewId, rating, content
+            travelPlanId = travelPlanId,
+            reviewName = reviewName,
+            overallReviewId = overallReviewId,
+            rating = rating,
+            content = content
         )
     }
 
@@ -21,7 +27,7 @@ data class GetReviewResponseDto(
         val itineraryInfo: ItineraryInfo,
         val dayIndex: Int,
         val reviewImageUrlList: List<String>,
-        val rating: Int,
+        val rating: Double,
         val content: String
     ) {
         data class ItineraryInfo(
@@ -37,7 +43,7 @@ data class GetReviewResponseDto(
                 val touristSpotInfo: TouristSpotInfo
             ) {
                 data class TouristSpotInfo(
-                    val touristSpotId: Int,
+                    val touristSpotId: Long,   // Long 으로 변경
                     val name: String,
                     val tel: String,
                     val category: String,
@@ -52,30 +58,55 @@ data class GetReviewResponseDto(
                     val naverBookingUrl: String,
                     val travelCityId: Int
                 ) {
-                    fun toModel() = GetReviewResponseModel.DailyReviewModel.ItineraryModel.RouteModel.TouristSpotModel(
-                        touristSpotId, name, tel, category, businessStatus, address,
-                        thumbnailUrl, thumbnailUrls, latitude, longitude, activityLevel,
-                        homePage, naverBookingUrl, travelCityId
-                    )
+                    fun toModel() =
+                        GetReviewResponseModel.DailyReviewModel.ItineraryModel.RouteModel.TouristSpotModel(
+                            touristSpotId = touristSpotId,
+                            name = name,
+                            tel = tel,
+                            category = category,
+                            businessStatus = businessStatus,
+                            address = address,
+                            thumbnailUrl = thumbnailUrl,
+                            thumbnailUrls = thumbnailUrls,
+                            latitude = latitude,
+                            longitude = longitude,
+                            activityLevel = activityLevel,
+                            homePage = homePage,
+                            naverBookingUrl = naverBookingUrl,
+                            travelCityId = travelCityId
+                        )
                 }
 
-                fun toModel() = GetReviewResponseModel.DailyReviewModel.ItineraryModel.RouteModel(
-                    routeId, orderIndex, visitStartTime, visitEndTime, touristSpotInfo.toModel()
-                )
+                fun toModel() =
+                    GetReviewResponseModel.DailyReviewModel.ItineraryModel.RouteModel(
+                        routeId = routeId,
+                        orderIndex = orderIndex,
+                        visitStartTime = visitStartTime,
+                        visitEndTime = visitEndTime,
+                        touristSpotInfo = touristSpotInfo.toModel()
+                    )
             }
 
-            fun toModel() = GetReviewResponseModel.DailyReviewModel.ItineraryModel(
-                itineraryId, dayIndex, routeInfoList.map { it.toModel() }
-            )
+            fun toModel() =
+                GetReviewResponseModel.DailyReviewModel.ItineraryModel(
+                    itineraryId = itineraryId,
+                    dayIndex = dayIndex,
+                    routeInfoList = routeInfoList.map { it.toModel() }
+                )
         }
 
-        fun toModel() = GetReviewResponseModel.DailyReviewModel(
-            itineraryInfo.toModel(), dayIndex, reviewImageUrlList, rating, content
-        )
+        fun toModel() =
+            GetReviewResponseModel.DailyReviewModel(
+                itineraryInfo = itineraryInfo.toModel(),
+                dayIndex = dayIndex,
+                reviewImageUrlList = reviewImageUrlList,
+                rating = rating,
+                content = content
+            )
     }
 
     fun toGetReviewResponseModel() = GetReviewResponseModel(
-        travelPlanId = travelPlanId,
+        travelPlanId = travelPlanId, // nullable 유지
         overallReviewInfo = overallReviewInfo.toModel(),
         dailyReviewInfoList = dailyReviewInfoList.map { it.toModel() }
     )

@@ -8,32 +8,35 @@ import com.tuk.jetsetgo.databinding.ItemReviewDetailBinding
 import com.tuk.jetsetgo.presentation.addTravel.adapter.MapPictureAdapter
 
 class ReviewDetailAdapter(
-    private val detailList: List<ReviewDetailData>
+    initial: List<ReviewDetailData> = emptyList()
 ) : RecyclerView.Adapter<ReviewDetailAdapter.ReviewDetailViewHolder>() {
 
-    inner class ReviewDetailViewHolder(private val binding: ItemReviewDetailBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    private val items = initial.toMutableList()
 
-        fun bind(data: ReviewDetailData) {
-            binding.tvReviewDetailTitle.text = data.dayTitle
-            binding.tvReviewDetailContent.text = data.content
-
+    inner class ReviewDetailViewHolder(private val binding: ItemReviewDetailBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: ReviewDetailData) = with(binding) {
+            tvReviewDetailTitle.text = data.dayTitle
+            tvReviewDetailStar.text = data.rating
+            tvReviewDetailContent.text = data.content
             val pictureAdapter = MapPictureAdapter(data.pictureList)
-            binding.rvReviewDetailPicture.apply {
-                adapter = pictureAdapter
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            }
+            rvReviewDetailPicture.adapter = pictureAdapter
+            rvReviewDetailPicture.layoutManager =
+                LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewDetailViewHolder {
-        val binding = ItemReviewDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ReviewDetailViewHolder(binding)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ReviewDetailViewHolder(ItemReviewDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-    override fun onBindViewHolder(holder: ReviewDetailViewHolder, position: Int) {
-        holder.bind(detailList[position])
-    }
+    override fun onBindViewHolder(holder: ReviewDetailViewHolder, position: Int) =
+        holder.bind(items[position])
 
-    override fun getItemCount(): Int = detailList.size
+    override fun getItemCount(): Int = items.size
+
+    fun submit(list: List<ReviewDetailData>) {
+        items.clear()
+        items.addAll(list)
+        notifyDataSetChanged()
+    }
 }

@@ -72,7 +72,11 @@
             android:id="@+id/reviewDetailFragment"
             android:name="com.tuk.jetsetgo.presentation.review.ReviewDetailFragment"
             android:label="ReviewDetailFragment"
-            tools:layout="@layout/fragment_review_detail"/>
+            tools:layout="@layout/fragment_review_detail">
+            <argument
+                android:name="travelPlanId"
+                app:argType="integer" />
+        </fragment>
     </navigation>
 
     <!-- add travel tab -->
@@ -224,11 +228,6 @@
                 android:id="@+id/goToDetailSchedule"
                 app:destination="@id/detailScheduleFragment" />
         </fragment>
-        <fragment
-            android:id="@+id/detailScheduleFragment"
-            android:name="com.tuk.jetsetgo.presentation.myTravel.DetailScheduleFragment"
-            android:label="DetailScheduleFragment"
-            tools:layout="@layout/fragment_detail_schedule"/>
     </navigation>
 
     <!-- my Travel tab -->
@@ -254,6 +253,9 @@
             <action
                 android:id="@+id/goToSettle"
                 app:destination="@id/settleFragment"/>
+            <action
+                android:id="@+id/goToReview"
+                app:destination="@id/createReviewFragment"/>
             <action
                 android:id="@+id/goToChecklist"
                 app:destination="@id/checklistFragment"/>
@@ -289,6 +291,27 @@
             <action
                 android:id="@+id/settleToSpend"
                 app:destination="@id/spendFragment"/>
+        </fragment>
+        <fragment
+            android:id="@+id/createReviewFragment"
+            android:name="com.tuk.jetsetgo.presentation.review.CreateReviewFragment"
+            android:label="CreateReviewFragment"
+            tools:layout="@layout/fragment_create_review">
+            <argument
+                android:name="travelPlanId"
+                app:argType="integer" />
+            <action
+                android:id="@+id/goToReviewDetail"
+                app:destination="@id/reviewDetailFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/reviewDetailFragment"
+            android:name="com.tuk.jetsetgo.presentation.review.ReviewDetailFragment"
+            android:label="ReviewDetailFragment"
+            tools:layout="@layout/fragment_review_detail">
+            <argument
+                android:name="travelPlanId"
+                app:argType="integer" />
         </fragment>
         <fragment
             android:id="@+id/checklistFragment"
